@@ -65,6 +65,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             static::COL_STATUS => 'Status',
             static::COL_FORMAT => 'Format',
             static::COL_CREATED_AT => 'Created At',
+            static::ACTIONS => 'Actions'
         ]);
 
         $config->addRawColumn(self::ACTIONS);
@@ -88,6 +89,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         $config->setRawColumns([
             static::COL_STATUS,
             static::COL_FORMAT,
+            static::ACTIONS,
         ]);
 
         return $config;

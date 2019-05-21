@@ -17,7 +17,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDat
  */
 class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION = 'QUERY_CONTAINER_CUSTOMER';
+    public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     /**
@@ -41,7 +41,9 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     protected function addUtilDateTimeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
-            return new PunchoutCatalogsToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
+            return new PunchoutCatalogsToUtilDateTimeServiceBridge(
+                $container->getLocator()->utilDateTime()->service()
+            );
         });
 
         return $container;
