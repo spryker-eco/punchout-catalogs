@@ -69,13 +69,13 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         ]);
 
         $config->setSortable([
-            PgwPunchoutCatalogConnectionTableMap::COL_ID_PUNCHOUT_CATALOG_CONNECTION,
-            PgwPunchoutCatalogConnectionTableMap::COL_NAME,
-            PgwPunchoutCatalogConnectionTableMap::COL_TYPE,
-            PgwPunchoutCatalogConnectionTableMap::COL_FK_COMPANY_BUSINESS_UNIT,
-            PgwPunchoutCatalogConnectionTableMap::COL_IS_ACTIVE,
-            PgwPunchoutCatalogConnectionTableMap::COL_FORMAT,
-            PgwPunchoutCatalogConnectionTableMap::COL_CREATED_AT,
+            static::COL_ID_PUNCHOUT_CATALOG_CONNECTION,
+            static::COL_NAME,
+            static::COL_TYPE,
+            static::COL_COMPANY,
+            static::COL_STATUS,
+            static::COL_FORMAT,
+            static::COL_CREATED_AT,
         ]);
 
         $config->setSearchable([
