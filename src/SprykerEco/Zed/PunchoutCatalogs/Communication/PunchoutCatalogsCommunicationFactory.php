@@ -22,7 +22,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsConnectionsTable
      */
-    public function createPunchoutCatalogsConnectionsTable()
+    public function createPunchoutCatalogsConnectionsTable(): PunchoutCatalogsConnectionsTable
     {
         return new PunchoutCatalogsConnectionsTable(
             $this->getPunchoutCatalogConnectionPropelQuery(),

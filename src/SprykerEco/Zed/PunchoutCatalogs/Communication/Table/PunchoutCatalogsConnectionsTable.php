@@ -55,7 +55,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
             static::COL_ID_PUNCHOUT_CATALOG_CONNECTION => '#',
@@ -98,7 +98,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection[] $punchoutCatalogConnections */
         $punchoutCatalogConnectionCollection = $this->runQuery(
