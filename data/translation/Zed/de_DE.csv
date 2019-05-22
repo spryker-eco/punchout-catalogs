@@ -1,16 +1,16 @@
-Punch-out Catalog,Punch-out Catalog
-New connection,New connection
+Punch-out Catalog,Punch-out Katalog
+New connection,Neue Verbindung
 Name,Name
-Company,Company
-Type,Type
+Company,Firma
+Type,Typ
 Status,Status
 Format,Format
-Created,Created
-Actions,Actions
-Activate,Activate
-Deactivate,Deactivate
-Active,Active
-Inactive,Inactive
+Created At,Hergestellt in
+Actions,Aktionen
+Activate,Aktivieren
+Deactivate,Deaktivieren
+Active,Aktiv
+Inactive,Inaktiv
 cXML,cXML
 OCI,OCI
 

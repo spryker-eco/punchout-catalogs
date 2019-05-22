@@ -64,7 +64,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             static::COL_COMPANY => 'Company',
             static::COL_STATUS => 'Status',
             static::COL_FORMAT => 'Format',
-            static::COL_CREATED_AT => 'Created',
+            static::COL_CREATED_AT => 'Created At',
             static::COL_ACTIONS => 'Actions'
         ]);
 
