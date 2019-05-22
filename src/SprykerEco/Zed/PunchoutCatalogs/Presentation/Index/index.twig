@@ -1,12 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'punch-out-catalog.connection.list.title' | trans %}
+{% set widget_title = 'Punch-out Catalog' | trans %}
 
 {% block head_title widget_title | trans %}
 {% block section_title widget_title | trans %}
 
 {% block action %}
-    {{ createActionButton('NOT_IMPLEMENTED', 'punch-out-catalog.connection.add-new-connection' | trans) }}
+    {{ createActionButton('NOT_IMPLEMENTED', 'New connection' | trans) }}
 {% endblock %}
 
 {% block content %}
