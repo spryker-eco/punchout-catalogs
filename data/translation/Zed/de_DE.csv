@@ -11,5 +11,5 @@ punch-out-catalog.connection.activate,Activate
 punch-out-catalog.connection.deactivate,Deactivate
 punch-out-catalog.connection.list.status.active,Active
 punch-out-catalog.connection.list.status.inactive,Inactive
-punch-out-catalog.connection.list.format.cxml,cXXML
+punch-out-catalog.connection.list.format.cxml,cXML
 punch-out-catalog.connection.list.format.oci,OCI
