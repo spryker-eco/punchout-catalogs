@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <punchout-catalogs>
+        <label>PunchOut</label>
+        <title>PunchOut</title>
+        <bundle>punchout-catalogs</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <visible>1</visible>
+    </punchout-catalogs>
+</config>

@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Punch-out Catalog' | trans %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ createActionButton('NOT_IMPLEMENTED', 'New connection' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ punchoutCatalogsConnectionsTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
