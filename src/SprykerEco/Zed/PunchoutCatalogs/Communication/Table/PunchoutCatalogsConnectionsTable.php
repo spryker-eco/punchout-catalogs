@@ -18,9 +18,8 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDat
 
 class PunchoutCatalogsConnectionsTable extends AbstractTable
 {
-    protected const ACTIONS = 'Actions';
-    protected const STATUS_ACTIVE = 'Active';
-    protected const STATUS_INACTIVE = 'Inactive';
+    protected const STATUS_ACTIVE = 'punch-out-catalog.connection.list.status.active';
+    protected const STATUS_INACTIVE = 'punch-out-catalog.connection.list.status.inactive';
 
     protected const COL_ID_PUNCHOUT_CATALOG_CONNECTION = 'id_punchout_catalog_connection';
     protected const COL_NAME = 'name';
@@ -29,6 +28,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const COL_FORMAT = 'format';
     protected const COL_CREATED_AT = 'createdAt';
     protected const COL_STATUS = 'status';
+    protected const COL_ACTIONS = 'actions';
 
     /**
      * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
@@ -59,16 +59,14 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     {
         $config->setHeader([
             static::COL_ID_PUNCHOUT_CATALOG_CONNECTION => '#',
-            static::COL_NAME => 'Name',
-            static::COL_TYPE => 'Type',
-            static::COL_COMPANY => 'Company',
-            static::COL_STATUS => 'Status',
-            static::COL_FORMAT => 'Format',
-            static::COL_CREATED_AT => 'Created At',
-            static::ACTIONS => 'Actions'
+            static::COL_NAME => 'punch-out-catalog.connection.list.name',
+            static::COL_TYPE => 'punch-out-catalog.connection.list.type',
+            static::COL_COMPANY => 'punch-out-catalog.connection.list.company',
+            static::COL_STATUS => 'punch-out-catalog.connection.list.status',
+            static::COL_FORMAT => 'punch-out-catalog.connection.list.format',
+            static::COL_CREATED_AT => 'punch-out-catalog.connection.list.created-at',
+            static::COL_ACTIONS => 'punch-out-catalog.connection.list.actions'
         ]);
-
-        $config->addRawColumn(self::ACTIONS);
 
         $config->setSortable([
             PgwPunchoutCatalogConnectionTableMap::COL_ID_PUNCHOUT_CATALOG_CONNECTION,
@@ -89,7 +87,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         $config->setRawColumns([
             static::COL_STATUS,
             static::COL_FORMAT,
-            static::ACTIONS,
+            static::COL_ACTIONS,
         ]);
 
         return $config;
@@ -157,10 +155,15 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     {
         $punchoutCatalogConnectionRow = $punchoutCatalogConnection->toArray();
 
-        $punchoutCatalogConnectionRow[static::ACTIONS] = $this->buildLinks($punchoutCatalogConnection);
-        $punchoutCatalogConnectionRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($punchoutCatalogConnection->getCreatedAt());
+        $punchoutCatalogConnectionRow[static::COL_ACTIONS] = $this->buildLinks($punchoutCatalogConnection);
         $punchoutCatalogConnectionRow[static::COL_STATUS] = $this->getStatusLabel($punchoutCatalogConnection);
-        $punchoutCatalogConnectionRow[static::COL_FORMAT] = $this->generateLabel($punchoutCatalogConnection->getFormat(), 'label-secondary');
+        $punchoutCatalogConnectionRow[static::COL_FORMAT] = $this->generateLabel(
+            $punchoutCatalogConnection->getFormat(),
+            'label-secondary'
+        );
+        $punchoutCatalogConnectionRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime(
+            $punchoutCatalogConnection->getCreatedAt()
+        );
         $punchoutCatalogConnectionRow[static::COL_COMPANY] = $punchoutCatalogConnection->getCompanyBusinessUnit()
             ->getCompany()
             ->getName();
@@ -176,8 +179,14 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected function buildLinks(PgwPunchoutCatalogConnection $punchoutCatalogConnection): string
     {
         $buttons = [];
-        $buttons[] = $this->generateEditButton('NOT_IMPLEMENTED', 'Activate');
-        $buttons[] = $this->generateEditButton('NOT_IMPLEMENTED', 'Test Cart');
+
+        if ($punchoutCatalogConnection->getIsActive()) {
+            $buttons[] = $this->generateRemoveButton('NOT_IMPLEMENTED', 'punch-out-catalog.connection.deactivate');
+        }
+
+        if (!$punchoutCatalogConnection->getIsActive()) {
+            $buttons[] = $this->generateButton('NOT_IMPLEMENTED', 'punch-out-catalog.connection.activate', ['btn-success']);
+        }
 
         return implode(' ', $buttons);
     }

@@ -1,0 +1,15 @@
+punch-out-catalog.connection.list.title,Punch-out Catalog
+punch-out-catalog.connection.add-new-connection,New connection
+punch-out-catalog.connection.list.name,Name
+punch-out-catalog.connection.list.company,Company
+punch-out-catalog.connection.list.type,Type
+punch-out-catalog.connection.list.status,Status
+punch-out-catalog.connection.list.format,Format
+punch-out-catalog.connection.list.created-at,Created
+punch-out-catalog.connection.list.actions,Actions
+punch-out-catalog.connection.activate,Activate
+punch-out-catalog.connection.deactivate,Deactivate
+punch-out-catalog.connection.list.status.active,Active
+punch-out-catalog.connection.list.status.inactive,Inactive
+punch-out-catalog.connection.list.format.cxml,cXXML
+punch-out-catalog.connection.list.format.oci,OCI

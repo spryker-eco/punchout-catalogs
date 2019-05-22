@@ -1,25 +1,18 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Punchout Catalog Connections' %}
+{% set widget_title = 'punch-out-catalog.connection.list.title' | trans %}
 
 {% block head_title widget_title | trans %}
-
 {% block section_title widget_title | trans %}
 
 {% block action %}
-    {{ createActionButton('REQUIRE_REPLACEMENT', 'Create Connection' | trans) }}
+    {{ createActionButton('NOT_IMPLEMENTED', 'punch-out-catalog.connection.add-new-connection' | trans) }}
 {% endblock %}
 
 {% block content %}
-
     {% embed '@Gui/Partials/widget.twig' %}
-
         {% block widget_content %}
-
             {{ punchoutCatalogsConnectionsTable | raw }}
-
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}
