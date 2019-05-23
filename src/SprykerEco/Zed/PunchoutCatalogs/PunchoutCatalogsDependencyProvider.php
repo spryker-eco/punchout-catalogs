@@ -10,7 +10,6 @@ namespace SprykerEco\Zed\PunchoutCatalogs;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeBridge;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceBridge;
 
 /**
@@ -19,10 +18,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDat
 class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION';
-
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
-
-    public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,22 +27,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        parent::provideCommunicationLayerDependencies($container);
         $container = $this->addUtilDateTimeService($container);
-        $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
-        $container = $this->addCompanyBusinessUnitFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container): Container
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
 
         return $container;
@@ -77,22 +58,6 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION, function () {
             return PgwPunchoutCatalogConnectionQuery::create();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addCompanyBusinessUnitFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
-            return new PunchoutCatalogsToCompanyBusinessUnitFacadeBridge(
-                $container->getLocator()->companyBusinessUnit()->facade()
-            );
         });
 
         return $container;
