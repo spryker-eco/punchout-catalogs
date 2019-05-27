@@ -41,7 +41,7 @@ interface PunchoutCatalogsFacadeInterface
      * Specification:
      * - Expects idPunchoutCatalogConnection to be provided.
      * - Returns unsuccessful response with corresponding message if no connection found by idPunchoutCatalogConnection.
-     * - Updated punchout catalog connection in Persistence.
+     * - Updates punchout catalog connection in Persistence.
      *
      * @api
      *

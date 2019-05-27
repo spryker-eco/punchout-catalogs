@@ -14,17 +14,20 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInt
 
 class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
 {
+    protected const MESSAGE_ERROR_DURING_CONNECTION_UPDATE = 'Error during connection update';
+
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface
      */
-    protected $punchoutCatalogEntityManager;
+    protected $punchoutCatalogsEntityManager;
 
     /**
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface $punchoutCatalogEntityManager
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface $punchoutCatalogsEntityManager
      */
-    public function __construct(PunchoutCatalogsEntityManagerInterface $punchoutCatalogEntityManager)
-    {
-        $this->punchoutCatalogEntityManager = $punchoutCatalogEntityManager;
+    public function __construct(
+        PunchoutCatalogsEntityManagerInterface $punchoutCatalogsEntityManager
+    ) {
+        $this->punchoutCatalogsEntityManager = $punchoutCatalogsEntityManager;
     }
 
     /**
@@ -34,17 +37,17 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
      */
     public function createConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
-        $punchoutCatalogConnectionTransfer = $this->punchoutCatalogEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
 
-        if ($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()) {
+        if (!$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()) {
             return (new PunchoutCatalogResponseTransfer())
-                ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
-                ->setIsSuccessful(true);
+                ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE))
+                ->setIsSuccessful(false);
         }
 
         return (new PunchoutCatalogResponseTransfer())
-            ->addMessage((new MessageTransfer())->setValue('Error during connection creation'))
-            ->setIsSuccessful(false);
+            ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**
@@ -56,7 +59,7 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
     {
         $punchoutCatalogConnectionTransfer->requireIdPunchoutCatalogConnection();
 
-        $isSuccessful = $this->punchoutCatalogEntityManager->updatePunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        $isSuccessful = $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
 
         if ($isSuccessful) {
             return (new PunchoutCatalogResponseTransfer())

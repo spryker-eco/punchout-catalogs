@@ -27,7 +27,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface;
  */
 class PunchoutCatalogsFacadeTest extends Unit
 {
-    protected const NOT_EXISTING_CONNECTION_ID = '21';
+    protected const NOT_EXISTING_CONNECTION_ID = 0;
     protected const CONNECTION_NAME = 'Test name';
     protected const CONNECTION_USERNAME = 'Test username';
     protected const CONNECTION_TYPE = 'Test type';
@@ -41,11 +41,14 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConnectionByIdReturnsNullIfNothingFound(): void
+    public function testFindConnectionByIdReturnsNullWhenConnectionNotFoundByProvidedId(): void
     {
+        // Arrange
+        $idPunchoutCatalogConnection = static::NOT_EXISTING_CONNECTION_ID;
+
         // Act
         $punchoutConnectionTransfer = $this->getFacade()
-            ->findConnectionById(static::NOT_EXISTING_CONNECTION_ID);
+            ->findConnectionById($idPunchoutCatalogConnection);
 
         // Assert
         $this->assertNull($punchoutConnectionTransfer);
@@ -54,7 +57,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConnectionByIdFindsConnectionById(): void
+    public function testFindConnectionByIdRetrievesConnectionWhenItExists(): void
     {
         // Arrange
         $idPunchoutCatalogConnection = $this->createPunchoutCatalogsConnection();
@@ -63,7 +66,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         $punchoutCatalogConnectionTransfer = $this->getFacade()
             ->findConnectionById($idPunchoutCatalogConnection);
 
-        //Assert
+        // Assert
         $this->assertNotNull($punchoutCatalogConnectionTransfer);
         $this->assertEquals($idPunchoutCatalogConnection, $punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection());
     }
@@ -71,7 +74,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateConnectionCreatesConnection(): void
+    public function testCreateConnectionCreatesConnectionWhenAllParametersAreSet(): void
     {
         // Arrange
         $companyBusinessUnitEntity = $this->createCompanyBusinessUnit();
@@ -85,7 +88,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         // Act
         $punchoutCatalogResponseTransfer = $this->getFacade()->createConnection($punchoutCatalogConnectionTransfer);
 
-        //Assert
+        // Assert
         $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
         $this->assertNotNull($punchoutCatalogResponseTransfer->getPunchoutCatalogConnection());
         $this->assertNotNull($punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()->getIdPunchoutCatalogConnection());
@@ -94,7 +97,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateConnectionUpdatesConnection(): void
+    public function testUpdateConnectionUpdatesConnectionWhenItExists(): void
     {
         // Arrange
         $punchoutCatalogConnectionTransfer = $this->getFacade()
@@ -108,7 +111,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         $punchoutCatalogResponseTransfer = $this->getFacade()
             ->updateConnection($punchoutCatalogConnectionTransfer);
 
-        //Assert
+        // Assert
         $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
 
         $updatedPunchoutCatalogConnectionTransfer = $this->getFacade()
@@ -130,7 +133,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         $punchoutCatalogResponseTransfer = $this->getFacade()
             ->updateConnection($punchoutCatalogConnectionTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($punchoutCatalogResponseTransfer->getIsSuccessful());
     }
 

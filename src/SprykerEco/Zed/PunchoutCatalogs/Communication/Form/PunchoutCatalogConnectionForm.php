@@ -24,11 +24,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PunchoutCatalogConnectionForm extends AbstractType
 {
-    public const OPTION_BUSINESS_UNIT_CHOICES = 'OPTION_BUSINESS_UNIT_ID_LIST';
+    public const OPTION_BUSINESS_UNIT_CHOICES = 'OPTION_BUSINESS_UNIT_CHOICES';
+
+    protected const BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Choose business unit';
+    protected const BUSINESS_UNIT_FIELD_LABEL = 'Business unit';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array $options
      *
      * @return void
      */
@@ -57,7 +60,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param string[] $options
+     * @param array $options
      *
      * @return $this
      */
@@ -68,8 +71,8 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ChoiceType::class,
             [
                 'choices' => $options[static::OPTION_BUSINESS_UNIT_CHOICES],
-                'placeholder' => 'Choose business unit',
-                'label' => 'Business unit',
+                'placeholder' => static::BUSINESS_UNIT_FIELD_PLACEHOLDER,
+                'label' => static::BUSINESS_UNIT_FIELD_LABEL,
                 'constraints' => [
                     new NotBlank(),
                 ],

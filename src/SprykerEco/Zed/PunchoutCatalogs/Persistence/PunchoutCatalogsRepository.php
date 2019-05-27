@@ -31,13 +31,11 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
             return null;
         }
 
-        $punchoutCatalogConnectionTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createPunchoutCatalogsConnectionMapper()
             ->mapPunchoutCatalogConnectionEntityToTransfer(
                 $punchoutCatalogConnectionEntity,
                 new PunchoutCatalogConnectionTransfer()
             );
-
-        return $punchoutCatalogConnectionTransfer;
     }
 }

@@ -23,18 +23,20 @@ class PunchoutCatalogsEntityManager extends AbstractEntityManager implements Pun
      */
     public function createPunchoutCatalogConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogConnectionTransfer
     {
-        $punchoutCatalogConnectionEntity = $this->getFactory()
-            ->createPunchoutCatalogsConnectionMapper()
-            ->mapPunchoutCatalogConnectionTransferToEntity(
-                $punchoutCatalogConnectionTransfer,
-                new PgwPunchoutCatalogConnection()
-            );
+        $punchoutCatalogsConnectionMapper = $this->getFactory()
+            ->createPunchoutCatalogsConnectionMapper();
+
+        $punchoutCatalogConnectionEntity = $punchoutCatalogsConnectionMapper->mapPunchoutCatalogConnectionTransferToEntity(
+            $punchoutCatalogConnectionTransfer,
+            new PgwPunchoutCatalogConnection()
+        );
 
         $punchoutCatalogConnectionEntity->save();
 
-        return $this->getFactory()
-            ->createPunchoutCatalogsConnectionMapper()
-            ->mapPunchoutCatalogConnectionEntityToTransfer($punchoutCatalogConnectionEntity, $punchoutCatalogConnectionTransfer);
+        return $punchoutCatalogsConnectionMapper->mapPunchoutCatalogConnectionEntityToTransfer(
+            $punchoutCatalogConnectionEntity,
+            $punchoutCatalogConnectionTransfer
+        );
     }
 
     /**
