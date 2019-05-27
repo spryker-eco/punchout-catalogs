@@ -14,9 +14,9 @@ interface PunchoutCatalogsEntityManagerInterface
     /**
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
      */
-    public function createPunchoutCatalogConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): bool;
+    public function createPunchoutCatalogConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogConnectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer

@@ -13,6 +13,7 @@
 
     <transfer name="PunchoutCatalogResponse">
         <property name="messages" type="Message[]" singular="message"/>
+        <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection"/>
         <property name="isSuccessful" type="bool" />
     </transfer>
 

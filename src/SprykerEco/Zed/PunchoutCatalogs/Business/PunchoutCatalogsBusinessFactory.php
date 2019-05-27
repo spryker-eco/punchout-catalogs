@@ -16,6 +16,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriterInterf
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface getRepository()
  * @method \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface getEntityManager()()
+ * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
  */
 class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
 {

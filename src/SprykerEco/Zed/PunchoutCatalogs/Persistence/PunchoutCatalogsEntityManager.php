@@ -19,9 +19,9 @@ class PunchoutCatalogsEntityManager extends AbstractEntityManager implements Pun
     /**
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
      *
-     * @return bool
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
      */
-    public function createPunchoutCatalogConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): bool
+    public function createPunchoutCatalogConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogConnectionTransfer
     {
         $punchoutCatalogConnectionEntity = $this->getFactory()
             ->createPunchoutCatalogsConnectionMapper()
@@ -30,7 +30,11 @@ class PunchoutCatalogsEntityManager extends AbstractEntityManager implements Pun
                 new PgwPunchoutCatalogConnection()
             );
 
-        return (bool)$punchoutCatalogConnectionEntity->save();
+        $punchoutCatalogConnectionEntity->save();
+
+        return $this->getFactory()
+            ->createPunchoutCatalogsConnectionMapper()
+            ->mapPunchoutCatalogConnectionEntityToTransfer($punchoutCatalogConnectionEntity, $punchoutCatalogConnectionTransfer);
     }
 
     /**

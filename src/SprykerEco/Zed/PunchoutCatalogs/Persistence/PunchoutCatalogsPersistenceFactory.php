@@ -15,6 +15,7 @@ use SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsDependencyProvider;
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface getEntityManager()
  * @method \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface getRepository()
+ * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
  */
 class PunchoutCatalogsPersistenceFactory extends AbstractPersistenceFactory
 {

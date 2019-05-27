@@ -191,7 +191,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
 
         $buttons[] = $this->generateEditButton(
             Url::generate('/punchout-catalogs/index/edit', [
-                static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection()
+                static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
             ]),
             'Edit'
         );

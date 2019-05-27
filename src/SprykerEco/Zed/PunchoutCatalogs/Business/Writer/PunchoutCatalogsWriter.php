@@ -34,10 +34,11 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
      */
     public function createConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
-        $isSuccessful = $this->punchoutCatalogEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        $punchoutCatalogConnectionTransfer = $this->punchoutCatalogEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
 
-        if ($isSuccessful) {
+        if ($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()) {
             return (new PunchoutCatalogResponseTransfer())
+                ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
                 ->setIsSuccessful(true);
         }
 
@@ -59,6 +60,7 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
 
         if ($isSuccessful) {
             return (new PunchoutCatalogResponseTransfer())
+                ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
                 ->setIsSuccessful(true);
         }
 
