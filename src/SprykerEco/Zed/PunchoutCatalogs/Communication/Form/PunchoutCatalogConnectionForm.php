@@ -35,7 +35,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addNameField($builder)
-            ->addFkBusinessUnitField($builder, $options)
+            ->addBusinessUnitField($builder, $options)
             ->addAddMappingField($builder);
     }
 
@@ -61,7 +61,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFkBusinessUnitField(FormBuilderInterface $builder, array $options)
+    protected function addBusinessUnitField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT,
@@ -69,6 +69,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             [
                 'choices' => $options[static::OPTION_BUSINESS_UNIT_CHOICES],
                 'placeholder' => 'Choose business unit',
+                'label' => 'Business unit',
                 'constraints' => [
                     new NotBlank(),
                 ],
