@@ -1,11 +1,14 @@
 {
   "name": "spryker-eco/punchout-catalogs",
+  "type": "library",
   "description": "PunchoutCatalogs module",
-  "license": "MIT",
+  "license": "proprietary",
   "require": {
     "php": ">=7.1",
+    "punchout-catalogs/punchout-catalog-spryker": "dev-master",
+    "spryker/company-business-unit": "^2.0.0",
     "spryker/kernel": "^3.0.0",
-    "punchout-catalogs/punchout-catalog-spryker": "dev-master"
+    "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
