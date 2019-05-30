@@ -34,6 +34,11 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
 
     /**
+     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::editAction()
+     */
+    protected const URL_EDIT_PUNCHOUT_CATALOG_CONNECTION = '/punchout-catalogs/index/edit';
+
+    /**
      * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
      */
     protected $connectionPropelQuery;
@@ -190,7 +195,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate('/punchout-catalogs/index/edit', [
+            Url::generate(static::URL_EDIT_PUNCHOUT_CATALOG_CONNECTION, [
                 static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
             ]),
             'Edit'
