@@ -27,8 +27,8 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const COL_COMPANY = 'company';
     protected const COL_TYPE = 'type';
     protected const COL_FORMAT = 'format';
-    protected const COL_CREATED_AT = 'createdAt';
-    protected const COL_STATUS = 'status';
+    protected const COL_CREATED_AT = 'created_at';
+    protected const COL_STATUS = 'is_active';
     protected const COL_ACTIONS = 'actions';
 
     protected const URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
@@ -135,13 +135,14 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         /**
          * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
          */
-        $query = $connectionPropelQuery->joinWithCompanyBusinessUnit()
-            ->useCompanyBusinessUnitQuery()
-            ->joinCompany()
-                ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
-            ->endUse();
+         $connectionPropelQuery
+            ->joinWithCompanyBusinessUnit()
+                ->useCompanyBusinessUnitQuery()
+                ->joinCompany()
+                    ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
+                ->endUse();
 
-        return $query;
+        return $connectionPropelQuery;
     }
 
     /**

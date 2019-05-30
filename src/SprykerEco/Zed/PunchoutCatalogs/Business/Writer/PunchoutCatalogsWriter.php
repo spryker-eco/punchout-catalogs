@@ -68,7 +68,7 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
         }
 
         return (new PunchoutCatalogResponseTransfer())
-            ->addMessage((new MessageTransfer())->setValue('Error during connection update'))
+            ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE))
             ->setIsSuccessful(false);
     }
 }

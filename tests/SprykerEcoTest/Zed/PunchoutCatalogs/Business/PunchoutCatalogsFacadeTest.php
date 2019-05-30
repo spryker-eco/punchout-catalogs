@@ -8,9 +8,6 @@
 namespace SprykerTest\Zed\PunchoutCatalogs\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\CompanyTransfer;
-use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
 use SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface;
@@ -77,7 +74,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     public function testCreateConnectionCreatesConnectionWhenAllParametersAreSet(): void
     {
         // Arrange
-        $companyBusinessUnitEntity = $this->createCompanyBusinessUnit();
+        $companyBusinessUnitEntity = $this->tester->createCompanyBusinessUnit();
         $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
             ->setFkCompanyBusinessUnit($companyBusinessUnitEntity->getIdCompanyBusinessUnit())
             ->setName(static::CONNECTION_NAME)
@@ -140,9 +137,9 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return int
      */
-    protected function createPunchoutCatalogsConnection(): int
+    public function createPunchoutCatalogsConnection(): int
     {
-        $companyTransferBusinessUnit = $this->createCompanyBusinessUnit();
+        $companyTransferBusinessUnit = $this->tester->createCompanyBusinessUnit();
 
         $punchoutCatalogConnectionEntity = (new PgwPunchoutCatalogConnection())
             ->setName(static::CONNECTION_NAME)
@@ -157,40 +154,15 @@ class PunchoutCatalogsFacadeTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CompanyTransfer
-     */
-    public function createCompany(): CompanyTransfer
-    {
-        return $this->tester->haveCompany(
-            [
-                CompanyTransfer::NAME => 'Test company',
-                CompanyTransfer::STATUS => 'approved',
-                CompanyTransfer::IS_ACTIVE => true,
-                CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
-            ]
-        );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
-     */
-    public function createCompanyBusinessUnit(): CompanyBusinessUnitTransfer
-    {
-        return $this->tester->haveCompanyBusinessUnit(
-            [
-                CompanyBusinessUnitTransfer::NAME => 'test business unit',
-                CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
-                CompanyBusinessUnitTransfer::PHONE => '1234567890',
-                CompanyBusinessUnitTransfer::FK_COMPANY => $this->createCompany()->getIdCompany(),
-            ]
-        );
-    }
-
-    /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface
      */
     protected function getFacade(): PunchoutCatalogsFacadeInterface
     {
-        return $this->tester->getFacade();
+        /**
+         * @var $facade PunchoutCatalogsFacadeInterface
+         */
+        $facade = $this->tester->getFacade();
+
+        return $facade;
     }
 }

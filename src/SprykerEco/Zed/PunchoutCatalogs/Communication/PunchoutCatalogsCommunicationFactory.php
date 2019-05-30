@@ -49,7 +49,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()
             ->create(
                 PunchoutCatalogConnectionForm::class,
-                $punchoutCatalogConnectionTransfer ?: $idPunchoutCatalogConnectionFormDataProvider->getInitialData(),
+                $idPunchoutCatalogConnectionFormDataProvider->getData($punchoutCatalogConnectionTransfer),
                 $idPunchoutCatalogConnectionFormDataProvider->getOptions()
             );
     }
@@ -83,7 +83,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface
      */
-    protected function getCompanyBusinessUnitFacade(): PunchoutCatalogsToCompanyBusinessUnitFacadeInterface
+    public function getCompanyBusinessUnitFacade(): PunchoutCatalogsToCompanyBusinessUnitFacadeInterface
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
     }

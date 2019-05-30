@@ -8,6 +8,9 @@
 namespace SprykerEcoTest\Zed\PunchoutCatalogs;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 
 /**
  * Inherited Methods
@@ -31,4 +34,34 @@ class PunchoutCatalogsBusinessTester extends Actor
    /**
     * Define custom actions here
     */
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyTransfer
+     */
+    public function createCompany(): CompanyTransfer
+    {
+        return $this->haveCompany(
+            [
+                CompanyTransfer::NAME => 'Test company',
+                CompanyTransfer::STATUS => 'approved',
+                CompanyTransfer::IS_ACTIVE => true,
+                CompanyTransfer::INITIAL_USER_TRANSFER => new CompanyUserTransfer(),
+            ]
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function createCompanyBusinessUnit(): CompanyBusinessUnitTransfer
+    {
+        return $this->haveCompanyBusinessUnit(
+            [
+                CompanyBusinessUnitTransfer::NAME => 'test business unit',
+                CompanyBusinessUnitTransfer::EMAIL => 'test@spryker.com',
+                CompanyBusinessUnitTransfer::PHONE => '1234567890',
+                CompanyBusinessUnitTransfer::FK_COMPANY => $this->createCompany()->getIdCompany(),
+            ]
+        );
+    }
 }

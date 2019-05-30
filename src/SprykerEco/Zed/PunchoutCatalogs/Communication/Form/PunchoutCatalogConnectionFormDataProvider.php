@@ -33,16 +33,21 @@ class PunchoutCatalogConnectionFormDataProvider
     public function getOptions(): array
     {
         return [
-            'data_class' => PunchoutCatalogConnectionTransfer::class,
             PunchoutCatalogConnectionForm::OPTION_BUSINESS_UNIT_CHOICES => $this->prepareCompanyBusinessUnitChoices(),
         ];
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null $punchoutCatalogConnectionTransfer
+     *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
      */
-    public function getInitialData(): PunchoutCatalogConnectionTransfer
+    public function getData(?PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer = null): PunchoutCatalogConnectionTransfer
     {
+        if ($punchoutCatalogConnectionTransfer) {
+            return $punchoutCatalogConnectionTransfer;
+        }
+
         return (new PunchoutCatalogConnectionTransfer())
             ->setIsActive(true)
             ->setType('NOT_IMPLEMENTED')
@@ -51,7 +56,7 @@ class PunchoutCatalogConnectionFormDataProvider
     }
 
     /**
-     * @return array [idBusinessUnit => label]
+     * @return string[] [idBusinessUnit => label]
      */
     protected function prepareCompanyBusinessUnitChoices(): array
     {
