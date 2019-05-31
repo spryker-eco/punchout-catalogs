@@ -12,6 +12,8 @@ use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReader;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriterInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface;
+use SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsDependencyProvider;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface getRepository()
@@ -26,7 +28,8 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
     public function createPunchoutCatalogsReader(): PunchoutCatalogsReaderInterface
     {
         return new PunchoutCatalogsReader(
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getVaultFacade()
         );
     }
 
@@ -36,7 +39,16 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
     public function createPunchoutCatalogsWriter(): PunchoutCatalogsWriterInterface
     {
         return new PunchoutCatalogsWriter(
-            $this->getEntityManager()
+            $this->getEntityManager(),
+            $this->getVaultFacade()
         );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface
+     */
+    public function getVaultFacade(): PunchoutCatalogsToVaultFacadeInterface
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::FACADE_VAULT);
     }
 }

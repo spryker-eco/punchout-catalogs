@@ -62,6 +62,8 @@ class PunchoutCatalogsEntityManager extends AbstractEntityManager implements Pun
                 $punchoutCatalogConnectionEntity
             );
 
-        return (bool)$punchoutCatalogConnectionEntity->save();
+        $punchoutCatalogConnectionEntity->save();
+
+        return true;
     }
 }

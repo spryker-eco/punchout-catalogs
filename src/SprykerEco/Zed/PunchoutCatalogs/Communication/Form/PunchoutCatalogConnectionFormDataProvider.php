@@ -20,11 +20,18 @@ class PunchoutCatalogConnectionFormDataProvider
     protected $companyBusinessUnitFacade;
 
     /**
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
-    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade)
+    protected $connectionFormatPlugins;
+
+    /**
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $connectionFormatPlugins
+     */
+    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade, array $connectionFormatPlugins)
     {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
+        $this->connectionFormatPlugins = $connectionFormatPlugins;
     }
 
     /**
@@ -34,6 +41,7 @@ class PunchoutCatalogConnectionFormDataProvider
     {
         return [
             PunchoutCatalogConnectionForm::OPTION_BUSINESS_UNIT_CHOICES => $this->prepareCompanyBusinessUnitChoices(),
+            PunchoutCatalogConnectionForm::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES => $this->prepareConnectionFormatSubForms(),
         ];
     }
 
@@ -53,13 +61,11 @@ class PunchoutCatalogConnectionFormDataProvider
          */
         return (new PunchoutCatalogConnectionTransfer())
             ->setIsActive(true)
-            ->setType('NOT_IMPLEMENTED')
-            ->setFormat('NOT_IMPLEMENTED')
-            ->setUsername('NOT_IMPLEMENTED');
+            ->setType('NOT_IMPLEMENTED');
     }
 
     /**
-     * @return string[] [idBusinessUnit => label]
+     * @return array [label => idBusinessUnit]
      */
     protected function prepareCompanyBusinessUnitChoices(): array
     {
@@ -75,6 +81,20 @@ class PunchoutCatalogConnectionFormDataProvider
         }
 
         return $companyBusinessUnitChoices;
+    }
+
+    /**
+     * @return array [connectionFormat => FormTypeInterface]
+     */
+    protected function prepareConnectionFormatSubForms(): array
+    {
+        $connectionFormatSubForms = [];
+
+        foreach ($this->connectionFormatPlugins as $connectionFormatPlugin) {
+            $connectionFormatSubForms[$connectionFormatPlugin->getConnectionFormat()] = $connectionFormatPlugin->getType();
+        }
+
+        return $connectionFormatSubForms;
     }
 
     /**

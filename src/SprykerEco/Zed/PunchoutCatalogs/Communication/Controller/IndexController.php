@@ -8,11 +8,9 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Controller;
 
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
-use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

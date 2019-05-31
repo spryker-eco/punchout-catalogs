@@ -108,7 +108,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection[] $punchoutCatalogConnections */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection[] $punchoutCatalogConnectionCollection */
         $punchoutCatalogConnectionCollection = $this->runQuery(
             $this->prepareQuery($this->connectionPropelQuery),
             $config,

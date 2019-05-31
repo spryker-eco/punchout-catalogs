@@ -8,21 +8,31 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Reader;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
 
 class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
 {
+    protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
+
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
      */
     protected $punchoutCatalogsRepository;
 
     /**
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface
      */
-    public function __construct(PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository)
+    protected $vaultFacade;
+
+    /**
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface $vaultFacade
+     */
+    public function __construct(PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository, PunchoutCatalogsToVaultFacadeInterface $vaultFacade)
     {
         $this->punchoutCatalogsRepository = $punchoutCatalogsRepository;
+        $this->vaultFacade = $vaultFacade;
     }
 
     /**
@@ -32,6 +42,18 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
      */
     public function findConnectionById(int $connectionId): ?PunchoutCatalogConnectionTransfer
     {
-        return $this->punchoutCatalogsRepository->findConnectionById($connectionId);
+        $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsRepository->findConnectionById($connectionId);
+
+        if (!$punchoutCatalogConnectionTransfer) {
+            return $punchoutCatalogConnectionTransfer;
+        }
+
+        $password = $this->vaultFacade->retrieve(
+            static::VAULT_DATA_TYPE_PASSWORD,
+            (string)$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()
+        );
+
+        return $punchoutCatalogConnectionTransfer
+            ->setPassword($password);
     }
 }

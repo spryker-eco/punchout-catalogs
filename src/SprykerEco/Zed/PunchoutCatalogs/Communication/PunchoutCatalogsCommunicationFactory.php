@@ -60,7 +60,8 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     public function createPunchoutCatalogConnectionFormDataProvider(): PunchoutCatalogConnectionFormDataProvider
     {
         return new PunchoutCatalogConnectionFormDataProvider(
-            $this->getCompanyBusinessUnitFacade()
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getConnectionFormatPlugins()
         );
     }
 
@@ -86,5 +87,13 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyBusinessUnitFacade(): PunchoutCatalogsToCompanyBusinessUnitFacadeInterface
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::FACADE_COMPANY_BUSINESS_UNIT);
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
+     */
+    protected function getConnectionFormatPlugins(): array
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_FORMAT);
     }
 }

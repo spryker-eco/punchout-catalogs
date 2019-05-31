@@ -8,7 +8,8 @@
     "punchout-catalogs/punchout-catalog-spryker": "dev-master",
     "spryker/company-business-unit": "^2.0.0",
     "spryker/kernel": "^3.0.0",
-    "spryker/util-text": "^1.1.0"
+    "spryker/util-text": "^1.1.0",
+    "spryker/vault": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

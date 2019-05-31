@@ -11,6 +11,7 @@ use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeBridge;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeBridge;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceBridge;
 
 /**
@@ -23,6 +24,9 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
+    public const FACADE_VAULT = 'FACADE_VAULT';
+
+    public const PLUGINS_CONNECTION_FORMAT = 'PLUGINS_CONNECTION_FORMAT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -35,6 +39,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
+        $container = $this->addConnectionFormatPlugins($container);
 
         return $container;
     }
@@ -48,6 +53,19 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        parent::provideBusinessLayerDependencies($container);
+        $container = $this->addVaultFacade($container);
 
         return $container;
     }
@@ -96,5 +114,43 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addVaultFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_VAULT, function (Container $container) {
+            return new PunchoutCatalogsToVaultFacadeBridge(
+                $container->getLocator()->vault()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConnectionFormatPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONNECTION_FORMAT, function (Container $container) {
+            return $this->getConnectionFormatPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
+     */
+    protected function getConnectionFormatPlugins(): array
+    {
+        return [];
     }
 }

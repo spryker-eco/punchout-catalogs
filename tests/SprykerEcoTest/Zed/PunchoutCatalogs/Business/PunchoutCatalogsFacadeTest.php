@@ -28,6 +28,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     protected const CONNECTION_USERNAME = 'Test username';
     protected const CONNECTION_TYPE = 'Test type';
     protected const CONNECTION_FORMAT = 'Test format';
+    protected const CONNECTION_PASSWORD = 'Test password';
 
     /**
      * @var \SprykerEcoTest\Zed\PunchoutCatalogs\PunchoutCatalogsBusinessTester
@@ -78,6 +79,7 @@ class PunchoutCatalogsFacadeTest extends Unit
             ->setFkCompanyBusinessUnit($companyBusinessUnitEntity->getIdCompanyBusinessUnit())
             ->setName(static::CONNECTION_NAME)
             ->setUsername(static::CONNECTION_USERNAME)
+            ->setPassword(static::CONNECTION_PASSWORD)
             ->setType(static::CONNECTION_TYPE)
             ->setFormat(static::CONNECTION_FORMAT);
 
