@@ -42,7 +42,7 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
 
         if (!$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()) {
             return (new PunchoutCatalogResponseTransfer())
-                ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE))
+                ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_CREATION))
                 ->setIsSuccessful(false);
         }
 
