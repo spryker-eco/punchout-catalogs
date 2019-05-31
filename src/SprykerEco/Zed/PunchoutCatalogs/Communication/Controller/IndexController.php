@@ -25,8 +25,6 @@ class IndexController extends AbstractController
     protected const PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
 
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
-    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_EDIT_PAGE = '/punchout-catalogs/index/edit';
-    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_CREATE_PAGE = '/punchout-catalogs/index/create';
 
     protected const MESSAGE_CONNECTION_UPDATED = 'Connection updated';
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
@@ -100,6 +98,8 @@ class IndexController extends AbstractController
 
         if (!$punchoutCatalogConnectionTransfer) {
             $this->addErrorMessage(static::MESSAGE_CONNECTION_NOT_FOUND);
+
+            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
         }
 
         $punchoutCatalogConnectionEditForm = $this->getFactory()
@@ -108,7 +108,7 @@ class IndexController extends AbstractController
         $punchoutCatalogConnectionEditForm->handleRequest($request);
 
         if ($punchoutCatalogConnectionEditForm->isSubmitted() && $punchoutCatalogConnectionEditForm->isValid()) {
-             return $this->processPunchoutCatalogConnectionEditForm($punchoutCatalogConnectionEditForm);
+            $this->processPunchoutCatalogConnectionEditForm($punchoutCatalogConnectionEditForm);
         }
 
         return [
@@ -119,9 +119,9 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface $punchoutCatalogConnectionEditForm
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return void
      */
-    protected function processPunchoutCatalogConnectionEditForm(FormInterface $punchoutCatalogConnectionEditForm): RedirectResponse
+    protected function processPunchoutCatalogConnectionEditForm(FormInterface $punchoutCatalogConnectionEditForm): void
     {
         $punchoutCatalogResponseTransfer = $this->getFacade()
             ->updateConnection($punchoutCatalogConnectionEditForm->getData());
@@ -131,25 +131,6 @@ class IndexController extends AbstractController
         }
 
         $this->handleResponseErrors($punchoutCatalogResponseTransfer);
-
-        return $this->redirectResponse(
-            $this->generateEditConnectionUrl(
-                $punchoutCatalogConnectionEditForm->getData()
-                    ->getIdPunchoutCatalogConnection()
-            )
-        );
-    }
-
-    /**
-     * @param int $idPunchoutCatalogConnection
-     *
-     * @return string
-     */
-    protected function generateEditConnectionUrl(int $idPunchoutCatalogConnection): string
-    {
-        return Url::generate(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_EDIT_PAGE, [
-            static::PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $idPunchoutCatalogConnection,
-        ])->build();
     }
 
     /**
