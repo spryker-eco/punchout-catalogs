@@ -30,6 +30,11 @@ class PunchoutCatalogsFacadeTest extends Unit
     protected const CONNECTION_PASSWORD = 'Test password';
 
     /**
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter::VAULT_DATA_TYPE_PASSWORD
+     */
+    protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
+
+    /**
      * @var \SprykerEcoTest\Zed\PunchoutCatalogs\PunchoutCatalogsBusinessTester
      */
     protected $tester;
@@ -72,6 +77,65 @@ class PunchoutCatalogsFacadeTest extends Unit
         // Assert
         $this->assertNotNull($punchoutCatalogConnectionTransfer);
         $this->assertEquals($idPunchoutCatalogConnection, $punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindConnectionByIdRetrievesPasswordFormVaultWhenItExists(): void
+    {
+        // Arrange
+        $idPunchoutCatalogConnection = $this->tester->havePunchoutCatalogConnection([
+            PunchoutCatalogConnectionTransfer::NAME => static::CONNECTION_NAME,
+            PunchoutCatalogConnectionTransfer::USERNAME => static::CONNECTION_USERNAME,
+            PunchoutCatalogConnectionTransfer::TYPE => static::CONNECTION_TYPE,
+            PunchoutCatalogConnectionTransfer::FORMAT => static::CONNECTION_FORMAT,
+            PunchoutCatalogConnectionTransfer::PASSWORD => static::CONNECTION_PASSWORD,
+            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $this->tester->createCompanyBusinessUnit()
+                ->getIdCompanyBusinessUnit(),
+        ])->getIdPunchoutCatalogConnection();
+
+        // Act
+        $punchoutCatalogConnectionTransfer = $this->tester->getFacade()
+            ->findConnectionById($idPunchoutCatalogConnection);
+
+        // Assert
+        $this->assertNotNull($punchoutCatalogConnectionTransfer);
+        $this->assertEquals(static::CONNECTION_PASSWORD, $punchoutCatalogConnectionTransfer->getPassword());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateConnectionCreatesStoresPasswordToVault(): void
+    {
+        // Arrange
+        $companyBusinessUnitEntity = $this->tester->createCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
+            ->setFkCompanyBusinessUnit($companyBusinessUnitEntity->getIdCompanyBusinessUnit())
+            ->setName(static::CONNECTION_NAME)
+            ->setUsername(static::CONNECTION_USERNAME)
+            ->setPassword(static::CONNECTION_PASSWORD)
+            ->setType(static::CONNECTION_TYPE)
+            ->setFormat(static::CONNECTION_FORMAT);
+
+        // Act
+        $punchoutCatalogResponseTransfer = $this->tester->getFacade()
+            ->createConnection($punchoutCatalogConnectionTransfer);
+
+        // Assert
+        $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
+
+        $password = $this->tester->getLocator()
+            ->vault()
+            ->facade()
+            ->retrieve(
+                static::VAULT_DATA_TYPE_PASSWORD,
+                $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                     ->getIdPunchoutCatalogConnection()
+            );
+
+        $this->assertEquals(static::CONNECTION_PASSWORD, $password);
     }
 
     /**

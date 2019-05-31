@@ -51,14 +51,10 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
         $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
 
         if (!$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()) {
-            return (new PunchoutCatalogResponseTransfer())
-                ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_CREATION))
-                ->setIsSuccessful(false);
+            return $this->createUnsuccessfulPunchoutCatalogResponseTransfer(static::MESSAGE_ERROR_DURING_CONNECTION_CREATION);
         }
 
-        return (new PunchoutCatalogResponseTransfer())
-            ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
-            ->setIsSuccessful(true);
+        return $this->storePassword($punchoutCatalogConnectionTransfer, static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
     }
 
     /**
@@ -73,19 +69,56 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
         $isSuccessful = $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
 
         if (!$isSuccessful) {
-            return (new PunchoutCatalogResponseTransfer())
-                ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE))
-                ->setIsSuccessful(false);
+            return $this->createUnsuccessfulPunchoutCatalogResponseTransfer(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
         }
 
-        if ($punchoutCatalogConnectionTransfer->getPassword()) {
-            $this->vaultFacade->store(
-                static::VAULT_DATA_TYPE_PASSWORD,
-                (string)$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection(),
-                $punchoutCatalogConnectionTransfer->getPassword()
-            );
+        return $this->storePassword($punchoutCatalogConnectionTransfer, static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
+     */
+    protected function storePassword(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer, string $errorMessage): PunchoutCatalogResponseTransfer
+    {
+        if (!$punchoutCatalogConnectionTransfer->getPassword()) {
+            return $this->createSuccessfulResponseTransfer($punchoutCatalogConnectionTransfer);
         }
 
+        $isSuccessful = $this->vaultFacade->store(
+            static::VAULT_DATA_TYPE_PASSWORD,
+            (string)$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection(),
+            $punchoutCatalogConnectionTransfer->getPassword()
+        );
+
+        if ($isSuccessful) {
+            return $this->createSuccessfulResponseTransfer($punchoutCatalogConnectionTransfer);
+        }
+
+        return $this->createUnsuccessfulPunchoutCatalogResponseTransfer($errorMessage);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
+     */
+    protected function createUnsuccessfulPunchoutCatalogResponseTransfer(string $message): PunchoutCatalogResponseTransfer
+    {
+        return (new PunchoutCatalogResponseTransfer())
+            ->addMessage((new MessageTransfer())->setValue($message))
+            ->setIsSuccessful(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
+     */
+    protected function createSuccessfulResponseTransfer(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
+    {
         return (new PunchoutCatalogResponseTransfer())
             ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
             ->setIsSuccessful(true);
