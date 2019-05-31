@@ -37,10 +37,12 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
      * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::editAction()
      */
     protected const URL_EDIT_PUNCHOUT_CATALOG_CONNECTION = '/punchout-catalogs/index/edit';
+
     /**
      * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::activateAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOG_CONNECTION_ACTIVATE = '/punchout-catalogs/connection/activate';
+
     /**
      * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::deactivateAction()
      */
