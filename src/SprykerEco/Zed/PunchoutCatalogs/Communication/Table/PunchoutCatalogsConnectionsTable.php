@@ -132,9 +132,6 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
      */
     protected function prepareQuery(PgwPunchoutCatalogConnectionQuery $connectionPropelQuery): PgwPunchoutCatalogConnectionQuery
     {
-        /**
-         * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
-         */
          $connectionPropelQuery
             ->joinWithCompanyBusinessUnit()
                 ->useCompanyBusinessUnitQuery()

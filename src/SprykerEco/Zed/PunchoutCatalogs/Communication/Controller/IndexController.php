@@ -77,8 +77,6 @@ class IndexController extends AbstractController
             }
 
             $this->handleResponseErrors($punchoutCatalogResponseTransfer);
-
-            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_CREATE_PAGE);
         }
 
         return [
@@ -102,8 +100,6 @@ class IndexController extends AbstractController
 
         if (!$punchoutCatalogConnectionTransfer) {
             $this->addErrorMessage(static::MESSAGE_CONNECTION_NOT_FOUND);
-
-            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
         }
 
         $punchoutCatalogConnectionEditForm = $this->getFactory()

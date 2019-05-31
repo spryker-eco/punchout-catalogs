@@ -15,6 +15,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInt
 class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
 {
     protected const MESSAGE_ERROR_DURING_CONNECTION_UPDATE = 'Error during connection update';
+    protected const MESSAGE_ERROR_DURING_CONNECTION_CREATION = 'Error during connection creation';
 
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface

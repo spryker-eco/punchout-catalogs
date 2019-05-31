@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

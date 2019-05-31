@@ -10,7 +10,6 @@ namespace SprykerTest\Zed\PunchoutCatalogs\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
-use SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -44,7 +43,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         $idPunchoutCatalogConnection = static::NOT_EXISTING_CONNECTION_ID;
 
         // Act
-        $punchoutConnectionTransfer = $this->getFacade()
+        $punchoutConnectionTransfer = $this->tester->getFacade()
             ->findConnectionById($idPunchoutCatalogConnection);
 
         // Assert
@@ -60,7 +59,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         $idPunchoutCatalogConnection = $this->createPunchoutCatalogsConnection();
 
         // Act
-        $punchoutCatalogConnectionTransfer = $this->getFacade()
+        $punchoutCatalogConnectionTransfer = $this->tester->getFacade()
             ->findConnectionById($idPunchoutCatalogConnection);
 
         // Assert
@@ -83,7 +82,8 @@ class PunchoutCatalogsFacadeTest extends Unit
             ->setFormat(static::CONNECTION_FORMAT);
 
         // Act
-        $punchoutCatalogResponseTransfer = $this->getFacade()->createConnection($punchoutCatalogConnectionTransfer);
+        $punchoutCatalogResponseTransfer = $this->tester->getFacade()
+            ->createConnection($punchoutCatalogConnectionTransfer);
 
         // Assert
         $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
@@ -97,7 +97,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     public function testUpdateConnectionUpdatesConnectionWhenItExists(): void
     {
         // Arrange
-        $punchoutCatalogConnectionTransfer = $this->getFacade()
+        $punchoutCatalogConnectionTransfer = $this->tester->getFacade()
             ->findConnectionById(
                 $this->createPunchoutCatalogsConnection()
             );
@@ -105,13 +105,13 @@ class PunchoutCatalogsFacadeTest extends Unit
         $punchoutCatalogConnectionTransfer->setUsername('Updated username');
 
         // Act
-        $punchoutCatalogResponseTransfer = $this->getFacade()
+        $punchoutCatalogResponseTransfer = $this->tester->getFacade()
             ->updateConnection($punchoutCatalogConnectionTransfer);
 
         // Assert
         $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
 
-        $updatedPunchoutCatalogConnectionTransfer = $this->getFacade()
+        $updatedPunchoutCatalogConnectionTransfer = $this->tester->getFacade()
             ->findConnectionById($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection());
 
         $this->assertEquals($punchoutCatalogConnectionTransfer->getUsername(), $updatedPunchoutCatalogConnectionTransfer->getUsername());
@@ -127,7 +127,7 @@ class PunchoutCatalogsFacadeTest extends Unit
         $punchoutCatalogConnectionTransfer->setIdPunchoutCatalogConnection(static::NOT_EXISTING_CONNECTION_ID);
 
         // Act
-        $punchoutCatalogResponseTransfer = $this->getFacade()
+        $punchoutCatalogResponseTransfer = $this->tester->getFacade()
             ->updateConnection($punchoutCatalogConnectionTransfer);
 
         // Assert
@@ -151,18 +151,5 @@ class PunchoutCatalogsFacadeTest extends Unit
         $punchoutCatalogConnectionEntity->save();
 
         return $punchoutCatalogConnectionEntity->getIdPunchoutCatalogConnection();
-    }
-
-    /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface
-     */
-    protected function getFacade(): PunchoutCatalogsFacadeInterface
-    {
-        /**
-         * @var $facade PunchoutCatalogsFacadeInterface
-         */
-        $facade = $this->tester->getFacade();
-
-        return $facade;
     }
 }

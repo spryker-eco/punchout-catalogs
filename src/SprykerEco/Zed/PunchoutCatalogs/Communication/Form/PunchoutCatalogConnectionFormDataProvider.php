@@ -48,6 +48,9 @@ class PunchoutCatalogConnectionFormDataProvider
             return $punchoutCatalogConnectionTransfer;
         }
 
+        /**
+         * @todo Remove those fields when functionality for it's saving will be implemented.
+         */
         return (new PunchoutCatalogConnectionTransfer())
             ->setIsActive(true)
             ->setType('NOT_IMPLEMENTED')
