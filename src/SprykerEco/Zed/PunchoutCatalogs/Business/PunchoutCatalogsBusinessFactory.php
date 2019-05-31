@@ -8,9 +8,10 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReader;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriterInterface;
-use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface getRepository()
@@ -20,6 +21,16 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterf
 class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
+     */
+    public function createPunchoutCatalogsReader(): PunchoutCatalogsReaderInterface
+    {
+        return new PunchoutCatalogsReader(
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriterInterface
      */
     public function createPunchoutCatalogsWriter(): PunchoutCatalogsWriterInterface
@@ -27,13 +38,5 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
         return new PunchoutCatalogsWriter(
             $this->getEntityManager()
         );
-    }
-
-    /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
-     */
-    public function getPunchoutCatalogsRepository(): PunchoutCatalogsRepositoryInterface
-    {
-        return $this->getRepository();
     }
 }
