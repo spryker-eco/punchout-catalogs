@@ -1,0 +1,14 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title 'Create transferred cart connection' | trans %}
+
+{% block action %}
+    {{ backActionButton('/punchout-catalogs', 'List of PunchOut connections' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(punchoutCatalogConnectionForm) }}
+         {{ form_rest(punchoutCatalogConnectionForm) }}
+         <input type="submit" class="btn btn-create safe-submit" value="{{ 'Create' | trans }}" />
+    {{ form_end(punchoutCatalogConnectionForm) }}
+{% endblock %}

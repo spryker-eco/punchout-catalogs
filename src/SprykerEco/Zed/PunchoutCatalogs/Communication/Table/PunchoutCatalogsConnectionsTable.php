@@ -12,6 +12,7 @@ use Orm\Zed\PunchoutCatalog\Persistence\Map\PgwPunchoutCatalogConnectionTableMap
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceInterface;
@@ -26,9 +27,16 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const COL_COMPANY = 'company';
     protected const COL_TYPE = 'type';
     protected const COL_FORMAT = 'format';
-    protected const COL_CREATED_AT = 'createdAt';
-    protected const COL_STATUS = 'status';
+    protected const COL_CREATED_AT = 'created_at';
+    protected const COL_STATUS = 'is_active';
     protected const COL_ACTIONS = 'actions';
+
+    protected const URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
+
+    /**
+     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::editAction()
+     */
+    protected const URL_EDIT_PUNCHOUT_CATALOG_CONNECTION = '/punchout-catalogs/index/edit';
 
     /**
      * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
@@ -65,7 +73,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             static::COL_STATUS => 'Status',
             static::COL_FORMAT => 'Format',
             static::COL_CREATED_AT => 'Created At',
-            static::COL_ACTIONS => 'Actions'
+            static::COL_ACTIONS => 'Actions',
         ]);
 
         $config->setSortable([
@@ -116,18 +124,22 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
 
     /**
      * @module Company
+     * @module CompanyBusinessUnit
      *
-     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery $connectionPropelQuery
      *
      * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
      */
     protected function prepareQuery(PgwPunchoutCatalogConnectionQuery $connectionPropelQuery): PgwPunchoutCatalogConnectionQuery
     {
-        return $connectionPropelQuery->joinWithCompanyBusinessUnit()
-            ->useCompanyBusinessUnitQuery()
-            ->joinCompany()
-                ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
-            ->endUse();
+         $connectionPropelQuery
+            ->joinWithCompanyBusinessUnit()
+                ->useCompanyBusinessUnitQuery()
+                ->joinCompany()
+                    ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
+                ->endUse();
+
+        return $connectionPropelQuery;
     }
 
     /**
@@ -179,6 +191,13 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected function buildLinks(PgwPunchoutCatalogConnection $punchoutCatalogConnection): string
     {
         $buttons = [];
+
+        $buttons[] = $this->generateEditButton(
+            Url::generate(static::URL_EDIT_PUNCHOUT_CATALOG_CONNECTION, [
+                static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
+            ]),
+            'Edit'
+        );
 
         if ($punchoutCatalogConnection->getIsActive()) {
             $buttons[] = $this->generateRemoveButton('NOT_IMPLEMENTED', 'Deactivate');

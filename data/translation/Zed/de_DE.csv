@@ -13,4 +13,17 @@ Active,Aktiv
 Inactive,Inaktiv
 cXML,cXML
 OCI,OCI
+Choose business unit,Wählen Sie einen Geschäftsbereich
+Error during connection update,Fehler beim Verbindungsupdate
+Error during connection creation,Fehler beim Verbindungsaufbau
+Save,Sparen
+Create,Erstellen
+Edit,Bearbeiten
+Create transferred cart connection,Verbindung für übertragenen Warenkorb erstellen
+Edit transferred cart connection,Bearbeiten Sie die übertragene Warenkorbverbindung
+List of PunchOut connections,Liste der PunchOut-Verbindungen
+Connection updated,Verbindung aktualisiert
+Connection added,Verbindung hinzugefügt
+Connection not found,Verbindung nicht gefunden
+Connection added,Verbindung hinzugefügt
 
