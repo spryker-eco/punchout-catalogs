@@ -26,4 +26,5 @@ Connection updated,Verbindung aktualisiert
 Connection added,Verbindung hinzugefügt
 Connection not found,Verbindung nicht gefunden
 Connection added,Verbindung hinzugefügt
-
+"Connection ""%connection_name%"" was activated.","Verbindung ""%connection_name%"" wurde aktiviert."
+"Connection ""%connection_name%"" was deactivated.","Verbindung ""%connection_name%"" wurde deaktiviert."

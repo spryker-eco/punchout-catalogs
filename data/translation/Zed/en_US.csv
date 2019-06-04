@@ -26,3 +26,5 @@ Connection updated,Connection updated
 Connection added,Connection added
 Connection not found,Connection not found
 Connection added,Connection added
+"Connection ""%connection_name%"" was activated.","Connection ""%connection_name%"" was activated."
+"Connection ""%connection_name%"" was deactivated.","Connection ""%connection_name%"" was deactivated."
