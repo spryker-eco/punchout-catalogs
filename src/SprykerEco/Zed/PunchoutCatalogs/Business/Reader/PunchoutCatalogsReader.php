@@ -13,7 +13,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterf
 
 class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
 {
-    protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
+    protected const CATALOG_CONNECTION_PASSWORD_VAULT_DATA_TYPE = 'pwg_punchout_catalog_connection.password';
 
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
@@ -49,11 +49,10 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
         }
 
         $password = $this->vaultFacade->retrieve(
-            static::VAULT_DATA_TYPE_PASSWORD,
+            static::CATALOG_CONNECTION_PASSWORD_VAULT_DATA_TYPE,
             (string)$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()
         );
 
-        return $punchoutCatalogConnectionTransfer
-            ->setPassword($password);
+        return $punchoutCatalogConnectionTransfer->setPassword($password);
     }
 }

@@ -30,11 +30,6 @@ class PunchoutCatalogsFacadeTest extends Unit
     protected const CONNECTION_PASSWORD = 'Test password';
 
     /**
-     * @see \SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter::VAULT_DATA_TYPE_PASSWORD
-     */
-    protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
-
-    /**
      * @var \SprykerEcoTest\Zed\PunchoutCatalogs\PunchoutCatalogsBusinessTester
      */
     protected $tester;
@@ -126,14 +121,10 @@ class PunchoutCatalogsFacadeTest extends Unit
         // Assert
         $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
 
-        $password = $this->tester->getLocator()
-            ->vault()
-            ->facade()
-            ->retrieve(
-                static::VAULT_DATA_TYPE_PASSWORD,
-                $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
-                     ->getIdPunchoutCatalogConnection()
-            );
+        $password = $this->tester->retrieveConnectionPasswordFromVault(
+            $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                ->getIdPunchoutCatalogConnection()
+        );
 
         $this->assertEquals(static::CONNECTION_PASSWORD, $password);
     }

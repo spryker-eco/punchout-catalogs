@@ -145,7 +145,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
              */
             $punchoutCatalogConnectionTransfer = $event->getData();
 
-            $this->mapSelectedSubFormToMainForm(
+            $this->addActiveFormatSubFormToConnectionForm(
                 $event->getForm(),
                 self::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES,
                 $punchoutCatalogConnectionTransfer->getFormat()
@@ -160,7 +160,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
      *
      * @return void
      */
-    protected function mapSelectedSubFormToMainForm(FormInterface $form, string $subFormsOptionName, string $selectedSubFormName): void
+    protected function addActiveFormatSubFormToConnectionForm(FormInterface $form, string $subFormsOptionName, string $selectedSubFormName): void
     {
         $options = $form->getConfig()->getOptions();
         $associatedFormType = $options[$subFormsOptionName][$selectedSubFormName] ?? null;

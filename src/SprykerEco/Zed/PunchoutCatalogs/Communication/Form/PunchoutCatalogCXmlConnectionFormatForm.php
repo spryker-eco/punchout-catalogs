@@ -21,8 +21,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PunchoutCatalogCXmlConnectionFormatForm extends AbstractType
 {
-    protected const FIELD_LABEL_SENDER_ID = 'Sender ID';
-    protected const FIELD_LABEL_SHARED_SECRET = 'Shared Secret';
+    protected const FIELD_LABEL_USERNAME = 'Sender ID';
+    protected const FIELD_LABEL_PASSWORD = 'Shared Secret';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -44,7 +44,7 @@ class PunchoutCatalogCXmlConnectionFormatForm extends AbstractType
     protected function addUsernameField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::USERNAME, TextType::class, [
-            'label' => static::FIELD_LABEL_SENDER_ID,
+            'label' => static::FIELD_LABEL_USERNAME,
             'constraints' => [
                 new NotBlank(),
             ],
@@ -61,7 +61,7 @@ class PunchoutCatalogCXmlConnectionFormatForm extends AbstractType
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::PASSWORD, TextType::class, [
-            'label' => static::FIELD_LABEL_SHARED_SECRET,
+            'label' => static::FIELD_LABEL_PASSWORD,
             'constraints' => [
                 new NotBlank(),
             ],
