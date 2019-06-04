@@ -40,7 +40,8 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
     {
         return new PunchoutCatalogsWriter(
             $this->getEntityManager(),
-            $this->getVaultFacade()
+            $this->getVaultFacade(),
+            $this->getRepository()
         );
     }
 

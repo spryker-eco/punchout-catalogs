@@ -65,7 +65,7 @@ class PunchoutCatalogConnectionFormDataProvider
     }
 
     /**
-     * @return array [label => idBusinessUnit]
+     * @return int[] [label => idBusinessUnit]
      */
     protected function prepareCompanyBusinessUnitChoices(): array
     {
@@ -84,7 +84,7 @@ class PunchoutCatalogConnectionFormDataProvider
     }
 
     /**
-     * @return array [connectionFormat => FormTypeInterface]
+     * @return string[] [connectionFormat => FormTypePath]
      */
     protected function prepareConnectionFormatSubForms(): array
     {

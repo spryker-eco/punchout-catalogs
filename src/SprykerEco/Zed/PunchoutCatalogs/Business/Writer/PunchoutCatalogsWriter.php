@@ -10,11 +10,17 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Business\Writer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Exception\InvalidPunchoutCatalogConnectionCreationException;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Exception\InvalidPunchoutCatalogConnectionUpdateException;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
 
 class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
 {
+    use TransactionTrait;
+
     protected const MESSAGE_ERROR_DURING_CONNECTION_UPDATE = 'Error during connection update';
     protected const MESSAGE_ERROR_DURING_CONNECTION_CREATION = 'Error during connection creation';
     protected const PASSWORD_VAULT_DATA_TYPE = 'pwg_punchout_catalog_connection.password';
@@ -25,6 +31,11 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
     protected $punchoutCatalogsEntityManager;
 
     /**
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
+     */
+    protected $punchoutCatalogsRepository;
+
+    /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface
      */
     protected $vaultFacade;
@@ -32,13 +43,16 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
     /**
      * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManagerInterface $punchoutCatalogsEntityManager
      * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface $vaultFacade
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
      */
     public function __construct(
         PunchoutCatalogsEntityManagerInterface $punchoutCatalogsEntityManager,
-        PunchoutCatalogsToVaultFacadeInterface $vaultFacade
+        PunchoutCatalogsToVaultFacadeInterface $vaultFacade,
+        PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
     ) {
         $this->punchoutCatalogsEntityManager = $punchoutCatalogsEntityManager;
         $this->vaultFacade = $vaultFacade;
+        $this->punchoutCatalogsRepository = $punchoutCatalogsRepository;
     }
 
     /**
@@ -48,13 +62,41 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
      */
     public function createConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
+        try {
+            return $this->getTransactionHandler()->handleTransaction(function () use ($punchoutCatalogConnectionTransfer) {
+                return $this->executeCreateConnectionTransaction($punchoutCatalogConnectionTransfer);
+            });
+        } catch (InvalidPunchoutCatalogConnectionCreationException $exception) {
+            return (new PunchoutCatalogResponseTransfer())
+                ->addMessage((new MessageTransfer())->setValue($exception->getMessage()))
+                ->setIsSuccessful(false);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     *
+     * @throws \SprykerEco\Zed\PunchoutCatalogs\Business\Exception\InvalidPunchoutCatalogConnectionCreationException
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
+     */
+    protected function executeCreateConnectionTransaction(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
+    {
         $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
 
         if (!$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()) {
-            return $this->createUnsuccessfulPunchoutCatalogResponseTransfer(static::MESSAGE_ERROR_DURING_CONNECTION_CREATION);
+            throw new InvalidPunchoutCatalogConnectionCreationException(static::MESSAGE_ERROR_DURING_CONNECTION_CREATION);
         }
 
-        return $this->storePassword($punchoutCatalogConnectionTransfer, static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
+        $isPasswordStored = $this->storePassword($punchoutCatalogConnectionTransfer);
+
+        if (!$isPasswordStored) {
+            throw new InvalidPunchoutCatalogConnectionCreationException(static::MESSAGE_ERROR_DURING_CONNECTION_CREATION);
+        }
+
+        return (new PunchoutCatalogResponseTransfer())
+            ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**
@@ -64,63 +106,59 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
      */
     public function updateConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
-        $punchoutCatalogConnectionTransfer->requireIdPunchoutCatalogConnection();
-
-        $isSuccessful = $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
-
-        if (!$isSuccessful) {
-            return $this->createUnsuccessfulPunchoutCatalogResponseTransfer(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
+        try {
+            return $this->getTransactionHandler()->handleTransaction(function () use ($punchoutCatalogConnectionTransfer) {
+                return $this->executeUpdateConnectionTransaction($punchoutCatalogConnectionTransfer);
+            });
+        } catch (InvalidPunchoutCatalogConnectionUpdateException $exception) {
+            return (new PunchoutCatalogResponseTransfer())
+                ->addMessage((new MessageTransfer())->setValue($exception->getMessage()))
+                ->setIsSuccessful(false);
         }
-
-        return $this->storePassword($punchoutCatalogConnectionTransfer, static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
-     * @param string $errorMessage
+     *
+     * @throws \SprykerEco\Zed\PunchoutCatalogs\Business\Exception\InvalidPunchoutCatalogConnectionUpdateException
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
      */
-    protected function storePassword(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer, string $errorMessage): PunchoutCatalogResponseTransfer
+    protected function executeUpdateConnectionTransaction(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
-        if (!$punchoutCatalogConnectionTransfer->getPassword()) {
-            return $this->createSuccessfulResponseTransfer($punchoutCatalogConnectionTransfer);
+        $punchoutCatalogConnectionTransfer->requireIdPunchoutCatalogConnection();
+
+        if (!$this->punchoutCatalogsRepository->findConnectionById($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection())) {
+            throw new InvalidPunchoutCatalogConnectionUpdateException(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
         }
 
-        $isSuccessful = $this->vaultFacade->store(
+        $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        $isPasswordStored = $this->storePassword($punchoutCatalogConnectionTransfer);
+
+        if (!$isPasswordStored) {
+            throw new InvalidPunchoutCatalogConnectionUpdateException(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE);
+        }
+
+        return (new PunchoutCatalogResponseTransfer())
+            ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
+            ->setIsSuccessful(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     *
+     * @return bool
+     */
+    protected function storePassword(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): bool
+    {
+        if (!$punchoutCatalogConnectionTransfer->getPassword()) {
+            return true;
+        }
+
+        return $this->vaultFacade->store(
             static::PASSWORD_VAULT_DATA_TYPE,
             (string)$punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection(),
             $punchoutCatalogConnectionTransfer->getPassword()
         );
-
-        if ($isSuccessful) {
-            return $this->createSuccessfulResponseTransfer($punchoutCatalogConnectionTransfer);
-        }
-
-        return $this->createUnsuccessfulPunchoutCatalogResponseTransfer($errorMessage);
-    }
-
-    /**
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
-     */
-    protected function createUnsuccessfulPunchoutCatalogResponseTransfer(string $message): PunchoutCatalogResponseTransfer
-    {
-        return (new PunchoutCatalogResponseTransfer())
-            ->addMessage((new MessageTransfer())->setValue($message))
-            ->setIsSuccessful(false);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
-     */
-    protected function createSuccessfulResponseTransfer(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
-    {
-        return (new PunchoutCatalogResponseTransfer())
-            ->setPunchoutCatalogConnection($punchoutCatalogConnectionTransfer)
-            ->setIsSuccessful(true);
     }
 }
