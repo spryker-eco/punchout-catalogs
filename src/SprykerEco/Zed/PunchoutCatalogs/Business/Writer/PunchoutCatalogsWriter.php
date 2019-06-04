@@ -97,8 +97,18 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
             return $this->createSuccessfulResponseTransfer($punchoutCatalogConnectionTransfer);
         }
 
+        return $this->createUnsuccessfulPunchoutCatalogResponseTransfer($errorMessage);
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
+     */
+    protected function createUnsuccessfulPunchoutCatalogResponseTransfer(string $message): PunchoutCatalogResponseTransfer
+    {
         return (new PunchoutCatalogResponseTransfer())
-            ->addMessage((new MessageTransfer())->setValue($errorMessage))
+            ->addMessage((new MessageTransfer())->setValue($message))
             ->setIsSuccessful(false);
     }
 
