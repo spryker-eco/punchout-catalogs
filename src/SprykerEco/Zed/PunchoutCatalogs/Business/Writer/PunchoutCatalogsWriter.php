@@ -20,7 +20,6 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
     use TransactionTrait;
 
     protected const MESSAGE_ERROR_DURING_CONNECTION_UPDATE = 'Error during connection update';
-    protected const MESSAGE_ERROR_DURING_CONNECTION_CREATION = 'Error during connection creation';
     protected const PASSWORD_VAULT_DATA_TYPE = 'pwg_punchout_catalog_connection.password';
 
     /**
