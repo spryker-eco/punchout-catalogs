@@ -1,0 +1,72 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'View Transaction:' | trans ~ ' ' ~ transaction.idPunchoutCatalogTransaction %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Transaction Details' } %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-1">
+                    <b>{{ 'Transaction ID' | trans }}</b>
+                </div>
+                <div class="col-xs-11">{{ transaction.idPunchoutCatalogTransaction }}</div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Connection Name' | trans }}</b></div>
+                <div class="col-xs-11">{{ transaction.connection.name }}</div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Status' | trans }}</b></div>
+                <div class="col-xs-11">
+                    {% if transaction.status %}
+                        <span class="label label-info">{{ 'Successful' | trans }}</span>
+                    {% else %}
+                        <span class="label label-danger">{{ 'Unsuccessful' | trans }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Message Type' | trans }}</b></div>
+                <div class="col-xs-11">{{ transaction.type }}</div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Created at' | trans }}</b></div>
+                <div class="col-xs-11">{{ transaction.createdAt | date }}</div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Session ID' | trans }}</b></div>
+                <div class="col-xs-11">{{ transaction.connectionSessionId }}</div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Message' | trans }}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <textarea class="form-control">
+                    {{ transaction.message | raw }}
+                    </textarea>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-1"><b>{{ 'Raw Data' | trans }}</b></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-4">
+                    <textarea class="form-control">
+                    {{ transaction.rawData | raw }}
+                    </textarea>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 
 interface PunchoutCatalogsRepositoryInterface
 {
@@ -17,4 +18,11 @@ interface PunchoutCatalogsRepositoryInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
     public function findConnectionById(int $connectionId): ?PunchoutCatalogConnectionTransfer;
+
+    /**
+     * @param int $idPunchoutCatalogTransaction
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
+     */
+    public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer;
 }

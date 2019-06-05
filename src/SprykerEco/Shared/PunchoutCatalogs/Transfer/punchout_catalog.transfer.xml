@@ -11,6 +11,18 @@
         <property name="username" type="string" />
     </transfer>
 
+    <transfer name="PunchoutCatalogTransaction">
+        <property name="idPunchoutCatalogTransaction" type="int" />
+        <property name="connection" type="PunchoutCatalogConnection" />
+        <property name="message" type="string" />
+        <property name="status" type="bool" />
+        <property name="type" type="string" />
+        <property name="connectionSessionId" type="string" />
+        <property name="rawData" type="string" />
+        <property name="errorMessage" type="string" />
+        <property name="createdAt" type="string" />
+    </transfer>
+
     <transfer name="PunchoutCatalogResponse">
         <property name="messages" type="Message[]" singular="message"/>
         <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection"/>

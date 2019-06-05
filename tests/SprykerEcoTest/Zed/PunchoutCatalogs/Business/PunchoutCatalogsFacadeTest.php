@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PunchoutCatalogs\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +28,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     protected const CONNECTION_USERNAME = 'Test username';
     protected const CONNECTION_TYPE = 'Test type';
     protected const CONNECTION_FORMAT = 'Test format';
+    protected const NOT_EXISTING_TRANSACTION_ID = 0;
 
     /**
      * @var \SprykerEcoTest\Zed\PunchoutCatalogs\PunchoutCatalogsBusinessTester
@@ -145,5 +147,50 @@ class PunchoutCatalogsFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($punchoutCatalogResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindTransactionByIdReturnsNullWhenTransactionNotFoundByProvidedId(): void
+    {
+        // Arrange
+        $idPunchoutCatalogTransaction = static::NOT_EXISTING_TRANSACTION_ID;
+
+        // Act
+        $punchoutTransactionTransfer = $this->tester->getFacade()
+            ->findConnectionById($idPunchoutCatalogTransaction);
+
+        // Assert
+        $this->assertNull($punchoutTransactionTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindTransactionByIdRetrievesTransactionWhenItExists(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->createCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer = $this->tester->havePunchoutCatalogConnection([
+            PunchoutCatalogConnectionTransfer::NAME => static::CONNECTION_NAME,
+            PunchoutCatalogConnectionTransfer::USERNAME => static::CONNECTION_USERNAME,
+            PunchoutCatalogConnectionTransfer::TYPE => static::CONNECTION_TYPE,
+            PunchoutCatalogConnectionTransfer::FORMAT => static::CONNECTION_FORMAT,
+            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ]);
+        $idPunchoutCatalogTransaction = $this->tester->havePunchoutCatalogTransaction([
+            PunchoutCatalogTransactionTransfer::CONNECTION => $punchoutCatalogConnectionTransfer,
+            PunchoutCatalogTransactionTransfer::TYPE => static::CONNECTION_NAME,
+            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ])->getIdPunchoutCatalogTransaction();
+
+        // Act
+        $punchoutCatalogTransactionTransfer = $this->tester->getFacade()
+            ->findTransactionById($idPunchoutCatalogTransaction);
+
+        // Assert
+        $this->assertNotNull($punchoutCatalogTransactionTransfer);
+        $this->assertEquals($idPunchoutCatalogTransaction, $punchoutCatalogTransactionTransfer->getIdPunchoutCatalogTransaction());
     }
 }
