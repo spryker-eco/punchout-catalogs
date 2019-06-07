@@ -28,3 +28,19 @@ Connection not found,Verbindung nicht gefunden
 Connection added,Verbindung hinzugefügt
 "Connection ""%connection_name%"" was activated.","Verbindung ""%connection_name%"" wurde aktiviert."
 "Connection ""%connection_name%"" was deactivated.","Verbindung ""%connection_name%"" wurde deaktiviert."
+Transaction not found,Transaktion nicht gefunden
+View,Ansehen
+ID,ID
+Message Type,Nachrichtentyp
+Business Unit,Geschäftsbereich
+Connection Name,Verbindungsname
+Session ID,Sitzungs-ID
+Message,Nachricht
+Raw Data,Rohdaten
+View Transaction:,Transaktion ansehen:
+Transaction Details,Transaktionsdetails
+Transaction ID,Transaktions-ID
+View transactions log,Transaktionsprotokoll ansehen
+Transactions log,Transaktionsprotokoll
+Unsuccessful,Erfolglos
+Successful,Erfolgreich

@@ -9,10 +9,12 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionFormDataProvider;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsConnectionsTable;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsTransactionLogTable;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceInterface;
 use SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsDependencyProvider;
@@ -33,6 +35,17 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     {
         return new PunchoutCatalogsConnectionsTable(
             $this->getPunchoutCatalogConnectionPropelQuery(),
+            $this->getUtilDateTimeService()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsTransactionLogTable
+     */
+    public function createPunchoutCatalogsTransactionLogTable(): PunchoutCatalogsTransactionLogTable
+    {
+        return new PunchoutCatalogsTransactionLogTable(
+            $this->getPunchoutCatalogTransactionPropelQuery(),
             $this->getUtilDateTimeService()
         );
     }
@@ -70,6 +83,14 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     public function getPunchoutCatalogConnectionPropelQuery(): PgwPunchoutCatalogConnectionQuery
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION);
+    }
+
+    /**
+     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery
+     */
+    public function getPunchoutCatalogTransactionPropelQuery(): PgwPunchoutCatalogTransactionQuery
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION);
     }
 
     /**

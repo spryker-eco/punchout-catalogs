@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -64,5 +65,20 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
         return $this->getFactory()
             ->createPunchoutCatalogsWriter()
             ->updateConnection($punchoutCatalogConnectionTransfer);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
+     * @param int $idPunchoutCatalogTransaction
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
+     */
+    public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer
+    {
+        return $this->getRepository()
+            ->findTransactionById($idPunchoutCatalogTransaction);
     }
 }

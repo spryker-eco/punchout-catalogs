@@ -56,7 +56,7 @@ class ConnectionController extends AbstractController
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_CONNECTION_ACIVATED, [
-                '%connection_name%' => $punchoutCatalogConnectionTransfer->getName()
+                '%connection_name%' => $punchoutCatalogConnectionTransfer->getName(),
             ]);
 
             return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
@@ -93,7 +93,7 @@ class ConnectionController extends AbstractController
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_CONNECTION_DEACTIVATED, [
-                '%connection_name%' => $punchoutCatalogConnectionTransfer->getName()
+                '%connection_name%' => $punchoutCatalogConnectionTransfer->getName(),
             ]);
 
             return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);

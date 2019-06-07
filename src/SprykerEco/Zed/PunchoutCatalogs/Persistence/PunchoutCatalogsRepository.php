@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -36,6 +37,31 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
             ->mapPunchoutCatalogConnectionEntityToTransfer(
                 $punchoutCatalogConnectionEntity,
                 new PunchoutCatalogConnectionTransfer()
+            );
+    }
+
+    /**
+     * @param int $idPunchoutCatalogTransaction
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
+     */
+    public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer
+    {
+        $punchoutCatalogTransactionEntity = $this->getFactory()
+            ->getPunchoutCatalogTransactionPropelQuery()
+            ->joinWithPunchoutCatalogConnection()
+            ->filterByIdPunchoutCatalogTransaction($idPunchoutCatalogTransaction)
+            ->findOne();
+
+        if (!$punchoutCatalogTransactionEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPunchoutCatalogsConnectionMapper()
+            ->mapPunchoutCatalogTransactionEntityToTransfer(
+                $punchoutCatalogTransactionEntity,
+                new PunchoutCatalogTransactionTransfer()
             );
     }
 }

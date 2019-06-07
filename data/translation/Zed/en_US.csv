@@ -28,3 +28,19 @@ Connection not found,Connection not found
 Connection added,Connection added
 "Connection ""%connection_name%"" was activated.","Connection ""%connection_name%"" was activated."
 "Connection ""%connection_name%"" was deactivated.","Connection ""%connection_name%"" was deactivated."
+Transaction not found,Transaction not found
+View,View
+ID,ID
+Message Type,Message Type
+Business Unit,Business Unit
+Connection Name,Connection Name
+Session ID,Session ID
+Message,Message
+Raw Data,Raw Data
+View Transaction:,View Transaction:
+Transaction Details,Transaction Details
+Transaction ID,Transaction ID
+View transactions log,View transactions log
+Transactions log,Transactions log
+Unsuccessful,Unsuccessful
+Successful,Successful
