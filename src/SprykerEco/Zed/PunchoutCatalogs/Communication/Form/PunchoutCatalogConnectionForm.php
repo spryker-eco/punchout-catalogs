@@ -141,16 +141,17 @@ class PunchoutCatalogConnectionForm extends AbstractType
     {
         $connectionFormatSubFormTypes = static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES;
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($connectionFormatSubFormTypes) {
-            /**
-             * @var \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
-             */
-            $punchoutCatalogConnectionTransfer = $event->getData();
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($connectionFormatSubFormTypes) {
+            $format = $event->getData()[PunchoutCatalogConnectionTransfer::FORMAT] ?? null;
+
+            if (!$format) {
+                return;
+            }
 
             $this->addActiveFormatSubFormToConnectionForm(
                 $event->getForm(),
                 $connectionFormatSubFormTypes,
-                $punchoutCatalogConnectionTransfer->getFormat()
+                $format
             );
         });
     }
