@@ -22,7 +22,7 @@ class TransactionController extends AbstractController
     protected const MESSAGE_TRANSACTION_NOT_FOUND = 'Transaction not found';
 
     /**
-     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::indexAction()
+     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::indexAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = 'punchout-catalogs/transaction/index';
 
