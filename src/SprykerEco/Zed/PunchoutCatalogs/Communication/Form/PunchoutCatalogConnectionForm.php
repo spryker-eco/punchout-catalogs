@@ -140,20 +140,22 @@ class PunchoutCatalogConnectionForm extends AbstractType
     protected function addConnectionFormatDynamicSubFormListener(FormBuilderInterface $builder): void
     {
         $connectionFormatSubFormTypes = static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES;
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) use ($connectionFormatSubFormTypes) {
+        $formModificationCallback = function (FormEvent $event) use ($connectionFormatSubFormTypes) {
             $format = $event->getData()[PunchoutCatalogConnectionTransfer::FORMAT] ?? null;
 
             if (!$format) {
                 return;
             }
 
-            $this->addActiveFormatSubFormToConnectionForm(
+            $this->addActiveDependentFieldSubFormToConnectionForm(
                 $event->getForm(),
                 $connectionFormatSubFormTypes,
                 $format
             );
-        });
+        };
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
     }
 
     /**
@@ -163,7 +165,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
      *
      * @return void
      */
-    protected function addActiveFormatSubFormToConnectionForm(FormInterface $form, string $subFormsOptionName, string $selectedSubFormName): void
+    protected function addActiveDependentFieldSubFormToConnectionForm(FormInterface $form, string $subFormsOptionName, string $selectedSubFormName): void
     {
         $options = $form->getConfig()->getOptions();
         $associatedFormType = $options[$subFormsOptionName][$selectedSubFormName] ?? null;
