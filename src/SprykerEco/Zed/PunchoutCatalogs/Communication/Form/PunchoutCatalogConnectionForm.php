@@ -102,6 +102,10 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ChoiceType::class,
             [
                 'choices' => array_combine($formats, $formats),
+                'attr' => [
+                    'class' => 'dependent-trigger',
+                    'data-dependent-group' => 'format',
+                ],
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -124,6 +128,11 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'mapped' => false,
                 'validation_groups' => static::VALIDATION_GROUP_DISABLED,
                 'label' => false,
+                'attr' => [
+                    'class' => 'dependent-child',
+                    'data-dependent-type' => $connectionFormat,
+                    'data-dependent-group' => 'format',
+                ],
             ]);
         }
 
