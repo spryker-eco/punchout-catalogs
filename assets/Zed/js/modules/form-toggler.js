@@ -13,7 +13,7 @@ $(document).ready(function() {
         visibleTarget.addClass('active').find(':input').attr('disabled', false);
         visibleTarget.siblings('.dependent-parent').find(':input').attr('disabled', true);
         $(selectItem).on('change', function (event) {
-            $(`.dependent-child[data-dependent-group=${groupName}]`)
+            $('.dependent-child[data-dependent-group=' + groupName + ']')
                 .parent('.dependent-parent')
                 .removeClass('active')
                 .find(':input')
@@ -23,6 +23,6 @@ $(document).ready(function() {
         })
     })
     function getTargetElements(group, type) {
-        return $(`.dependent-child[data-dependent-group=${group}][data-dependent-type=${type}]`).parent('.dependent-parent');
+        return $('.dependent-child[data-dependent-group=' + group + '][data-dependent-type=' + type + ']').parent('.dependent-parent');
     }
 });
