@@ -174,13 +174,20 @@ class PunchoutCatalogConnectionForm extends AbstractType
             return;
         }
 
+        $options = $form->get($selectedSubFormName)
+            ->getConfig()
+            ->getOptions();
+
         $form->add(
             $selectedSubFormName,
             $associatedFormType,
-            [
-                'inherit_data' => true,
-                'label' => false,
-            ]
+            array_merge(
+                [
+                    'inherit_data' => true,
+                    'label' => false,
+                ],
+                $options
+            )
         );
     }
 
