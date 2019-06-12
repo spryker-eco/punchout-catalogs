@@ -1,0 +1,29 @@
+<script src="/assets/js/spryker-zed-punchout-catalogs-main.js"></script>
+
+<div class="ibox-content">
+    {{ form_start(punchoutCatalogConnectionForm) }}
+    <h4>{{ "General" | trans }}</h4>
+    <hr>
+    {{ form_row(punchoutCatalogConnectionForm.name) }}
+    {{ form_row(punchoutCatalogConnectionForm.fkCompanyBusinessUnit) }}
+    {{ form_row(punchoutCatalogConnectionForm.mapping) }}
+    <br>
+
+    <h4>{{ "Connection Format" | trans }}</h4>
+    <hr>
+    {{ form_row(punchoutCatalogConnectionForm.format) }}
+    {% for key,choice in punchoutCatalogConnectionForm.format.vars.choices %}
+        {{ form_row(attribute(punchoutCatalogConnectionForm, choice.value)) }}
+    {% endfor %}
+    <br>
+
+    <h4>{{ "Connection Type" | trans }}</h4>
+    <hr>
+    {{ form_row(punchoutCatalogConnectionForm.type) }}
+    {% for key,choice in punchoutCatalogConnectionForm.type.vars.choices %}
+        {{ form_row(attribute(punchoutCatalogConnectionForm, choice.value)) }}
+    {% endfor %}
+
+    <input type="submit" class="btn btn-create safe-submit" value="{{ 'Save' | trans }}" />
+    {{ form_end(punchoutCatalogConnectionForm) }}
+</div>

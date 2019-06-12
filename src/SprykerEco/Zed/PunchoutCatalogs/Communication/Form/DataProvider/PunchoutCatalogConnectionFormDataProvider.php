@@ -5,11 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form;
+namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface;
 
 class PunchoutCatalogConnectionFormDataProvider
@@ -25,13 +26,20 @@ class PunchoutCatalogConnectionFormDataProvider
     protected $connectionFormatPlugins;
 
     /**
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
+     */
+    protected $connectionTypePlugins;
+
+    /**
      * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $connectionFormatPlugins
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[] $connectionTypePlugins
      */
-    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade, array $connectionFormatPlugins)
+    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade, array $connectionFormatPlugins, array $connectionTypePlugins)
     {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
         $this->connectionFormatPlugins = $connectionFormatPlugins;
+        $this->connectionTypePlugins = $connectionTypePlugins;
     }
 
     /**
@@ -42,6 +50,7 @@ class PunchoutCatalogConnectionFormDataProvider
         return [
             PunchoutCatalogConnectionForm::OPTION_BUSINESS_UNIT_CHOICES => $this->prepareCompanyBusinessUnitChoices(),
             PunchoutCatalogConnectionForm::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES => $this->prepareConnectionFormatSubForms(),
+            PunchoutCatalogConnectionForm::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES => $this->prepareConnectionTypeSubForms(),
         ];
     }
 
@@ -56,12 +65,8 @@ class PunchoutCatalogConnectionFormDataProvider
             return $punchoutCatalogConnectionTransfer;
         }
 
-        /**
-         * @todo Remove those fields when functionality for it's saving will be implemented.
-         */
         return (new PunchoutCatalogConnectionTransfer())
-            ->setIsActive(true)
-            ->setType('NOT_IMPLEMENTED');
+            ->setIsActive(true);
     }
 
     /**
@@ -95,6 +100,20 @@ class PunchoutCatalogConnectionFormDataProvider
         }
 
         return $connectionFormatSubForms;
+    }
+
+    /**
+     * @return string[] [connectionType => FormTypePath]
+     */
+    protected function prepareConnectionTypeSubForms(): array
+    {
+        $connectionTypeSubForms = [];
+
+        foreach ($this->connectionTypePlugins as $connectionTypePlugin) {
+            $connectionTypeSubForms[$connectionTypePlugin->getConnectionType()] = $connectionTypePlugin->getType();
+        }
+
+        return $connectionTypeSubForms;
     }
 
     /**

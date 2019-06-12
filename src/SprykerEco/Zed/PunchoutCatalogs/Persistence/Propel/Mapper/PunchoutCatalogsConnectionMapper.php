@@ -7,11 +7,33 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
 
 class PunchoutCatalogsConnectionMapper
 {
+    /**
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper\PunchoutCatalogsConnectionSetupMapper
+     */
+    protected $punchoutCatalogConnectionSetupMapper;
+
+    /**
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper\PunchoutCatalogsConnectionCartMapper
+     */
+    protected $punchoutCatalogConnectionCartMapper;
+
+    /**
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper\PunchoutCatalogsConnectionSetupMapper $punchoutCatalogConnectionSetupMapper
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper\PunchoutCatalogsConnectionCartMapper $punchoutCatalogConnectionCartMapper
+     */
+    public function __construct(PunchoutCatalogsConnectionSetupMapper $punchoutCatalogConnectionSetupMapper, PunchoutCatalogsConnectionCartMapper $punchoutCatalogConnectionCartMapper)
+    {
+        $this->punchoutCatalogConnectionSetupMapper = $punchoutCatalogConnectionSetupMapper;
+        $this->punchoutCatalogConnectionCartMapper = $punchoutCatalogConnectionCartMapper;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
      * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection $punchoutCatalogConnectionEntity
@@ -38,6 +60,24 @@ class PunchoutCatalogsConnectionMapper
         PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
     ): PunchoutCatalogConnectionTransfer {
         $punchoutCatalogConnectionTransfer->fromArray($punchoutCatalogConnectionEntity->toArray(), true);
+
+        if ($punchoutCatalogConnectionEntity->getPgwPunchoutCatalogConnectionSetup()) {
+            $punchoutCatalogConnectionTransfer->setSetup(
+                $this->punchoutCatalogConnectionSetupMapper->mapPunchoutCatalogConnectionSetupEntityToTransfer(
+                    $punchoutCatalogConnectionEntity->getPgwPunchoutCatalogConnectionSetup(),
+                    new PunchoutCatalogConnectionSetupTransfer()
+                )
+            );
+        }
+
+        if ($punchoutCatalogConnectionEntity->getPgwPunchoutCatalogConnectionCart()) {
+            $punchoutCatalogConnectionTransfer->setCart(
+                $this->punchoutCatalogConnectionCartMapper->mapPunchoutCatalogConnectionCartEntityToTransfer(
+                    $punchoutCatalogConnectionEntity->getPgwPunchoutCatalogConnectionCart(),
+                    new PunchoutCatalogConnectionCartTransfer()
+                )
+            );
+        }
 
         return $punchoutCatalogConnectionTransfer;
     }

@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,6 +18,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -29,11 +31,14 @@ class PunchoutCatalogConnectionForm extends AbstractType
 {
     public const OPTION_BUSINESS_UNIT_CHOICES = 'OPTION_BUSINESS_UNIT_CHOICES';
     public const OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES = 'OPTION_CONNECTION_FORMAT_FORMS';
+    public const OPTION_CONNECTION_TYPE_SUB_FORM_TYPES = 'OPTION_CONNECTION_TYPE_SUB_FORM_TYPES';
 
     protected const BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Choose business unit';
     protected const BUSINESS_UNIT_FIELD_LABEL = 'Business unit';
 
     protected const VALIDATION_GROUP_DISABLED = 'disabled';
+
+    protected const DEPENDENT_GROUP_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -47,7 +52,9 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ->addBusinessUnitField($builder, $options)
             ->addAddMappingField($builder)
             ->addConnectionFormatField($builder, $options)
-            ->addConnectionFormatSubForms($builder, $options);
+            ->addConnectionTypeField($builder, $options)
+            ->addConnectionFormatSubForms($builder, $options)
+            ->addConnectionTypeSubForms($builder, $options);
     }
 
     /**
@@ -60,6 +67,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
         $resolver->setRequired([
             static::OPTION_BUSINESS_UNIT_CHOICES,
             static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES,
+            static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES,
         ]);
     }
 
@@ -81,6 +89,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionTransfer::NAME, TextType::class, [
             'constraints' => [
                 new NotBlank(),
+                new Length(['max' => 255]),
             ],
         ]);
 
@@ -117,6 +126,34 @@ class PunchoutCatalogConnectionForm extends AbstractType
      *
      * @return $this
      */
+    protected function addConnectionTypeField(FormBuilderInterface $builder, array $options)
+    {
+        $types = array_keys($options[static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES]);
+
+        $builder->add(
+            PunchoutCatalogConnectionTransfer::TYPE,
+            ChoiceType::class,
+            [
+                'choices' => array_combine($types, $types),
+                'constraints' => [
+                    new NotBlank(),
+                ],
+                'attr' => [
+                    'class' => 'dependent-trigger',
+                    'data-dependent-group' => static::DEPENDENT_GROUP_TYPE,
+                ],
+            ]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addConnectionFormatSubForms(FormBuilderInterface $builder, array $options)
     {
         foreach ($options[static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES] as $connectionFormat => $connectionFormatSubFormType) {
@@ -128,6 +165,32 @@ class PunchoutCatalogConnectionForm extends AbstractType
         }
 
         $this->addConnectionFormatDynamicSubFormListener($builder);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
+    protected function addConnectionTypeSubForms(FormBuilderInterface $builder, array $options)
+    {
+        foreach ($options[static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES] as $connectionType => $connectionTypeSubFormType) {
+            $builder->add($connectionType, $connectionTypeSubFormType, [
+                'mapped' => false,
+                'validation_groups' => static::VALIDATION_GROUP_DISABLED,
+                'label' => false,
+                'attr' => [
+                    'class' => 'dependent-child',
+                    'data-dependent-type' => $connectionType,
+                    'data-dependent-group' => static::DEPENDENT_GROUP_TYPE,
+                ],
+            ]);
+        }
+
+        $this->addConnectionTypeDynamicSubFormListener($builder);
 
         return $this;
     }
@@ -156,6 +219,32 @@ class PunchoutCatalogConnectionForm extends AbstractType
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback);
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function addConnectionTypeDynamicSubFormListener(FormBuilderInterface $builder): void
+    {
+        $connectionTypeSubFormTypes = static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES;
+        $formModificationCallback = function (FormEvent $event) use ($connectionTypeSubFormTypes) {
+            $type = $event->getData()[PunchoutCatalogConnectionTransfer::TYPE] ?? null;
+
+            if (!$type) {
+                return;
+            }
+
+            $this->addActiveDependentFieldSubFormToConnectionForm(
+                $event->getForm(),
+                $connectionTypeSubFormTypes,
+                $type
+            );
+        };
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback)
+            ->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
     }
 
     /**
@@ -215,7 +304,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     {
         $builder->add(
             PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT,
-            ChoiceType::class,
+            SelectType::class,
             [
                 'choices' => $options[static::OPTION_BUSINESS_UNIT_CHOICES],
                 'placeholder' => static::BUSINESS_UNIT_FIELD_PLACEHOLDER,

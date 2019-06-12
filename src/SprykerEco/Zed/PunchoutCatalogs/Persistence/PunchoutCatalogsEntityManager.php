@@ -7,8 +7,12 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCart;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetup;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -59,5 +63,101 @@ class PunchoutCatalogsEntityManager extends AbstractEntityManager implements Pun
             );
 
         $punchoutCatalogConnectionEntity->save();
+    }
+
+    /**
+     * @param int $idPunchoutCatalogConnection
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer $punchoutCatalogConnectionCartTransfer
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer
+     */
+    public function createPunchoutCatalogConnectionCart(int $idPunchoutCatalogConnection, PunchoutCatalogConnectionCartTransfer $punchoutCatalogConnectionCartTransfer): PunchoutCatalogConnectionCartTransfer
+    {
+        $punchoutCatalogsConnectionCartMapper = $this->getFactory()
+            ->createPunchoutCatalogsConnectionCartMapper();
+
+        $punchoutCatalogConnectionCartEntity = $punchoutCatalogsConnectionCartMapper->mapPunchoutCatalogConnectionCartTransferToEntity(
+            $punchoutCatalogConnectionCartTransfer,
+            new PgwPunchoutCatalogConnectionCart()
+        );
+
+        $punchoutCatalogConnectionCartEntity->setIdPunchoutCatalogConnectionCart($idPunchoutCatalogConnection);
+
+        $punchoutCatalogConnectionCartEntity->save();
+
+        return $punchoutCatalogsConnectionCartMapper->mapPunchoutCatalogConnectionCartEntityToTransfer(
+            $punchoutCatalogConnectionCartEntity,
+            $punchoutCatalogConnectionCartTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer $punchoutCatalogConnectionCartTransfer
+     *
+     * @return void
+     */
+    public function updatePunchoutCatalogConnectionCart(PunchoutCatalogConnectionCartTransfer $punchoutCatalogConnectionCartTransfer): void
+    {
+        $punchoutCatalogConnectionCartEntity = $this->getFactory()
+            ->getPunchoutCatalogConnectionCartPropelQuery()
+            ->filterByIdPunchoutCatalogConnectionCart($punchoutCatalogConnectionCartTransfer->getIdPunchoutCatalogCart())
+            ->findOne();
+
+        $punchoutCatalogConnectionCartEntity = $this->getFactory()
+            ->createPunchoutCatalogsConnectionCartMapper()
+            ->mapPunchoutCatalogConnectionCartTransferToEntity(
+                $punchoutCatalogConnectionCartTransfer,
+                $punchoutCatalogConnectionCartEntity
+            );
+
+        $punchoutCatalogConnectionCartEntity->save();
+    }
+
+    /**
+     * @param int $idPunchoutCatalogConnection
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer
+     */
+    public function createPunchoutCatalogConnectionSetup(int $idPunchoutCatalogConnection, PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer): PunchoutCatalogConnectionSetupTransfer
+    {
+        $punchoutCatalogsConnectionSetupMapper = $this->getFactory()
+            ->createPunchoutCatalogsConnectionSetupMapper();
+
+        $punchoutCatalogConnectionSetupEntity = $punchoutCatalogsConnectionSetupMapper->mapPunchoutCatalogConnectionSetupTransferToEntity(
+            $punchoutCatalogConnectionSetupTransfer,
+            new PgwPunchoutCatalogConnectionSetup()
+        );
+
+        $punchoutCatalogConnectionSetupEntity->setIdPunchoutCatalogConnectionSetup($idPunchoutCatalogConnection);
+
+        $punchoutCatalogConnectionSetupEntity->save();
+
+        return $punchoutCatalogsConnectionSetupMapper->mapPunchoutCatalogConnectionSetupEntityToTransfer(
+            $punchoutCatalogConnectionSetupEntity,
+            $punchoutCatalogConnectionSetupTransfer
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer
+     *
+     * @return void
+     */
+    public function updatePunchoutCatalogConnectionSetup(PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer): void
+    {
+        $punchoutCatalogConnectionSetupEntity = $this->getFactory()
+            ->getPunchoutCatalogConnectionSetupPropelQuery()
+            ->filterByIdPunchoutCatalogConnectionSetup($punchoutCatalogConnectionSetupTransfer->getIdPunchoutCatalogSetup())
+            ->findOne();
+
+        $punchoutCatalogConnectionSetupEntity = $this->getFactory()
+            ->createPunchoutCatalogsConnectionSetupMapper()
+            ->mapPunchoutCatalogConnectionSetupTransferToEntity(
+                $punchoutCatalogConnectionSetupTransfer,
+                $punchoutCatalogConnectionSetupEntity
+            );
+
+        $punchoutCatalogConnectionSetupEntity->save();
     }
 }

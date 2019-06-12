@@ -8,12 +8,15 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogConnectionFormDataProvider;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
-use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionFormDataProvider;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsConnectionsTable;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyUserFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceInterface;
 use SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -55,13 +58,14 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionFormDataProvider
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogConnectionFormDataProvider
      */
     public function createPunchoutCatalogConnectionFormDataProvider(): PunchoutCatalogConnectionFormDataProvider
     {
         return new PunchoutCatalogConnectionFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getConnectionFormatPlugins()
+            $this->getConnectionFormatPlugins(),
+            $this->getConnectionTypePlugins()
         );
     }
 
@@ -71,6 +75,22 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     public function getPunchoutCatalogConnectionPropelQuery(): PgwPunchoutCatalogConnectionQuery
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION);
+    }
+
+    /**
+     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery
+     */
+    public function getPunchoutCatalogConnectionSetupPropelQuery(): PgwPunchoutCatalogConnectionSetupQuery
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_SETUP);
+    }
+
+    /**
+     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery
+     */
+    public function getPunchoutCatalogConnectionCartPropelQuery(): PgwPunchoutCatalogConnectionCartQuery
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART);
     }
 
     /**
@@ -90,10 +110,26 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyUserFacadeInterface
+     */
+    public function getCompanyUserFacade(): PunchoutCatalogsToCompanyUserFacadeInterface
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
     protected function getConnectionFormatPlugins(): array
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_FORMAT);
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
+     */
+    protected function getConnectionTypePlugins(): array
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_TYPE);
     }
 }
