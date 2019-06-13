@@ -11,6 +11,8 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 
 /**
  * Inherited Methods
@@ -40,6 +42,12 @@ class PunchoutCatalogsBusinessTester extends Actor
      * @see \SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter::PASSWORD_VAULT_DATA_TYPE
      */
     protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
+
+    protected const CONNECTION_SETUP_LOGIN_MODE = 'single_user';
+    protected const CONNECTION_CART_SUPPLIED_ID = 'Test supplier ID';
+    protected const CONNECTION_CART_MAPPING = 'Test mapping';
+    protected const CONNECTION_CART_ENCODING = 'url-encoded';
+    protected const CONNECTION_CART_MAX_DESCRIPTION_LENGTH = 256;
 
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
@@ -85,5 +93,28 @@ class PunchoutCatalogsBusinessTester extends Actor
                 static::VAULT_DATA_TYPE_PASSWORD,
                 $idPunchoutCatalogConnection
             );
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer
+     */
+    public function createPunchoutCatalogsConnectionSetupTransfer(int $idCompanyBusinessUnit): PunchoutCatalogConnectionSetupTransfer
+    {
+        return (new PunchoutCatalogConnectionSetupTransfer())
+            ->setLoginMode(static::CONNECTION_SETUP_LOGIN_MODE)
+            ->setFkCompanyBusinessUnit($idCompanyBusinessUnit);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer
+     */
+    public function createPunchoutCatalogsConnectionCartTransfer(): PunchoutCatalogConnectionCartTransfer
+    {
+        return (new PunchoutCatalogConnectionCartTransfer())
+            ->setDefaultSupplierId(static::CONNECTION_CART_SUPPLIED_ID)
+            ->setMaxDescriptionLength(static::CONNECTION_CART_MAX_DESCRIPTION_LENGTH)
+            ->setMapping(static::CONNECTION_CART_MAPPING)
+            ->setEncoding(static::CONNECTION_CART_ENCODING);
     }
 }
