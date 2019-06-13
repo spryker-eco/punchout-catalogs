@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs;
 
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeBridge;
@@ -20,6 +21,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDat
 class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION';
+    public const PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
@@ -38,6 +40,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         parent::provideCommunicationLayerDependencies($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
+        $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addConnectionFormatPlugins($container);
 
@@ -53,6 +56,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
+        $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
 
         return $container;
     }
@@ -95,6 +99,20 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION, function () {
             return PgwPunchoutCatalogConnectionQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPunchoutCatalogTransactionPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION, function () {
+            return PgwPunchoutCatalogTransactionQuery::create();
         });
 
         return $container;

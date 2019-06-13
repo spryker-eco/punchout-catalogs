@@ -39,6 +39,16 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const URL_EDIT_PUNCHOUT_CATALOG_CONNECTION = '/punchout-catalogs/index/edit';
 
     /**
+     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::activateAction()
+     */
+    protected const ROUTE_PUNCHOUT_CATALOG_CONNECTION_ACTIVATE = '/punchout-catalogs/connection/activate';
+
+    /**
+     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::deactivateAction()
+     */
+    protected const ROUTE_PUNCHOUT_CATALOG_CONNECTION_DEACTIVATE = '/punchout-catalogs/connection/deactivate';
+
+    /**
      * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
      */
     protected $connectionPropelQuery;
@@ -199,15 +209,33 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             'Edit'
         );
 
-        if ($punchoutCatalogConnection->getIsActive()) {
-            $buttons[] = $this->generateRemoveButton('NOT_IMPLEMENTED', 'Deactivate');
-        }
-
-        if (!$punchoutCatalogConnection->getIsActive()) {
-            $buttons[] = $this->generateButton('NOT_IMPLEMENTED', 'Activate', ['btn-success']);
-        }
+        $buttons[] = $this->generateConnectionStatusChangeButton($punchoutCatalogConnection);
 
         return implode(' ', $buttons);
+    }
+
+    /**
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection $punchoutCatalogConnection
+     *
+     * @return string
+     */
+    protected function generateConnectionStatusChangeButton(PgwPunchoutCatalogConnection $punchoutCatalogConnection): string
+    {
+        if ($punchoutCatalogConnection->getIsActive()) {
+            return $this->generateRemoveButton(
+                Url::generate(static::ROUTE_PUNCHOUT_CATALOG_CONNECTION_DEACTIVATE, [
+                    static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
+                ]),
+                'Deactivate'
+            );
+        }
+
+        return $this->generateViewButton(
+            Url::generate(static::ROUTE_PUNCHOUT_CATALOG_CONNECTION_ACTIVATE, [
+                static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
+            ]),
+            'Activate'
+        );
     }
 
     /**
