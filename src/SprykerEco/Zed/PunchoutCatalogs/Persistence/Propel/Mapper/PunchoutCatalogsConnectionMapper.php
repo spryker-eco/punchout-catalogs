@@ -10,7 +10,9 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction;
 
 class PunchoutCatalogsConnectionMapper
 {
@@ -80,5 +82,29 @@ class PunchoutCatalogsConnectionMapper
         }
 
         return $punchoutCatalogConnectionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction $punchoutCatalogTransaction
+     * @param \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer $punchoutCatalogTransactionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer
+     */
+    public function mapPunchoutCatalogTransactionEntityToTransfer(
+        PgwPunchoutCatalogTransaction $punchoutCatalogTransaction,
+        PunchoutCatalogTransactionTransfer $punchoutCatalogTransactionTransfer
+    ): PunchoutCatalogTransactionTransfer {
+        $punchoutCatalogTransactionTransfer->fromArray($punchoutCatalogTransaction->toArray(), true);
+
+        if ($punchoutCatalogTransaction->getPunchoutCatalogConnection()) {
+            $punchoutCatalogTransactionTransfer->setConnection(
+                $this->mapPunchoutCatalogConnectionEntityToTransfer(
+                    $punchoutCatalogTransaction->getPunchoutCatalogConnection(),
+                    new PunchoutCatalogConnectionTransfer()
+                )
+            );
+        }
+
+        return $punchoutCatalogTransactionTransfer;
     }
 }

@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 
 interface PunchoutCatalogsFacadeInterface
 {
@@ -50,4 +51,16 @@ interface PunchoutCatalogsFacadeInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer
      */
     public function updateConnection(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves punchout catalog transaction by ID, returns null if nothing found.
+     *
+     * @api
+     *
+     * @param int $idPunchoutCatalogTransaction
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
+     */
+    public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer;
 }

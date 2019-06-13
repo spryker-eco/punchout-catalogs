@@ -10,6 +10,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper\PunchoutCatalogsConnectionCartMapper;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper\PunchoutCatalogsConnectionMapper;
@@ -29,6 +30,14 @@ class PunchoutCatalogsPersistenceFactory extends AbstractPersistenceFactory
     public function getPunchoutCatalogConnectionPropelQuery(): PgwPunchoutCatalogConnectionQuery
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION);
+    }
+
+    /**
+     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery
+     */
+    public function getPunchoutCatalogTransactionPropelQuery(): PgwPunchoutCatalogTransactionQuery
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION);
     }
 
     /**

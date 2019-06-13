@@ -10,6 +10,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeBridge;
@@ -25,6 +26,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION';
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_SETUP = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_SETUP';
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART';
+    public const PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
@@ -47,6 +49,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionSetupPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionCartPropelQuery($container);
+        $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addConnectionFormatPlugins($container);
@@ -66,6 +69,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionSetupPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionCartPropelQuery($container);
+        $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
 
         return $container;
     }
@@ -136,6 +140,20 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container->set(static::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART, function () {
             return PgwPunchoutCatalogConnectionCartQuery::create();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPunchoutCatalogTransactionPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION, function () {
+            return PgwPunchoutCatalogTransactionQuery::create();
         });
 
         return $container;
