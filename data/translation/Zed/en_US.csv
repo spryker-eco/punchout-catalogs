@@ -21,10 +21,9 @@ Edit,Edit
 Create transferred cart connection,Create transferred cart connection
 Edit transferred cart connection,Edit transferred cart connection
 List of PunchOut connections,List of PunchOut connections
-Connection updated,Connection updated
-Connection added,Connection added
-Connection not found,Connection not found
-Connection added,Connection added
+"Connection ""%connection_name%"" was updated successfully","Connection ""%connection_name%"" was updated successfully."
+"Connection ""%connection_name%"" was created successfully.","Connection ""%connection_name%"" was created successfully."
+Connection not found,Verbindung nicht gefunden
 "Connection ""%connection_name%"" was activated.","Connection ""%connection_name%"" was activated."
 "Connection ""%connection_name%"" was deactivated.","Connection ""%connection_name%"" was deactivated."
 Transaction not found,Transaction not found

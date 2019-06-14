@@ -27,7 +27,7 @@ class ConnectionController extends AbstractController
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
 
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
-    protected const MESSAGE_CONNECTION_ACIVATED = 'Connection "%connection_name%" was activated.';
+    protected const MESSAGE_CONNECTION_ACTIVATED = 'Connection "%connection_name%" was activated.';
     protected const MESSAGE_CONNECTION_DEACTIVATED = 'Connection "%connection_name%" was deactivated.';
 
     /**
@@ -55,7 +55,7 @@ class ConnectionController extends AbstractController
             ->updateConnection($punchoutCatalogConnectionTransfer);
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_CONNECTION_ACIVATED, [
+            $this->addSuccessMessage(static::MESSAGE_CONNECTION_ACTIVATED, [
                 '%connection_name%' => $punchoutCatalogConnectionTransfer->getName(),
             ]);
 

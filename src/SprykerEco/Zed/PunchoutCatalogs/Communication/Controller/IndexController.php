@@ -27,9 +27,9 @@ class IndexController extends AbstractController
      */
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
 
-    protected const MESSAGE_CONNECTION_UPDATED = 'Connection updated';
+    protected const MESSAGE_CONNECTION_UPDATED = 'Connection "%connection_name%" was updated successfully.';
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
-    protected const MESSAGE_CONNECTION_ADDED = 'Connection added';
+    protected const MESSAGE_CONNECTION_ADDED = 'Connection "%connection_name%" was created successfully.';
 
     /**
      * @return array
@@ -72,7 +72,10 @@ class IndexController extends AbstractController
                 ->createConnection($punchoutCatalogConnectionsForm->getData());
 
             if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_CONNECTION_ADDED);
+                $this->addSuccessMessage(static::MESSAGE_CONNECTION_ADDED, [
+                    '%connection_name%' => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                        ->getName(),
+                ]);
             }
 
             $this->handleResponseErrors($punchoutCatalogResponseTransfer);
@@ -132,7 +135,10 @@ class IndexController extends AbstractController
             ->updateConnection($punchoutCatalogConnectionEditForm->getData());
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_CONNECTION_UPDATED);
+            $this->addSuccessMessage(static::MESSAGE_CONNECTION_UPDATED, [
+                '%connection_name%' => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                    ->getName(),
+            ]);
         }
 
         $this->handleResponseErrors($punchoutCatalogResponseTransfer);

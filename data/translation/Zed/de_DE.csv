@@ -20,11 +20,10 @@ Create,Erstellen
 Edit,Bearbeiten
 Create transferred cart connection,Verbindung für übertragenen Warenkorb erstellen
 Edit transferred cart connection,Bearbeiten Sie die übertragene Warenkorbverbindung
-List of PunchOut connections,Liste der PunchOut-Verbindungen
-Connection updated,Verbindung aktualisiert
-Connection added,Verbindung hinzugefügt
+List of PunchOut connections,Verbindung %connection_name% ist nicht gefunden.
+"Connection ""%connection_name%"" was updated successfully.","Verbindung ""%connection_name%"" wurde erfolgreich aktualisiert".
+"Connection ""%connection_name%"" was created successfully.","Verbindung ""%connection_name%"" wurde erfolgreich erstellt".
 Connection not found,Verbindung nicht gefunden
-Connection added,Verbindung hinzugefügt
 "Connection ""%connection_name%"" was activated.","Verbindung ""%connection_name%"" wurde aktiviert."
 "Connection ""%connection_name%"" was deactivated.","Verbindung ""%connection_name%"" wurde deaktiviert."
 Transaction not found,Transaktion nicht gefunden
