@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title 'Edit Transferred Cart Connection' | trans %}
+{% block section_title ('Edit Transferred Cart Connection' | trans) ~ ': ' ~ idPunchoutCatalogConnection %}
 
 {% block action %}
     {{ backActionButton('/punchout-catalogs', 'List of PunchOut connections' | trans) }}

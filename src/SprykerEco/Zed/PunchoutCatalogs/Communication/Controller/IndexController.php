@@ -121,6 +121,7 @@ class IndexController extends AbstractController
 
         return [
             'punchoutCatalogConnectionForm' => $punchoutCatalogConnectionEditForm->createView(),
+            'idPunchoutCatalogConnection' => $idPunchoutCatalogConnection,
         ];
     }
 
