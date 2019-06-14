@@ -103,8 +103,8 @@ class PunchoutCatalogConnectionForm extends AbstractType
             [
                 'choices' => array_combine($formats, $formats),
                 'attr' => [
-                    'class' => 'dependent-trigger',
-                    'data-dependent-group' => 'format',
+                    'class' => 'toggle-trigger',
+                    'data-toggle-group' => 'format',
                 ],
                 'constraints' => [
                     new NotBlank(),
@@ -129,9 +129,9 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'validation_groups' => static::VALIDATION_GROUP_DISABLED,
                 'label' => false,
                 'attr' => [
-                    'class' => 'dependent-child',
-                    'data-dependent-type' => $connectionFormat,
-                    'data-dependent-group' => 'format',
+                    'class' => 'toggle-inner-item',
+                    'data-toggle-type' => $connectionFormat,
+                    'data-toggle-group' => 'format',
                 ],
             ]);
         }

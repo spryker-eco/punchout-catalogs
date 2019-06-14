@@ -6,23 +6,47 @@
 'use strict';
 
 $(document).ready(function() {
-    $('.dependent-trigger').each(function (index, selectItem) {
-        $('.dependent-child').parent('.form-group').addClass('dependent-parent');
-        var groupName = $(selectItem).attr('data-dependent-group');
-        var visibleTarget = getTargetElements(groupName, selectItem.value);
-        visibleTarget.addClass('active').find(':input').attr('disabled', false);
-        visibleTarget.siblings('.dependent-parent').find(':input').attr('disabled', true);
+
+    createToggleElements();
+
+    $('.toggle-trigger').each(function (index, selectItem) {
+        var group = $(selectItem).data('toggle-group'),
+            type = selectItem.value,
+            items = getItems(group),
+            activeItem = getActiveItem(group, type);
+
+        toggleItems(items, activeItem);
+
         $(selectItem).on('change', function (event) {
-            $('.dependent-child[data-dependent-group=' + groupName + ']')
-                .parent('.dependent-parent')
-                .removeClass('active')
-                .find(':input')
-                .attr('disabled', true);
-            visibleTarget = getTargetElements(groupName, event.target.value);
-            visibleTarget.addClass('active').find(':input').attr('disabled', false);
-        })
-    })
-    function getTargetElements(group, type) {
-        return $('.dependent-child[data-dependent-group=' + group + '][data-dependent-type=' + type + ']').parent('.dependent-parent');
+            type = event.target.value;
+            activeItem = getActiveItem(group, type);
+
+            toggleItems(items, activeItem);
+        });
+    });
+
+    function createToggleElements () {
+        $('.toggle-inner-item').parent('.form-group').addClass('toggle-item');
+    }
+
+    function getItems(group) {
+        return $('.toggle-inner-item[data-toggle-group=' + group + ']').parent('.toggle-item');
+    }
+
+    function getActiveItem(group, type) {
+        return $('.toggle-inner-item[data-toggle-group=' + group + '][data-toggle-type=' + type + ']').parent('.toggle-item');
+    }
+
+    function showItems(activeItem) {
+        activeItem.addClass('active').find(':input').attr('disabled', false);
+    }
+
+    function hideItems(toggleItems) {
+        toggleItems.removeClass('active').find(':input').attr('disabled', true);
+    }
+
+    function toggleItems(items, activeItem) {
+        hideItems(items);
+        showItems(activeItem);
     }
 });
