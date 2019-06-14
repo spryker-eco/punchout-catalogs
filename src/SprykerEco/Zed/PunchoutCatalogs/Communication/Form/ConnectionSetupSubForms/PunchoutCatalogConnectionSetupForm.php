@@ -38,7 +38,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     protected const DEPENDENT_GROUP_LOGIN_MODE = 'login-mode';
 
     protected const LOGIN_MODE_SINGLE_USER = 'single_user';
-    protected const LOGIN_MODE_DYNAMIC_USER_CREATION = 'dynamic_user_creation';
+    protected const LOGIN_MODE_DYNAMIC_USER = 'dynamic_user';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -78,7 +78,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             'label' => static::FIELD_LABEL_LOGIN_MODE,
             'choices' => [
                 'single_user' => static::LOGIN_MODE_SINGLE_USER,
-                'dynamic_user_creation' => static::LOGIN_MODE_DYNAMIC_USER_CREATION,
+                'dynamic_user_creation' => static::LOGIN_MODE_DYNAMIC_USER,
             ],
             'attr' => [
                 'class' => 'dependent-trigger',
@@ -134,7 +134,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             $form = $event->getForm();
             $loginMode = $event->getData()[PunchoutCatalogConnectionSetupTransfer::LOGIN_MODE] ?? null;
 
-            if ($loginMode !== static::LOGIN_MODE_DYNAMIC_USER_CREATION) {
+            if ($loginMode !== static::LOGIN_MODE_DYNAMIC_USER) {
                 $this->disableCompanyBusinessUnitField($form);
 
                 return;
@@ -330,7 +330,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             'attr' => [
                 'class' => 'dependent-child',
                 'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
-                'data-dependent-type' => static::LOGIN_MODE_DYNAMIC_USER_CREATION,
+                'data-dependent-type' => static::LOGIN_MODE_DYNAMIC_USER,
             ],
         ];
     }
