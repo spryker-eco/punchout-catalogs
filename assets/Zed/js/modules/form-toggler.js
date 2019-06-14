@@ -25,7 +25,7 @@ $(document).ready(function() {
         });
     });
 
-    function createToggleElements () {
+    function createToggleElements() {
         $('.toggle-inner-item').parent('.form-group').addClass('toggle-item');
     }
 
