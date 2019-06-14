@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form\ConnectionSetupSubF
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -31,6 +32,8 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected const FIELD_LABEL_ENCODING = 'Cart Encoding';
     protected const FIELD_LABEL_MAPPING = 'Cart Mapping';
     protected const FIELD_LABEL_DEFAULT_SUPPLIER_ID = 'Default Supplier ID';
+
+    protected const MAX_DESCRIPTION_LENGTH = 99999;
 
     protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/ConnectionForm/max_description_length.twig';
 
@@ -74,13 +77,16 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
             'constraints' => [
                 new Range([
                     'min' => 16,
-                    'max' => 99999,
+                    'max' => static::MAX_DESCRIPTION_LENGTH,
                 ]),
             ],
             'attr' => [
                 'template_path' => static::TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD,
             ],
         ]);
+
+        $builder->get(PunchoutCatalogConnectionCartTransfer::MAX_DESCRIPTION_LENGTH)
+            ->addViewTransformer($this->createMaxDescriptionLengthTransformer());
 
         return $this;
     }
@@ -136,5 +142,24 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createMaxDescriptionLengthTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function (string $maxDescriptionLength) {
+                if (!$maxDescriptionLength) {
+                    return static::MAX_DESCRIPTION_LENGTH;
+                }
+
+                return $maxDescriptionLength;
+            },
+            function (string $maxDescriptionLength) {
+                return $maxDescriptionLength;
+            }
+        );
     }
 }
