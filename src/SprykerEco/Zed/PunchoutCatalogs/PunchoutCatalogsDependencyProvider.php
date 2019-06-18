@@ -36,6 +36,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
 
     public const PLUGINS_CONNECTION_FORMAT = 'PLUGINS_CONNECTION_FORMAT';
     public const PLUGINS_CONNECTION_TYPE = 'PLUGINS_CONNECTION_TYPE';
+    public const PLUGINS_SETUP_REQUEST_FORM_EXTENSION = 'PLUGINS_SETUP_REQUEST_FORM_EXTENSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,6 +55,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addConnectionFormatPlugins($container);
         $container = $this->addConnectionTypePlugins($container);
+        $container = $this->addSetupRequestFormExtensionPlugins($container);
 
         return $container;
     }
@@ -236,6 +238,20 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSetupRequestFormExtensionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SETUP_REQUEST_FORM_EXTENSION, function (Container $container) {
+            return $this->getSetupRequestFormExtensionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
     protected function getConnectionFormatPlugins(): array
@@ -247,6 +263,14 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestConnectionTypePlugin[]
      */
     protected function getConnectionTypePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
+     */
+    protected function getSetupRequestFormExtensionPlugins(): array
     {
         return [];
     }
