@@ -86,7 +86,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
         ]);
 
         $builder->get(PunchoutCatalogConnectionCartTransfer::MAX_DESCRIPTION_LENGTH)
-            ->addViewTransformer($this->createMaxDescriptionLengthTransformer());
+            ->addViewTransformer($this->createMaxDescriptionLengthViewTransformer());
 
         return $this;
     }
@@ -105,7 +105,9 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
                 'url-encoded' => 'url-encoded',
                 'no-encoding' => 'no-encoding',
             ],
-            'constraints' => new NotBlank(),
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
@@ -147,7 +149,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createMaxDescriptionLengthTransformer(): CallbackTransformer
+    protected function createMaxDescriptionLengthViewTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function (string $maxDescriptionLength) {

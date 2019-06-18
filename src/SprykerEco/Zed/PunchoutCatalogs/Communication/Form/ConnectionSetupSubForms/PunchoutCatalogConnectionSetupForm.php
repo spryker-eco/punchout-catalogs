@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form\ConnectionSetupSubForms;
 
+use Closure;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
@@ -29,8 +30,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PunchoutCatalogConnectionSetupForm extends AbstractType
 {
-    public const OPTION_COMPANY_USERS_ARRAY = 'option-company-users-array';
-
     protected const FIELD_LABEL_LOGIN_MODE = 'Login Mode';
     protected const FIELD_LABEL_COMPANY_USER = 'Single User';
     protected const FIELD_LABEL_COMPANY_BUSINESS_UNIT = 'Default Business Unit';
@@ -127,7 +126,18 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyBusinessUnitFieldListeners(FormBuilderInterface $builder)
     {
-        $formModificationCallback = function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->createCompanyBusinessUnitFormEventListener());
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $this->createCompanyBusinessUnitFormEventListener());
+
+        return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createCompanyBusinessUnitFormEventListener(): Closure
+    {
+        return function (FormEvent $event) {
             $form = $event->getForm();
             $loginMode = $event->getData()[PunchoutCatalogConnectionSetupTransfer::LOGIN_MODE] ?? null;
 
@@ -149,11 +159,6 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
 
             $this->updateCompanyBusinessUnitFieldChoices($form, $idParentCompanyBusinessUnit);
         };
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback);
-
-        return $this;
     }
 
     /**
@@ -163,7 +168,18 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyUserFieldListeners(FormBuilderInterface $builder)
     {
-        $formModificationCallback = function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->createCompanyUserFormEventListener());
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $this->createCompanyUserFormEventListener());
+
+        return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function createCompanyUserFormEventListener(): Closure
+    {
+        return function (FormEvent $event) {
             $form = $event->getForm();
             $loginMode = $event->getData()[PunchoutCatalogConnectionSetupTransfer::LOGIN_MODE] ?? null;
 
@@ -185,11 +201,6 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
 
             $this->updateCompanyUserFieldChoices($form, $idParentCompanyBusinessUnit);
         };
-
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback);
-
-        return $this;
     }
 
     /**
@@ -264,7 +275,8 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
         $companyBusinessUnitCollectionTransfer = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitCollection(
-                (new CompanyBusinessUnitCriteriaFilterTransfer())->setIdParentCompanyBusinessUnit($idParentCompanyBusinessUnit)
+                (new CompanyBusinessUnitCriteriaFilterTransfer())
+                    ->setIdParentCompanyBusinessUnit($idParentCompanyBusinessUnit)
             );
 
         $parentCompanyBusinessUnitTransfer = $this->getFactory()
@@ -297,7 +309,8 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
         $companyUserCollectionTransfer = $this->getFactory()
             ->getCompanyUserFacade()
             ->getCompanyUserCollection(
-                (new CompanyUserCriteriaFilterTransfer())->setIdCompanyBusinessUnit($idParentCompanyBusinessUnit)
+                (new CompanyUserCriteriaFilterTransfer())
+                    ->setIdCompanyBusinessUnit($idParentCompanyBusinessUnit)
             );
 
         $companyUsers = [];

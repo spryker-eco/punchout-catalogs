@@ -26,7 +26,7 @@ class CompanyBusinessUnitController extends AbstractController
     protected const KEY_TEXT = 'text';
     protected const KEY_RESULTS = 'results';
 
-    protected const PARAM_PARENT_COMPANY_BUSINESS_UNIT = 'id-parent-company-business-unit';
+    protected const PARAM_ID_PARENT_COMPANY_BUSINESS_UNIT = 'id-parent-company-business-unit';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -37,12 +37,14 @@ class CompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $idParentCompanyBusinessUnit = $this->castId($request->query->getInt(static::PARAM_PARENT_COMPANY_BUSINESS_UNIT));
-        $parentCompanyBusinessUnit = $this->getFactory()
+        $idParentCompanyBusinessUnit = $this->castId(
+            $request->query->getInt(static::PARAM_ID_PARENT_COMPANY_BUSINESS_UNIT)
+        );
+        $parentCompanyBusinessUnitTransfer = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
             ->findCompanyBusinessUnitById($idParentCompanyBusinessUnit);
 
-        if (!$parentCompanyBusinessUnit) {
+        if (!$parentCompanyBusinessUnitTransfer) {
             throw new NotFoundHttpException();
         }
 
@@ -54,8 +56,8 @@ class CompanyBusinessUnitController extends AbstractController
             );
 
         return $this->jsonResponse([
-            static::KEY_RESULTS => $this->prepareChoices($companyBusinessUnitCollectionTransfer)
-                ?: [$this->prepareChoice($parentCompanyBusinessUnit)],
+            static::KEY_RESULTS => $this->prepareCompanyBusinessUnitChoices($companyBusinessUnitCollectionTransfer)
+                ?: [$this->prepareCompanyBusinessUnitChoice($parentCompanyBusinessUnitTransfer)],
         ]);
     }
 
@@ -64,12 +66,12 @@ class CompanyBusinessUnitController extends AbstractController
      *
      * @return array
      */
-    protected function prepareChoices(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer): array
+    protected function prepareCompanyBusinessUnitChoices(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer): array
     {
         $companyBusinessUnits = [];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $companyBusinessUnits[] = $this->prepareChoice($companyBusinessUnitTransfer);
+            $companyBusinessUnits[] = $this->prepareCompanyBusinessUnitChoice($companyBusinessUnitTransfer);
         }
 
         return $companyBusinessUnits;
@@ -80,7 +82,7 @@ class CompanyBusinessUnitController extends AbstractController
      *
      * @return array
      */
-    protected function prepareChoice(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array
+    protected function prepareCompanyBusinessUnitChoice(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): array
     {
         return [
             static::KEY_ID => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),

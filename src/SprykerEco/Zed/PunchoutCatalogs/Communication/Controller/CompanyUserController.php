@@ -24,7 +24,7 @@ class CompanyUserController extends AbstractController
     protected const KEY_TEXT = 'text';
     protected const KEY_RESULTS = 'results';
 
-    protected const PARAM_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
+    protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -33,7 +33,9 @@ class CompanyUserController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $idCompanyBusinessUnit = $this->castId($request->query->getInt(static::PARAM_COMPANY_BUSINESS_UNIT));
+        $idCompanyBusinessUnit = $this->castId(
+            $request->query->getInt(static::PARAM_ID_COMPANY_BUSINESS_UNIT)
+        );
 
         $companyUserCollectionTransfer = $this->getFactory()
             ->getCompanyUserFacade()
@@ -43,7 +45,7 @@ class CompanyUserController extends AbstractController
             );
 
         return $this->jsonResponse([
-            static::KEY_RESULTS => $this->prepareChoices($companyUserCollectionTransfer),
+            static::KEY_RESULTS => $this->prepareCompanyUserChoices($companyUserCollectionTransfer),
         ]);
     }
 
@@ -52,7 +54,7 @@ class CompanyUserController extends AbstractController
      *
      * @return array
      */
-    protected function prepareChoices(CompanyUserCollectionTransfer $companyUserCollectionTransfer): array
+    protected function prepareCompanyUserChoices(CompanyUserCollectionTransfer $companyUserCollectionTransfer): array
     {
         $companyUsers = [];
 

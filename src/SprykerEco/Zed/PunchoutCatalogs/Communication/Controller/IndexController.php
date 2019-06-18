@@ -31,6 +31,8 @@ class IndexController extends AbstractController
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
     protected const MESSAGE_CONNECTION_ADDED = 'Connection "%connection_name%" was created successfully.';
 
+    protected const GLOSSARY_PARAM_CONNECTION_NAME = '%connection_name%';
+
     /**
      * @return array
      */
@@ -73,7 +75,7 @@ class IndexController extends AbstractController
 
             if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
                 $this->addSuccessMessage(static::MESSAGE_CONNECTION_ADDED, [
-                    '%connection_name%' => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                    static::GLOSSARY_PARAM_CONNECTION_NAME => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
                         ->getName(),
                 ]);
             }
@@ -137,7 +139,7 @@ class IndexController extends AbstractController
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_CONNECTION_UPDATED, [
-                '%connection_name%' => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                static::MESSAGE_CONNECTION_UPDATED => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
                     ->getName(),
             ]);
         }

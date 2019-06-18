@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 
 /**
  * Inherited Methods
@@ -48,6 +50,11 @@ class PunchoutCatalogsBusinessTester extends Actor
     protected const CONNECTION_CART_MAPPING = 'Test mapping';
     protected const CONNECTION_CART_ENCODING = 'url-encoded';
     protected const CONNECTION_CART_MAX_DESCRIPTION_LENGTH = 256;
+    protected const CONNECTION_NAME = 'Test name';
+    protected const CONNECTION_USERNAME = 'Test username';
+    protected const CONNECTION_TYPE = 'Test type';
+    protected const CONNECTION_FORMAT = 'Test format';
+    protected const CONNECTION_PASSWORD = 'Test password';
 
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
@@ -97,6 +104,7 @@ class PunchoutCatalogsBusinessTester extends Actor
 
     /**
      * @param int $idCompanyBusinessUnit
+     *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer
      */
     public function createPunchoutCatalogsConnectionSetupTransfer(int $idCompanyBusinessUnit): PunchoutCatalogConnectionSetupTransfer
@@ -116,5 +124,59 @@ class PunchoutCatalogsBusinessTester extends Actor
             ->setMaxDescriptionLength(static::CONNECTION_CART_MAX_DESCRIPTION_LENGTH)
             ->setMapping(static::CONNECTION_CART_MAPPING)
             ->setEncoding(static::CONNECTION_CART_ENCODING);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
+     */
+    public function createPunchoutCatalogConnection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): PunchoutCatalogConnectionTransfer
+    {
+        $punchoutCatalogConnectionTransfer = $this->havePunchoutCatalogConnection([
+            PunchoutCatalogConnectionTransfer::NAME => static::CONNECTION_NAME,
+            PunchoutCatalogConnectionTransfer::USERNAME => static::CONNECTION_USERNAME,
+            PunchoutCatalogConnectionTransfer::PASSWORD => static::CONNECTION_PASSWORD,
+            PunchoutCatalogConnectionTransfer::TYPE => static::CONNECTION_TYPE,
+            PunchoutCatalogConnectionTransfer::FORMAT => static::CONNECTION_FORMAT,
+            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+            PunchoutCatalogConnectionTransfer::SETUP => $this->createPunchoutCatalogsConnectionSetupTransfer($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()),
+            PunchoutCatalogConnectionTransfer::CART => $this->createPunchoutCatalogsConnectionCartTransfer(),
+        ]);
+
+        return $punchoutCatalogConnectionTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer
+     */
+    public function createPunchoutCatalogTransaction(): PunchoutCatalogTransactionTransfer
+    {
+        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection($companyBusinessUnitTransfer);
+
+        return $this->havePunchoutCatalogTransaction([
+            PunchoutCatalogTransactionTransfer::CONNECTION => $punchoutCatalogConnectionTransfer,
+            PunchoutCatalogTransactionTransfer::TYPE => static::CONNECTION_NAME,
+            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ]);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
+     */
+    public function createPunchoutCatalogConnectionTransfer(): PunchoutCatalogConnectionTransfer
+    {
+        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnit();
+
+        return (new PunchoutCatalogConnectionTransfer())
+            ->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
+            ->setName(static::CONNECTION_NAME)
+            ->setUsername(static::CONNECTION_USERNAME)
+            ->setPassword(static::CONNECTION_PASSWORD)
+            ->setType(static::CONNECTION_TYPE)
+            ->setFormat(static::CONNECTION_FORMAT)
+            ->setSetup($this->createPunchoutCatalogsConnectionSetupTransfer($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()))
+            ->setCart($this->createPunchoutCatalogsConnectionCartTransfer());
     }
 }
