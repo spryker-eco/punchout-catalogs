@@ -32,7 +32,6 @@ class PunchoutCatalogOciConnectionFormatPlugin extends AbstractPlugin implements
     /**
      * {@inheritdoc}
      * - Returns a form that is capable of handling all attributes related to the OCI connection format.
-
      *
      * @api
      *

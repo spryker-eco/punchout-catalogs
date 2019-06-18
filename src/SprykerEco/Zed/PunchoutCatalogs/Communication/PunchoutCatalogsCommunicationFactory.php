@@ -141,7 +141,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
-    protected function getConnectionFormatPlugins(): array
+    public function getConnectionFormatPlugins(): array
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_FORMAT);
     }
@@ -149,7 +149,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
-    protected function getConnectionTypePlugins(): array
+    public function getConnectionTypePlugins(): array
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_TYPE);
     }
