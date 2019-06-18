@@ -38,7 +38,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
 
     protected const VALIDATION_GROUP_DISABLED = 'disabled';
 
-    protected const DEPENDENT_GROUP_TYPE = 'type';
+    protected const DEPENDENT_FIELD_GROUP_CONNECTION_TYPE = 'type';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -140,7 +140,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 ],
                 'attr' => [
                     'class' => 'dependent-trigger',
-                    'data-dependent-group' => static::DEPENDENT_GROUP_TYPE,
+                    'data-dependent-group' => static::DEPENDENT_FIELD_GROUP_CONNECTION_TYPE,
                 ],
             ]
         );
@@ -185,7 +185,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'attr' => [
                     'class' => 'dependent-child',
                     'data-dependent-type' => $connectionType,
-                    'data-dependent-group' => static::DEPENDENT_GROUP_TYPE,
+                    'data-dependent-group' => static::DEPENDENT_FIELD_GROUP_CONNECTION_TYPE,
                 ],
             ]);
         }
