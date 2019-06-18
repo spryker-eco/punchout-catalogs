@@ -10,16 +10,16 @@ $(document).ready(function() {
     createToggleElements();
 
     $('.toggle-trigger').each(function (index, selectItem) {
-        var group = $(selectItem).data('toggle-group'),
-            type = selectItem.value,
-            items = getItems(group),
-            activeItem = getActiveItem(group, type);
+        var group = $(selectItem).data('toggle-group');
+        var selectedValue = selectItem.value;
+        var items = getItems(group);
+        var activeItem = getActiveItem(group, selectedValue);
 
         toggleItems(items, activeItem);
 
         $(selectItem).on('change', function (event) {
-            type = event.target.value;
-            activeItem = getActiveItem(group, type);
+            selectedValue = event.target.value;
+            activeItem = getActiveItem(group, selectedValue);
 
             toggleItems(items, activeItem);
         });
@@ -33,8 +33,8 @@ $(document).ready(function() {
         return $('.toggle-inner-item[data-toggle-group=' + group + ']').parent('.toggle-item');
     }
 
-    function getActiveItem(group, type) {
-        return $('.toggle-inner-item[data-toggle-group=' + group + '][data-toggle-type=' + type + ']').parent('.toggle-item');
+    function getActiveItem(group, selectedValue) {
+        return $('.toggle-inner-item[data-toggle-group=' + group + '][data-toggle-type=' + selectedValue + ']').parent('.toggle-item');
     }
 
     function showItems(activeItem) {
