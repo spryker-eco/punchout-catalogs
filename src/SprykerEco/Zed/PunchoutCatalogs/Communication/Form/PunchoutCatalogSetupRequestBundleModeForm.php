@@ -28,6 +28,8 @@ class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
     protected const OPTION_LABEL_BUNDLE_MODE_COMPOSITE = 'Composite';
     protected const OPTION_LABEL_BUNDLE_MODE_SINGLE = 'Single';
 
+    protected const FIELD_LABEL_BUNDLE_MODE = 'Bundle Mode';
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -51,6 +53,7 @@ class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
                 static::BUNDLE_MODE_COMPOSITE => static::OPTION_LABEL_BUNDLE_MODE_COMPOSITE,
                 static::BUNDLE_MODE_SINGLE => static::OPTION_LABEL_BUNDLE_MODE_SINGLE,
             ],
+            'label' => static::FIELD_LABEL_BUNDLE_MODE,
             'constraints' => new NotBlank(),
             'property_path' => PunchoutCatalogConnectionTransfer::CART . '.' . PunchoutCatalogConnectionCartTransfer::BUNDLE_MODE,
         ]);
