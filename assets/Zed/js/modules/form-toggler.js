@@ -7,26 +7,26 @@
 
 $(document).ready(function() {
 
-    createToggleElements();
+    initToggleElements();
 
-    $('.toggle-trigger').each(function (index, selectItem) {
-        var group = $(selectItem).data('toggle-group');
-        var selectedValue = selectItem.value;
-        var items = getItems(group);
-        var activeItem = getActiveItem(group, selectedValue);
+    function initToggleElements() {
+        $('.toggle-inner-item').parent('.form-group').addClass('toggle-item');
 
-        toggleItems(items, activeItem);
-
-        $(selectItem).on('change', function (event) {
-            selectedValue = event.target.value;
-            activeItem = getActiveItem(group, selectedValue);
+        $('.toggle-trigger').each(function (index, selectItem) {
+            var group = $(selectItem).data('toggle-group');
+            var selectedValue = selectItem.value;
+            var items = getItems(group);
+            var activeItem = getActiveItem(group, selectedValue);
 
             toggleItems(items, activeItem);
-        });
-    });
 
-    function createToggleElements() {
-        $('.toggle-inner-item').parent('.form-group').addClass('toggle-item');
+            $(selectItem).on('change', function (event) {
+                selectedValue = event.target.value;
+                activeItem = getActiveItem(group, selectedValue);
+
+                toggleItems(items, activeItem);
+            });
+        });
     }
 
     function getItems(group) {
