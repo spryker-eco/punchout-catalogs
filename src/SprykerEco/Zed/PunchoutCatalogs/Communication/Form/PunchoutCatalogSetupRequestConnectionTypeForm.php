@@ -30,7 +30,7 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCartSubForm($builder)
-            ->executeExtendFormPlugins($builder)
+            ->executeFormExtensionPlugins($builder)
             ->addSetupSubForm($builder);
     }
 
@@ -69,7 +69,7 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
      *
      * @return $this
      */
-    protected function executeExtendFormPlugins(FormBuilderInterface $builder)
+    protected function executeFormExtensionPlugins(FormBuilderInterface $builder)
     {
         $setupRequestFormExtensionPlugins = $this->getFactory()
             ->getSetupRequestFormExtensionPlugins();

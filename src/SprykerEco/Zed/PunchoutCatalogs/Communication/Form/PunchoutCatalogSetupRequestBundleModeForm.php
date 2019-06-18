@@ -50,8 +50,8 @@ class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::BUNDLE_MODE, ChoiceType::class, [
             'choices' => [
-                static::BUNDLE_MODE_COMPOSITE => static::OPTION_LABEL_BUNDLE_MODE_COMPOSITE,
-                static::BUNDLE_MODE_SINGLE => static::OPTION_LABEL_BUNDLE_MODE_SINGLE,
+                static::OPTION_LABEL_BUNDLE_MODE_COMPOSITE => static::BUNDLE_MODE_COMPOSITE,
+                static::OPTION_LABEL_BUNDLE_MODE_SINGLE => static::BUNDLE_MODE_SINGLE,
             ],
             'label' => static::FIELD_LABEL_BUNDLE_MODE,
             'constraints' => new NotBlank(),
