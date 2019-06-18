@@ -49,9 +49,9 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addLoginModeField($builder)
-            ->addCompanyBusinessUnitField($builder, [])
+            ->addCompanyBusinessUnitField($builder)
             ->addCompanyBusinessUnitFieldListeners($builder)
-            ->addCompanyUserField($builder, [])
+            ->addCompanyUserField($builder)
             ->addCompanyUserFieldListeners($builder);
     }
 
@@ -92,15 +92,13 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnitField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, array_merge(
-            $this->getCompanyBusinessUnitFieldOptions(),
-            $options
+            $this->getCompanyBusinessUnitFieldOptions()
         ));
 
         return $this;
@@ -108,16 +106,15 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $options
      *
      * @return $this
      */
-    protected function addCompanyUserField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyUserField(FormBuilderInterface $builder)
     {
         $builder->add(
             PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER,
             SelectType::class,
-            array_merge($this->getCompanyUserFieldOptions(), $options)
+            $this->getCompanyUserFieldOptions()
         );
 
         return $this;
