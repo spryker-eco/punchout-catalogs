@@ -22,8 +22,8 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
 {
-    protected const BUNDLE_MODE_COMPOSITE = 'composite';
-    protected const BUNDLE_MODE_SINGLE = 'single';
+    protected const OPTION_VALUE_BUNDLE_MODE_COMPOSITE = 'composite';
+    protected const OPTION_VALUE_BUNDLE_MODE_SINGLE = 'single';
 
     protected const OPTION_LABEL_BUNDLE_MODE_COMPOSITE = 'Composite';
     protected const OPTION_LABEL_BUNDLE_MODE_SINGLE = 'Single';
@@ -50,11 +50,13 @@ class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::BUNDLE_MODE, ChoiceType::class, [
             'choices' => [
-                static::OPTION_LABEL_BUNDLE_MODE_COMPOSITE => static::BUNDLE_MODE_COMPOSITE,
-                static::OPTION_LABEL_BUNDLE_MODE_SINGLE => static::BUNDLE_MODE_SINGLE,
+                static::OPTION_LABEL_BUNDLE_MODE_COMPOSITE => static::OPTION_VALUE_BUNDLE_MODE_COMPOSITE,
+                static::OPTION_LABEL_BUNDLE_MODE_SINGLE => static::OPTION_VALUE_BUNDLE_MODE_SINGLE,
             ],
             'label' => static::FIELD_LABEL_BUNDLE_MODE,
-            'constraints' => new NotBlank(),
+            'constraints' => [
+                new NotBlank(),
+            ],
             'property_path' => PunchoutCatalogConnectionTransfer::CART . '.' . PunchoutCatalogConnectionCartTransfer::BUNDLE_MODE,
         ]);
 
