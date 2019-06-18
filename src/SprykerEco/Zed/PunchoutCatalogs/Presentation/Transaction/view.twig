@@ -5,6 +5,10 @@
 {% block head_title widget_title | trans %}
 {% block section_title widget_title | trans %}
 
+{% block action %}
+    {{ backActionButton('/punchout-catalogs/transaction', 'Back' | trans) }}
+{% endblock %}
+
 {% block content %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Transaction Details' } %}
         {% block widget_content %}
