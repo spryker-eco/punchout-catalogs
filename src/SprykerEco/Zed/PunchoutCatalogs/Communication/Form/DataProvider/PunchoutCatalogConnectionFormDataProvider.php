@@ -23,23 +23,23 @@ class PunchoutCatalogConnectionFormDataProvider
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
-    protected $punchoutCatalogConnectionFormatPlugins;
+    protected $connectionFormatPlugins;
 
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
-    protected $punchoutCatalogConnectionTypePlugins;
+    protected $connectionTypePlugins;
 
     /**
      * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $punchoutCatalogConnectionFormatPlugins
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[] $punchoutCatalogConnectionTypePlugins
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $connectionFormatPlugins
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[] $connectionTypePlugins
      */
-    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade, array $punchoutCatalogConnectionFormatPlugins, array $punchoutCatalogConnectionTypePlugins)
+    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade, array $connectionFormatPlugins, array $connectionTypePlugins)
     {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
-        $this->punchoutCatalogConnectionFormatPlugins = $punchoutCatalogConnectionFormatPlugins;
-        $this->punchoutCatalogConnectionTypePlugins = $punchoutCatalogConnectionTypePlugins;
+        $this->connectionFormatPlugins = $connectionFormatPlugins;
+        $this->connectionTypePlugins = $connectionTypePlugins;
     }
 
     /**
@@ -95,8 +95,8 @@ class PunchoutCatalogConnectionFormDataProvider
     {
         $connectionFormatSubForms = [];
 
-        foreach ($this->punchoutCatalogConnectionFormatPlugins as $punchoutCatalogConnectionFormatPlugin) {
-            $connectionFormatSubForms[$punchoutCatalogConnectionFormatPlugin->getConnectionFormat()] = $punchoutCatalogConnectionFormatPlugin->getType();
+        foreach ($this->connectionFormatPlugins as $connectionFormatPlugin) {
+            $connectionFormatSubForms[$connectionFormatPlugin->getConnectionFormat()] = $connectionFormatPlugin->getType();
         }
 
         return $connectionFormatSubForms;
@@ -109,8 +109,8 @@ class PunchoutCatalogConnectionFormDataProvider
     {
         $connectionTypeSubForms = [];
 
-        foreach ($this->punchoutCatalogConnectionTypePlugins as $punchoutCatalogConnectionTypePlugin) {
-            $connectionTypeSubForms[$punchoutCatalogConnectionTypePlugin->getConnectionType()] = $punchoutCatalogConnectionTypePlugin->getType();
+        foreach ($this->connectionTypePlugins as $connectionTypePlugin) {
+            $connectionTypeSubForms[$connectionTypePlugin->getConnectionType()] = $connectionTypePlugin->getType();
         }
 
         return $connectionTypeSubForms;

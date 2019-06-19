@@ -77,8 +77,8 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     {
         return new PunchoutCatalogConnectionFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getPunchoutCatalogConnectionFormatPlugins(),
-            $this->getPunchoutCatalogConnectionTypePlugins()
+            $this->getConnectionFormatPlugins(),
+            $this->getConnectionTypePlugins()
         );
     }
 
@@ -141,16 +141,16 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
-    public function getPunchoutCatalogConnectionFormatPlugins(): array
+    public function getConnectionFormatPlugins(): array
     {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT);
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_FORMAT);
     }
 
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
-    public function getPunchoutCatalogConnectionTypePlugins(): array
+    public function getConnectionTypePlugins(): array
     {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE);
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_TYPE);
     }
 }

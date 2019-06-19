@@ -34,8 +34,8 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_VAULT = 'FACADE_VAULT';
 
-    public const PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT = 'PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT';
-    public const PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE = 'PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE';
+    public const PLUGINS_CONNECTION_FORMAT = 'PLUGINS_CONNECTION_FORMAT';
+    public const PLUGINS_CONNECTION_TYPE = 'PLUGINS_CONNECTION_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -214,8 +214,8 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addConnectionFormatPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT, function (Container $container) {
-            return $this->getPunchoutCatalogConnectionFormatPlugins();
+        $container->set(static::PLUGINS_CONNECTION_FORMAT, function (Container $container) {
+            return $this->getConnectionFormatPlugins();
         });
 
         return $container;
@@ -228,8 +228,8 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addConnectionTypePlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE, function (Container $container) {
-            return $this->getPunchoutCatalogConnectionTypePlugins();
+        $container->set(static::PLUGINS_CONNECTION_TYPE, function (Container $container) {
+            return $this->getConnectionTypePlugins();
         });
 
         return $container;
@@ -238,7 +238,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
-    protected function getPunchoutCatalogConnectionFormatPlugins(): array
+    protected function getConnectionFormatPlugins(): array
     {
         return [];
     }
@@ -246,7 +246,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestConnectionTypePlugin[]
      */
-    protected function getPunchoutCatalogConnectionTypePlugins(): array
+    protected function getConnectionTypePlugins(): array
     {
         return [];
     }
