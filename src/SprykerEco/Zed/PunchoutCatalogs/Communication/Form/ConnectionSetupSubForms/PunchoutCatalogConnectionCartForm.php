@@ -28,11 +28,6 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class PunchoutCatalogConnectionCartForm extends AbstractType
 {
-    protected const FIELD_LABEL_MAX_DESCRIPTION_LENGTH = 'Set Description length on "Transfer to Requisition"';
-    protected const FIELD_LABEL_ENCODING = 'Cart Encoding';
-    protected const FIELD_LABEL_MAPPING = 'Cart Mapping';
-    protected const FIELD_LABEL_DEFAULT_SUPPLIER_ID = 'Default Supplier ID';
-
     protected const MAX_DESCRIPTION_LENGTH = 99999;
 
     protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/ConnectionForm/max_description_length.twig';
@@ -72,7 +67,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addMaxDescriptionLengthField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::MAX_DESCRIPTION_LENGTH, IntegerType::class, [
-            'label' => static::FIELD_LABEL_MAX_DESCRIPTION_LENGTH,
+            'label' => 'Set Description length on "Transfer to Requisition"',
             'required' => false,
             'constraints' => [
                 new Range([
@@ -99,7 +94,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addEncodingField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::ENCODING, ChoiceType::class, [
-            'label' => static::FIELD_LABEL_ENCODING,
+            'label' => 'Cart Encoding',
             'choices' => [
                 'base64' => 'base64',
                 'url-encoded' => 'url-encoded',
@@ -121,7 +116,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addMappingField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::MAPPING, TextareaType::class, [
-            'label' => static::FIELD_LABEL_MAPPING,
+            'label' => 'Cart Mapping',
             'required' => false,
         ]);
 
@@ -136,7 +131,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addDefaultSupplierIdField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::DEFAULT_SUPPLIER_ID, TextType::class, [
-            'label' => static::FIELD_LABEL_DEFAULT_SUPPLIER_ID,
+            'label' => 'Default Supplier ID',
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 64]),

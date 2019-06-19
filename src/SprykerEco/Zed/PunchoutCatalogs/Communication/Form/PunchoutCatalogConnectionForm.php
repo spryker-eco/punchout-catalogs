@@ -33,9 +33,6 @@ class PunchoutCatalogConnectionForm extends AbstractType
     public const OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES = 'OPTION_CONNECTION_FORMAT_FORMS';
     public const OPTION_CONNECTION_TYPE_SUB_FORM_TYPES = 'OPTION_CONNECTION_TYPE_SUB_FORM_TYPES';
 
-    protected const BUSINESS_UNIT_FIELD_PLACEHOLDER = 'Choose business unit';
-    protected const BUSINESS_UNIT_FIELD_LABEL = 'Business unit';
-
     protected const VALIDATION_GROUP_DISABLED = 'disabled';
 
     protected const DEPENDENT_FIELD_GROUP_CONNECTION_TYPE = 'type';
@@ -87,6 +84,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     protected function addNameField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::NAME, TextType::class, [
+            'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 255]),
@@ -110,6 +108,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             PunchoutCatalogConnectionTransfer::FORMAT,
             ChoiceType::class,
             [
+                'label' => 'Format',
                 'choices' => array_combine($formats, $formats),
                 'constraints' => [
                     new NotBlank(),
@@ -134,6 +133,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             PunchoutCatalogConnectionTransfer::TYPE,
             ChoiceType::class,
             [
+                'Label' => 'Type',
                 'choices' => array_combine($types, $types),
                 'constraints' => [
                     new NotBlank(),
@@ -288,6 +288,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     protected function addAddMappingField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::MAPPING, TextareaType::class, [
+            'Label' => 'Mapping',
             'required' => false,
         ]);
 
@@ -307,8 +308,8 @@ class PunchoutCatalogConnectionForm extends AbstractType
             SelectType::class,
             [
                 'choices' => $options[static::OPTION_BUSINESS_UNIT_CHOICES],
-                'placeholder' => static::BUSINESS_UNIT_FIELD_PLACEHOLDER,
-                'label' => static::BUSINESS_UNIT_FIELD_LABEL,
+                'placeholder' => 'Choose business unit',
+                'label' => 'Business unit',
                 'constraints' => [
                     new NotBlank(),
                 ],

@@ -14,6 +14,7 @@ use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogConnectionFormDataProvider;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogSetupRequestConnectionTypeFormDataProvider;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsConnectionsTable;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsTransactionLogTable;
@@ -79,6 +80,17 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyBusinessUnitFacade(),
             $this->getConnectionFormatPlugins(),
             $this->getConnectionTypePlugins()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
+     */
+    public function createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider(): PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
+    {
+        return new PunchoutCatalogSetupRequestConnectionTypeFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyUserFacade()
         );
     }
 
