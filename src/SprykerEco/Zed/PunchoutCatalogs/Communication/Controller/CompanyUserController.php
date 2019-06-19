@@ -37,11 +37,21 @@ class CompanyUserController extends AbstractController
             $request->query->getInt(static::PARAM_ID_COMPANY_BUSINESS_UNIT)
         );
 
+        $companyUserIds = $this->getFactory()
+            ->getCompanyBusinessUnitFacade()
+            ->getCompanyUserIdsByIdCompanyBusinessUnit($idCompanyBusinessUnit);
+
+        if (!$companyUserIds) {
+            return $this->jsonResponse([
+                static::KEY_RESULTS => [],
+            ]);
+        }
+
         $companyUserCollectionTransfer = $this->getFactory()
             ->getCompanyUserFacade()
             ->getCompanyUserCollection(
                 (new CompanyUserCriteriaFilterTransfer())
-                    ->setIdCompanyBusinessUnit($idCompanyBusinessUnit)
+                    ->setCompanyUserIds($companyUserIds)
             );
 
         return $this->jsonResponse([

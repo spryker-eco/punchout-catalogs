@@ -37,12 +37,12 @@ class CompanyBusinessUnitController extends AbstractController
      */
     public function indexAction(Request $request): JsonResponse
     {
-        $idParentCompanyBusinessUnit = $this->castId(
+        $parentCompanyBusinessUnitId = $this->castId(
             $request->query->getInt(static::PARAM_ID_PARENT_COMPANY_BUSINESS_UNIT)
         );
         $parentCompanyBusinessUnitTransfer = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
-            ->findCompanyBusinessUnitById($idParentCompanyBusinessUnit);
+            ->findCompanyBusinessUnitById($parentCompanyBusinessUnitId);
 
         if (!$parentCompanyBusinessUnitTransfer) {
             throw new NotFoundHttpException();
@@ -52,7 +52,7 @@ class CompanyBusinessUnitController extends AbstractController
             ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitCollection(
                 (new CompanyBusinessUnitCriteriaFilterTransfer())
-                    ->setIdParentCompanyBusinessUnit($idParentCompanyBusinessUnit)
+                    ->setParentCompanyBusinessUnitId($parentCompanyBusinessUnitId)
             );
 
         return $this->jsonResponse([

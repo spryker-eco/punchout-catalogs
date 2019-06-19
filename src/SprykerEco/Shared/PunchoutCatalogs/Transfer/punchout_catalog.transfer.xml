@@ -59,7 +59,7 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
-        <property name="idParentCompanyBusinessUnit" type="int"/>
+        <property name="parentCompanyBusinessUnitId" type="int"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
@@ -68,7 +68,7 @@
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
-        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="companyUserIds" type="array"/>
     </transfer>
 
     <transfer name="CompanyUser">

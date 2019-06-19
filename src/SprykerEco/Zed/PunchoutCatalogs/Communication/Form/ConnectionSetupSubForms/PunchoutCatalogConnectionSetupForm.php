@@ -149,17 +149,17 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
                 return;
             }
 
-            $idParentCompanyBusinessUnit = $form
+            $parentCompanyBusinessUnitId = $form
                 ->getParent()
                 ->getParent()
                 ->get(PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT)
                 ->getData();
 
-            if (!$idParentCompanyBusinessUnit) {
+            if (!$parentCompanyBusinessUnitId) {
                 return;
             }
 
-            $this->updateCompanyBusinessUnitFieldChoices($form, $idParentCompanyBusinessUnit);
+            $this->updateCompanyBusinessUnitFieldChoices($form, $parentCompanyBusinessUnitId);
         };
     }
 
@@ -170,7 +170,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyUserFieldListeners(FormBuilderInterface $builder)
     {
-        $companyUserEventListenerCallback =  $this->createCompanyUserFormEventListener();
+        $companyUserEventListenerCallback = $this->createCompanyUserFormEventListener();
 
         $builder->addEventListener(FormEvents::PRE_SUBMIT, $companyUserEventListenerCallback);
         $builder->addEventListener(FormEvents::PRE_SET_DATA, $companyUserEventListenerCallback);
@@ -193,17 +193,17 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
                 return;
             }
 
-            $idParentCompanyBusinessUnit = $form
+            $parentCompanyBusinessUnitId = $form
                 ->getParent()
                 ->getParent()
                 ->get(PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT)
                 ->getData();
 
-            if (!$idParentCompanyBusinessUnit) {
+            if (!$parentCompanyBusinessUnitId) {
                 return;
             }
 
-            $this->updateCompanyUserFieldChoices($form, $idParentCompanyBusinessUnit);
+            $this->updateCompanyUserFieldChoices($form, $parentCompanyBusinessUnitId);
         };
     }
 
@@ -239,53 +239,53 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param int $idParentCompanyBusinessUnit
+     * @param int $parentCompanyBusinessUnitId
      *
      * @return void
      */
-    protected function updateCompanyBusinessUnitFieldChoices(FormInterface $form, int $idParentCompanyBusinessUnit): void
+    protected function updateCompanyBusinessUnitFieldChoices(FormInterface $form, int $parentCompanyBusinessUnitId): void
     {
         $form->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, array_merge(
             $this->getCompanyBusinessUnitFieldOptions(),
             [
-                'choices' => $this->getCompanyBusinessUnitChoices($idParentCompanyBusinessUnit),
+                'choices' => $this->getCompanyBusinessUnitChoices($parentCompanyBusinessUnitId),
             ]
         ));
     }
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param int $idParentCompanyBusinessUnit
+     * @param int $parentCompanyBusinessUnitId
      *
      * @return void
      */
-    protected function updateCompanyUserFieldChoices(FormInterface $form, int $idParentCompanyBusinessUnit): void
+    protected function updateCompanyUserFieldChoices(FormInterface $form, int $parentCompanyBusinessUnitId): void
     {
         $form->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER, SelectType::class, array_merge(
             $this->getCompanyUserFieldOptions(),
             [
-                'choices' => $this->getCompanyUserChoices($idParentCompanyBusinessUnit),
+                'choices' => $this->getCompanyUserChoices($parentCompanyBusinessUnitId),
             ]
         ));
     }
 
     /**
-     * @param int $idParentCompanyBusinessUnit
+     * @param int $parentCompanyBusinessUnitId
      *
      * @return array
      */
-    protected function getCompanyBusinessUnitChoices(int $idParentCompanyBusinessUnit): array
+    protected function getCompanyBusinessUnitChoices(int $parentCompanyBusinessUnitId): array
     {
         $companyBusinessUnitCollectionTransfer = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
             ->getCompanyBusinessUnitCollection(
                 (new CompanyBusinessUnitCriteriaFilterTransfer())
-                    ->setIdParentCompanyBusinessUnit($idParentCompanyBusinessUnit)
+                    ->setParentCompanyBusinessUnitId($parentCompanyBusinessUnitId)
             );
 
         $parentCompanyBusinessUnitTransfer = $this->getFactory()
             ->getCompanyBusinessUnitFacade()
-            ->findCompanyBusinessUnitById($idParentCompanyBusinessUnit);
+            ->findCompanyBusinessUnitById($parentCompanyBusinessUnitId);
 
         if (!$parentCompanyBusinessUnitTransfer) {
             return [];
@@ -304,17 +304,25 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     }
 
     /**
-     * @param int $idParentCompanyBusinessUnit
+     * @param int $parentCompanyBusinessUnitId
      *
      * @return array
      */
-    protected function getCompanyUserChoices(int $idParentCompanyBusinessUnit): array
+    protected function getCompanyUserChoices(int $parentCompanyBusinessUnitId): array
     {
+        $companyUserIds = $this->getFactory()
+            ->getCompanyBusinessUnitFacade()
+            ->getCompanyUserIdsByIdCompanyBusinessUnit($parentCompanyBusinessUnitId);
+
+        if (!$companyUserIds) {
+            return $companyUserIds;
+        }
+
         $companyUserCollectionTransfer = $this->getFactory()
             ->getCompanyUserFacade()
             ->getCompanyUserCollection(
                 (new CompanyUserCriteriaFilterTransfer())
-                    ->setIdCompanyBusinessUnit($idParentCompanyBusinessUnit)
+                    ->setCompanyUserIds($companyUserIds)
             );
 
         $companyUsers = [];
