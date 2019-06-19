@@ -56,12 +56,12 @@ class CompanyUserController extends AbstractController
      */
     protected function prepareCompanyUserChoices(CompanyUserCollectionTransfer $companyUserCollectionTransfer): array
     {
-        $companyUsers = [];
+        $companyUsersChoices = [];
 
         foreach ($companyUserCollectionTransfer->getCompanyUsers() as $companyUserTransfer) {
             $customerTransfer = $companyUserTransfer->getCustomer();
 
-            $companyUsers[] = [
+            $companyUsersChoices[] = [
                 static::KEY_ID => $companyUserTransfer->getIdCompanyUser(),
                 static::KEY_TEXT => sprintf(
                     '%s %s (%s)',
@@ -72,6 +72,6 @@ class CompanyUserController extends AbstractController
             ];
         }
 
-        return $companyUsers;
+        return $companyUsersChoices;
     }
 }

@@ -83,7 +83,9 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
                 'class' => 'dependent-trigger',
                 'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
             ],
-            'constraints' => new NotBlank(),
+            'constraints' => [
+                new NotBlank(),
+            ],
         ]);
 
         return $this;
@@ -168,8 +170,10 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyUserFieldListeners(FormBuilderInterface $builder)
     {
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, $this->createCompanyUserFormEventListener());
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, $this->createCompanyUserFormEventListener());
+        $companyUserEventListenerCallback =  $this->createCompanyUserFormEventListener();
+
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, $companyUserEventListenerCallback);
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, $companyUserEventListenerCallback);
 
         return $this;
     }

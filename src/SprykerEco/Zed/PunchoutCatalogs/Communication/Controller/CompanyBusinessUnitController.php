@@ -68,13 +68,13 @@ class CompanyBusinessUnitController extends AbstractController
      */
     protected function prepareCompanyBusinessUnitChoices(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer): array
     {
-        $companyBusinessUnits = [];
+        $companyBusinessUnitChoices = [];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
-            $companyBusinessUnits[] = $this->prepareCompanyBusinessUnitChoice($companyBusinessUnitTransfer);
+            $companyBusinessUnitChoices[] = $this->prepareCompanyBusinessUnitChoice($companyBusinessUnitTransfer);
         }
 
-        return $companyBusinessUnits;
+        return $companyBusinessUnitChoices;
     }
 
     /**
