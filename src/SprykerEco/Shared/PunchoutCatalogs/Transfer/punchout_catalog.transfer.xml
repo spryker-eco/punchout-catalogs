@@ -77,8 +77,8 @@
     </transfer>
 
     <transfer name="Customer">
-        <property name="email" dataBuilderRule="email" />
-        <property name="firstName" dataBuilderRule="firstName" />
-        <property name="lastName" dataBuilderRule="lastName" />
+        <property name="email" />
+        <property name="firstName"/>
+        <property name="lastName"/>
     </transfer>
 </transfers>

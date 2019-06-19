@@ -35,8 +35,11 @@ class PunchoutCatalogConnectionFormDataProvider
      * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $connectionFormatPlugins
      * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[] $connectionTypePlugins
      */
-    public function __construct(PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade, array $connectionFormatPlugins, array $connectionTypePlugins)
-    {
+    public function __construct(
+        PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
+        array $connectionFormatPlugins,
+        array $connectionTypePlugins
+    ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
         $this->connectionFormatPlugins = $connectionFormatPlugins;
         $this->connectionTypePlugins = $connectionTypePlugins;

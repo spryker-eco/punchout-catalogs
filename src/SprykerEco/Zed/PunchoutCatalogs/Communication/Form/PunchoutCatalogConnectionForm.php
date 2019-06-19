@@ -104,17 +104,13 @@ class PunchoutCatalogConnectionForm extends AbstractType
     {
         $formats = array_keys($options[static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES]);
 
-        $builder->add(
-            PunchoutCatalogConnectionTransfer::FORMAT,
-            ChoiceType::class,
-            [
-                'label' => 'Format',
-                'choices' => array_combine($formats, $formats),
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]
-        );
+        $builder->add(PunchoutCatalogConnectionTransfer::FORMAT, ChoiceType::class, [
+            'label' => 'Format',
+            'choices' => array_combine($formats, $formats),
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ]);
 
         return $this;
     }
@@ -129,21 +125,17 @@ class PunchoutCatalogConnectionForm extends AbstractType
     {
         $types = array_keys($options[static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES]);
 
-        $builder->add(
-            PunchoutCatalogConnectionTransfer::TYPE,
-            ChoiceType::class,
-            [
-                'Label' => 'Type',
-                'choices' => array_combine($types, $types),
-                'constraints' => [
-                    new NotBlank(),
-                ],
-                'attr' => [
-                    'class' => 'dependent-trigger',
-                    'data-dependent-group' => static::DEPENDENT_FIELD_GROUP_CONNECTION_TYPE,
-                ],
-            ]
-        );
+        $builder->add(PunchoutCatalogConnectionTransfer::TYPE, ChoiceType::class, [
+            'Label' => 'Type',
+            'choices' => array_combine($types, $types),
+            'constraints' => [
+                new NotBlank(),
+            ],
+            'attr' => [
+                'class' => 'dependent-trigger',
+                'data-dependent-group' => static::DEPENDENT_FIELD_GROUP_CONNECTION_TYPE,
+            ],
+        ]);
 
         return $this;
     }
@@ -267,17 +259,13 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ->getConfig()
             ->getOptions();
 
-        $form->add(
-            $selectedSubFormName,
-            $associatedFormType,
-            array_merge(
-                $options,
-                [
-                    'inherit_data' => true,
-                    'label' => false,
-                ]
-            )
-        );
+        $form->add($selectedSubFormName, $associatedFormType, array_merge(
+            $options,
+            [
+                'inherit_data' => true,
+                'label' => false,
+            ]
+        ));
     }
 
     /**

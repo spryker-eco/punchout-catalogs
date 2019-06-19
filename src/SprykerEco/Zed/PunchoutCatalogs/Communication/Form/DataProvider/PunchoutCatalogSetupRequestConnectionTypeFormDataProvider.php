@@ -92,7 +92,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
     /**
      * @param int $parentCompanyBusinessUnitId
      *
-     * @return array
+     * @return int[]
      */
     public function getCompanyBusinessUnitChoices(int $parentCompanyBusinessUnitId): array
     {
@@ -123,7 +123,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
     /**
      * @param int $parentCompanyBusinessUnitId
      *
-     * @return array
+     * @return int[]
      */
     public function getCompanyUserChoices(int $parentCompanyBusinessUnitId): array
     {
@@ -145,6 +145,18 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
         }
 
         return $companyUsers;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCartEncodingChoices(): array
+    {
+        return [
+            'base64' => 'base64',
+            'url-encoded' => 'url-encoded',
+            'no-encoding' => 'no-encoding',
+        ];
     }
 
     /**

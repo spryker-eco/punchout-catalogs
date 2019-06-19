@@ -92,9 +92,11 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
-        $builder->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, array_merge(
+        $builder->add(
+            PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT,
+            SelectType::class,
             $this->getCompanyBusinessUnitFieldOptions()
-        ));
+        );
 
         return $this;
     }

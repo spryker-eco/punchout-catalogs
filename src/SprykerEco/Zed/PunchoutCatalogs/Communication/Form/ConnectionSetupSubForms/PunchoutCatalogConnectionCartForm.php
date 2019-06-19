@@ -93,13 +93,13 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
      */
     protected function addEncodingField(FormBuilderInterface $builder)
     {
+        $choices = $this->getFactory()
+            ->createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider()
+            ->getCartEncodingChoices();
+
         $builder->add(PunchoutCatalogConnectionCartTransfer::ENCODING, ChoiceType::class, [
             'label' => 'Cart Encoding',
-            'choices' => [
-                'base64' => 'base64',
-                'url-encoded' => 'url-encoded',
-                'no-encoding' => 'no-encoding',
-            ],
+            'choices' => $choices,
             'constraints' => [
                 new NotBlank(),
             ],
