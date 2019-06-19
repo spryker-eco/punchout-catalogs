@@ -5,48 +5,49 @@
 
 'use strict';
 
+var TOGGLE_TRIGGER_SELECTOR = '.toggle-trigger';
+var TOGGLE_HOOK_ITEM_SELECTOR = '.toggle-inner-item';
+var TOGGLE_ITEM_CLASS_NAME = 'toggle-item';
+var TOGGLE_GROUP_NAME = 'toggle-group';
+var TOGGLE_TARGET_TYPE = 'toggle-type';
+var VISIBLE_CLASS_NAME = 'active';
+
 $(document).ready(function() {
 
     initToggleElements();
 
     function initToggleElements() {
-        $('.toggle-inner-item').parent('.form-group').addClass('toggle-item');
+        $(TOGGLE_HOOK_ITEM_SELECTOR).parent('.form-group').addClass(TOGGLE_ITEM_CLASS_NAME);
 
-        $('.toggle-trigger').each(function (index, selectItem) {
-            var group = $(selectItem).data('toggle-group');
-            var selectedValue = selectItem.value;
-            var items = getItems(group);
-            var activeItem = getActiveItem(group, selectedValue);
+        $(TOGGLE_TRIGGER_SELECTOR).each(function (index, selectItem) {
+            var groupName = $(selectItem).data(TOGGLE_GROUP_NAME);
+            var currentSelectValue = selectItem.value;
 
-            toggleItems(items, activeItem);
-
-            $(selectItem).on('change', function (event) {
-                selectedValue = event.target.value;
-                activeItem = getActiveItem(group, selectedValue);
-
-                toggleItems(items, activeItem);
-            });
+            toggleItemsVisibility(groupName, currentSelectValue);
+            $(selectItem).on('change', { group: groupName }, onChangeHandler);
         });
     }
 
     function getItems(group) {
-        return $('.toggle-inner-item[data-toggle-group=' + group + ']').parent('.toggle-item');
+        return $(TOGGLE_HOOK_ITEM_SELECTOR + '[data-' + TOGGLE_GROUP_NAME + '=' + group + ']').parent('.' + TOGGLE_ITEM_CLASS_NAME);
     }
 
-    function getActiveItem(group, selectedValue) {
-        return $('.toggle-inner-item[data-toggle-group=' + group + '][data-toggle-type=' + selectedValue + ']').parent('.toggle-item');
+    function getActiveItem(group, currentSelectValue) {
+        return $(TOGGLE_HOOK_ITEM_SELECTOR + '[data-' + TOGGLE_GROUP_NAME + '=' + group + '][data-' + TOGGLE_TARGET_TYPE + '=' + currentSelectValue + ']').parent('.' + TOGGLE_ITEM_CLASS_NAME);
+    }
+    
+    function onChangeHandler(event) {
+        var currentSelectValue = event.target.value;
+        var groupName = event.data.group;
+
+        toggleItemsVisibility(groupName, currentSelectValue);
     }
 
-    function showItems(activeItem) {
-        activeItem.addClass('active').find(':input').attr('disabled', false);
-    }
+    function toggleItemsVisibility(groupName, currentSelectValue) {
+        var items = getItems(groupName);
+        var activeItem = getActiveItem(groupName, currentSelectValue);
 
-    function hideItems(toggleItems) {
-        toggleItems.removeClass('active').find(':input').attr('disabled', true);
-    }
-
-    function toggleItems(items, activeItem) {
-        hideItems(items);
-        showItems(activeItem);
+        items.removeClass(VISIBLE_CLASS_NAME).find(':input').attr('disabled', true);
+        activeItem.addClass(VISIBLE_CLASS_NAME).find(':input').attr('disabled', false);
     }
 });
