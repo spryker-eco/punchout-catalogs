@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -82,7 +83,32 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             ],
         ]);
 
+        $builder->addModelTransformer($this->createLoginModeDependentFieldsModelTransformer());
+
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\CallbackTransformer
+     */
+    protected function createLoginModeDependentFieldsModelTransformer(): CallbackTransformer
+    {
+        return new CallbackTransformer(
+            function (PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer) {
+                if ($punchoutCatalogConnectionSetupTransfer->getLoginMode() === static::LOGIN_MODE_SINGLE_USER) {
+                    $punchoutCatalogConnectionSetupTransfer->setFkCompanyBusinessUnit(null);
+
+                    return $punchoutCatalogConnectionSetupTransfer;
+                }
+
+                $punchoutCatalogConnectionSetupTransfer->setFkCompanyUser(null);
+
+                return $punchoutCatalogConnectionSetupTransfer;
+            },
+            function (PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer) {
+                return $punchoutCatalogConnectionSetupTransfer;
+            }
+        );
     }
 
     /**
@@ -92,11 +118,14 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyBusinessUnitField(FormBuilderInterface $builder)
     {
-        $builder->add(
-            PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT,
-            SelectType::class,
-            $this->getCompanyBusinessUnitFieldOptions()
-        );
+        $builder->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, [
+            'label' => 'Default Business Unit',
+            'attr' => [
+                'class' => 'dependent-child',
+                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
+                'data-dependent-type' => static::LOGIN_MODE_DYNAMIC_USER,
+            ],
+        ]);
 
         return $this;
     }
@@ -108,11 +137,14 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
      */
     protected function addCompanyUserField(FormBuilderInterface $builder)
     {
-        $builder->add(
-            PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER,
-            SelectType::class,
-            $this->getCompanyUserFieldOptions()
-        );
+        $builder->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER, SelectType::class, [
+            'label' => 'Single User',
+            'attr' => [
+                'class' => 'dependent-child',
+                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
+                'data-dependent-type' => static::LOGIN_MODE_SINGLE_USER,
+            ],
+        ]);
 
         return $this;
     }
@@ -137,13 +169,6 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     {
         return function (FormEvent $event) {
             $form = $event->getForm();
-            $loginMode = $event->getData()[PunchoutCatalogConnectionSetupTransfer::LOGIN_MODE] ?? null;
-
-            if ($loginMode !== static::LOGIN_MODE_DYNAMIC_USER) {
-                $this->disableCompanyBusinessUnitField($form);
-
-                return;
-            }
 
             $parentCompanyBusinessUnitId = $form
                 ->getParent()
@@ -181,13 +206,6 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     {
         return function (FormEvent $event) {
             $form = $event->getForm();
-            $loginMode = $event->getData()[PunchoutCatalogConnectionSetupTransfer::LOGIN_MODE] ?? null;
-
-            if ($loginMode !== static::LOGIN_MODE_SINGLE_USER) {
-                $this->disableCompanyUserField($form);
-
-                return;
-            }
 
             $parentCompanyBusinessUnitId = $form
                 ->getParent()
@@ -205,36 +223,6 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return void
-     */
-    protected function disableCompanyBusinessUnitField(FormInterface $form): void
-    {
-        $form->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, array_merge(
-            $this->getCompanyBusinessUnitFieldOptions(),
-            [
-                'mapped' => false,
-            ]
-        ));
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     *
-     * @return void
-     */
-    protected function disableCompanyUserField(FormInterface $form): void
-    {
-        $form->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER, SelectType::class, array_merge(
-            $this->getCompanyUserFieldOptions(),
-            [
-                'mapped' => false,
-            ]
-        ));
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param int $parentCompanyBusinessUnitId
      *
      * @return void
@@ -245,8 +233,12 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             ->createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider()
             ->getCompanyBusinessUnitChoices($parentCompanyBusinessUnitId);
 
+        $existingOptions = $form->get(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT)
+            ->getConfig()
+            ->getOptions();
+
         $form->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, array_merge(
-            $this->getCompanyBusinessUnitFieldOptions(),
+            $existingOptions,
             [
                 'choices' => $companyBusinessUnitChoices,
             ]
@@ -265,41 +257,15 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             ->createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider()
             ->getCompanyUserChoices($parentCompanyBusinessUnitId);
 
+        $existingOptions = $form->get(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER)
+            ->getConfig()
+            ->getOptions();
+
         $form->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER, SelectType::class, array_merge(
-            $this->getCompanyUserFieldOptions(),
+            $existingOptions,
             [
                 'choices' => $companyUserChoices,
             ]
         ));
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCompanyBusinessUnitFieldOptions(): array
-    {
-        return [
-            'label' => 'Default Business Unit',
-            'attr' => [
-                'class' => 'dependent-child',
-                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
-                'data-dependent-type' => static::LOGIN_MODE_DYNAMIC_USER,
-            ],
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getCompanyUserFieldOptions(): array
-    {
-        return [
-            'label' => 'Single User',
-            'attr' => [
-                'class' => 'dependent-child',
-                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
-                'data-dependent-type' => static::LOGIN_MODE_SINGLE_USER,
-            ],
-        ];
     }
 }

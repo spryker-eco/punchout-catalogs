@@ -126,7 +126,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
         $types = array_keys($options[static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES]);
 
         $builder->add(PunchoutCatalogConnectionTransfer::TYPE, ChoiceType::class, [
-            'Label' => 'Type',
+            'label' => 'Type',
             'choices' => array_combine($types, $types),
             'constraints' => [
                 new NotBlank(),
@@ -276,7 +276,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     protected function addAddMappingField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::MAPPING, TextareaType::class, [
-            'Label' => 'Mapping',
+            'label' => 'Mapping',
             'required' => false,
         ]);
 
