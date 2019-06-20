@@ -71,8 +71,8 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionSetupTransfer::LOGIN_MODE, ChoiceType::class, [
             'label' => 'Login Mode',
             'choices' => [
-                'single_user' => static::LOGIN_MODE_SINGLE_USER,
-                'dynamic_user_creation' => static::LOGIN_MODE_DYNAMIC_USER,
+                'Single User' => static::LOGIN_MODE_SINGLE_USER,
+                'Dynamic User Creation' => static::LOGIN_MODE_DYNAMIC_USER,
             ],
             'attr' => [
                 'class' => 'dependent-trigger',

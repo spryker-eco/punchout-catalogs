@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -28,9 +30,10 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class PunchoutCatalogConnectionCartForm extends AbstractType
 {
+    protected const MIN_DESCRIPTION_LENGTH = 16;
     protected const MAX_DESCRIPTION_LENGTH = 99999;
 
-    protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/ConnectionForm/max_description_length.twig';
+    protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/Form/Connection/Setup/max_description_length.twig';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -60,6 +63,20 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['min_description_length'] = static::MIN_DESCRIPTION_LENGTH;
+        $view->vars['max_description_length'] = static::MAX_DESCRIPTION_LENGTH;
+
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -71,7 +88,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
             'required' => false,
             'constraints' => [
                 new Range([
-                    'min' => 16,
+                    'min' => static::MIN_DESCRIPTION_LENGTH,
                     'max' => static::MAX_DESCRIPTION_LENGTH,
                 ]),
             ],

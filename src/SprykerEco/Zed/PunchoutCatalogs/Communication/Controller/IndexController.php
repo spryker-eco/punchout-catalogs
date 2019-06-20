@@ -139,7 +139,7 @@ class IndexController extends AbstractController
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_CONNECTION_UPDATED, [
-                static::MESSAGE_CONNECTION_UPDATED => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                static::GLOSSARY_PARAM_CONNECTION_NAME => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
                     ->getName(),
             ]);
         }

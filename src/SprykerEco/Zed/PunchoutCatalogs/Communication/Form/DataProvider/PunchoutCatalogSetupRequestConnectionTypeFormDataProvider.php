@@ -16,9 +16,6 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyU
 
 class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
 {
-    protected const LOGIN_MODE_SINGLE_USER = 'single_user';
-    protected const LOGIN_MODE_DYNAMIC_USER = 'dynamic_user';
-
     protected const DEPENDENT_GROUP_LOGIN_MODE = 'login-mode';
 
     protected const KEY_RESULTS = 'results';
@@ -155,7 +152,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
         return [
             'base64' => 'base64',
             'url-encoded' => 'url-encoded',
-            'no-encoding' => 'no-encoding',
+            'No Encoding' => 'no-encoding',
         ];
     }
 

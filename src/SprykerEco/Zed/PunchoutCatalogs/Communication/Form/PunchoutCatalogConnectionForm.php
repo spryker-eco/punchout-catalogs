@@ -297,7 +297,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             [
                 'choices' => $options[static::OPTION_BUSINESS_UNIT_CHOICES],
                 'placeholder' => 'Choose business unit',
-                'label' => 'Business unit',
+                'label' => 'Business Unit',
                 'constraints' => [
                     new NotBlank(),
                 ],
