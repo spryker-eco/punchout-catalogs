@@ -169,8 +169,8 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
      */
-    public function getSetupRequestFormExtensionPlugins(): array
+    public function getPunchoutCatalogSetupRequestFormExtensionPlugins(): array
     {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_SETUP_REQUEST_FORM_EXTENSION);
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_PUNCHOUT_CATALOG_SETUP_REQUEST_FORM_EXTENSION);
     }
 }

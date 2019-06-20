@@ -71,11 +71,11 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
      */
     protected function executeSetupRequestFormExtensionPlugins(FormBuilderInterface $builder)
     {
-        $setupRequestFormExtensionPlugins = $this->getFactory()
-            ->getSetupRequestFormExtensionPlugins();
+        $setupRequestPunchoutCatalogsFormExtensionPlugins = $this->getFactory()
+            ->getPunchoutCatalogSetupRequestFormExtensionPlugins();
 
-        foreach ($setupRequestFormExtensionPlugins as $setupRequestFormExtensionPlugin) {
-            $builder->add(md5($setupRequestFormExtensionPlugin->getType()), $setupRequestFormExtensionPlugin->getType(), [
+        foreach ($setupRequestPunchoutCatalogsFormExtensionPlugins as $setupRequestPunchoutCatalogsFormExtensionPlugin) {
+            $builder->add(md5($setupRequestPunchoutCatalogsFormExtensionPlugin->getType()), $setupRequestPunchoutCatalogsFormExtensionPlugin->getType(), [
                 'inherit_data' => true,
                 'label' => false,
             ]);

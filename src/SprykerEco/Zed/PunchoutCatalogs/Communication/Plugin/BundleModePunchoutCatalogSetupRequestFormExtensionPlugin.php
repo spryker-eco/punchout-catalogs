@@ -9,7 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin;
 
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogSetupRequestBundleModeForm;
 
-class PunchoutCatalogBundleModeSetupRequestFormExtensionPlugin implements PunchoutCatalogSetupRequestFormExtensionPluginInterface
+class BundleModePunchoutCatalogSetupRequestFormExtensionPlugin implements PunchoutCatalogSetupRequestFormExtensionPluginInterface
 {
     /**
      * {@inheritdoc}
