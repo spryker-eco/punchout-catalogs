@@ -14,6 +14,7 @@ use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogConnectionFormDataProvider;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogSetupRequestConnectionTypeFormDataProvider;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsConnectionsTable;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsTransactionLogTable;
@@ -77,8 +78,19 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     {
         return new PunchoutCatalogConnectionFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getConnectionFormatPlugins(),
-            $this->getConnectionTypePlugins()
+            $this->getPunchoutCatalogConnectionFormatPlugins(),
+            $this->getPunchoutCatalogConnectionTypePlugins()
+        );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
+     */
+    public function createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider(): PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
+    {
+        return new PunchoutCatalogSetupRequestConnectionTypeFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->getCompanyUserFacade()
         );
     }
 
@@ -141,17 +153,17 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
-    protected function getConnectionFormatPlugins(): array
+    public function getPunchoutCatalogConnectionFormatPlugins(): array
     {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_FORMAT);
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT);
     }
 
     /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
-    protected function getConnectionTypePlugins(): array
+    public function getPunchoutCatalogConnectionTypePlugins(): array
     {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_CONNECTION_TYPE);
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE);
     }
 
     /**

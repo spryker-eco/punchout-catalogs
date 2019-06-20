@@ -1,4 +1,4 @@
-Punch-out Catalog,Punch-out Katalog
+PunchOut Catalog,PunchOut Katalog
 New connection,Neue Verbindung
 Name,Name
 Company,Firma
@@ -38,7 +38,25 @@ Raw Data,Rohdaten
 View Transaction:,Transaktion ansehen:
 Transaction Details,Transaktionsdetails
 Transaction ID,Transaktions-ID
-View transactions log,Transaktionsprotokoll ansehen
-Transactions log,Transaktionsprotokoll
+View Transactions Log,Transaktionsprotokoll ansehen
+Transactions Log,Transaktionsprotokoll
 Unsuccessful,Erfolglos
 Successful,Erfolgreich
+"Set Description length on ""Transfer to Requisition""","Set Description length on ""Transfer to Requisition"""
+Cart Encoding,Cart Encoding
+Cart Mapping,Cart Mapping
+Default Supplier ID,Default Supplier ID
+Login Mode,Login Mode
+Default Business Unit,Default Business Unit
+Single User,Single User
+Dynamic User Creation,Dynamic User Creation
+Default Business Unit,Default Business Unit
+base64,base64
+url-encoded,url-encoded
+No Encoding,No Encoding
+Mapping,Mapping
+single_request,Single Request
+General,General
+Connection Format,Connection Format
+Connection Type,Connection Type
+"A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied."

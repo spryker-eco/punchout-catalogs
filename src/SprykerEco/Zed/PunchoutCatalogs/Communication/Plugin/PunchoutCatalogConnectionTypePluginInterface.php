@@ -17,12 +17,18 @@ interface PunchoutCatalogConnectionTypePluginInterface extends FormTypeInterface
      * - Value is a lowercase key, capable for glossary key.
      *
      * Example: setup_request
+     *
+     * @api
+     *
+     * @return string
      */
     public function getConnectionType(): string;
 
     /**
      * Specification:
      * - Retrieves a form that is capable of handling all attributes related to the given connection type.
+     *
+     * @api
      *
      * @return string
      */

@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -28,14 +30,10 @@ use Symfony\Component\Validator\Constraints\Range;
  */
 class PunchoutCatalogConnectionCartForm extends AbstractType
 {
-    protected const FIELD_LABEL_MAX_DESCRIPTION_LENGTH = 'Set Description length on "Transfer to Requisition"';
-    protected const FIELD_LABEL_ENCODING = 'Cart Encoding';
-    protected const FIELD_LABEL_MAPPING = 'Cart Mapping';
-    protected const FIELD_LABEL_DEFAULT_SUPPLIER_ID = 'Default Supplier ID';
-
+    protected const MIN_DESCRIPTION_LENGTH = 16;
     protected const MAX_DESCRIPTION_LENGTH = 99999;
 
-    protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/ConnectionForm/max_description_length.twig';
+    protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/Form/Connection/Setup/max_description_length.twig';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -65,6 +63,20 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\Form\FormView $view
+     * @param \Symfony\Component\Form\FormInterface $form
+     * @param array $options
+     *
+     * @return void
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['min_description_length'] = static::MIN_DESCRIPTION_LENGTH;
+        $view->vars['max_description_length'] = static::MAX_DESCRIPTION_LENGTH;
+
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
@@ -72,11 +84,11 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addMaxDescriptionLengthField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::MAX_DESCRIPTION_LENGTH, IntegerType::class, [
-            'label' => static::FIELD_LABEL_MAX_DESCRIPTION_LENGTH,
+            'label' => 'Set Description length on "Transfer to Requisition"',
             'required' => false,
             'constraints' => [
                 new Range([
-                    'min' => 16,
+                    'min' => static::MIN_DESCRIPTION_LENGTH,
                     'max' => static::MAX_DESCRIPTION_LENGTH,
                 ]),
             ],
@@ -86,7 +98,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
         ]);
 
         $builder->get(PunchoutCatalogConnectionCartTransfer::MAX_DESCRIPTION_LENGTH)
-            ->addViewTransformer($this->createMaxDescriptionLengthTransformer());
+            ->addViewTransformer($this->createMaxDescriptionLengthViewTransformer());
 
         return $this;
     }
@@ -98,14 +110,16 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
      */
     protected function addEncodingField(FormBuilderInterface $builder)
     {
+        $choices = $this->getFactory()
+            ->createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider()
+            ->getCartEncodingChoices();
+
         $builder->add(PunchoutCatalogConnectionCartTransfer::ENCODING, ChoiceType::class, [
-            'label' => static::FIELD_LABEL_ENCODING,
-            'choices' => [
-                'base64' => 'base64',
-                'url-encoded' => 'url-encoded',
-                'no-encoding' => 'no-encoding',
+            'label' => 'Cart Encoding',
+            'choices' => $choices,
+            'constraints' => [
+                new NotBlank(),
             ],
-            'constraints' => new NotBlank(),
         ]);
 
         return $this;
@@ -119,7 +133,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addMappingField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::MAPPING, TextareaType::class, [
-            'label' => static::FIELD_LABEL_MAPPING,
+            'label' => 'Cart Mapping',
             'required' => false,
         ]);
 
@@ -134,7 +148,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected function addDefaultSupplierIdField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionCartTransfer::DEFAULT_SUPPLIER_ID, TextType::class, [
-            'label' => static::FIELD_LABEL_DEFAULT_SUPPLIER_ID,
+            'label' => 'Default Supplier ID',
             'constraints' => [
                 new NotBlank(),
                 new Length(['max' => 64]),
@@ -147,7 +161,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createMaxDescriptionLengthTransformer(): CallbackTransformer
+    protected function createMaxDescriptionLengthViewTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function (string $maxDescriptionLength) {

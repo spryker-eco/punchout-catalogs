@@ -28,6 +28,8 @@ interface PunchoutCatalogConnectionFormatPluginInterface extends FormTypeInterfa
      * Specification:
      * - Retrieves a form that is capable of handling all attributes related to the given connection format.
      *
+     * @api
+     *
      * @return string
      */
     public function getType(): string;
