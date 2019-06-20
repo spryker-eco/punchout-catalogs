@@ -15,7 +15,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogSetupReque
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
  * @method \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface getFacade()
  */
-class PunchoutCatalogSetupRequestConnectionTypePlugin extends AbstractPlugin implements PunchoutCatalogConnectionTypePluginInterface
+class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin implements PunchoutCatalogConnectionTypePluginInterface
 {
     /**
      * {@inheritdoc}

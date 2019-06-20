@@ -8,14 +8,14 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogOciConnectionFormatForm;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogCXmlConnectionFormatForm;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Communication\PunchoutCatalogsCommunicationFactory getFactory()
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
  * @method \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface getFacade()
  */
-class PunchoutCatalogOciConnectionFormatPlugin extends AbstractPlugin implements PunchoutCatalogConnectionFormatPluginInterface
+class CXmlPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implements PunchoutCatalogConnectionFormatPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -26,12 +26,12 @@ class PunchoutCatalogOciConnectionFormatPlugin extends AbstractPlugin implements
      */
     public function getConnectionFormat(): string
     {
-        return 'oci';
+        return 'cxml';
     }
 
     /**
      * {@inheritdoc}
-     * - Returns a form that is capable of handling all attributes related to the OCI connection format.
+     * - Returns a form that is capable of handling all attributes related to the cXml connection format.
      *
      * @api
      *
@@ -39,6 +39,6 @@ class PunchoutCatalogOciConnectionFormatPlugin extends AbstractPlugin implements
      */
     public function getType(): string
     {
-        return PunchoutCatalogOciConnectionFormatForm::class;
+        return PunchoutCatalogCXmlConnectionFormatForm::class;
     }
 }
