@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PunchoutCatalogConnectionSetupForm extends AbstractType
 {
-    protected const DEPENDENT_GROUP_LOGIN_MODE = 'login-mode';
+    protected const TOGGLE_GROUP_LOGIN_MODE = 'login-mode';
 
     protected const LOGIN_MODE_SINGLE_USER = 'single_user';
     protected const LOGIN_MODE_DYNAMIC_USER = 'dynamic_user';
@@ -75,8 +75,8 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
                 'Dynamic User Creation' => static::LOGIN_MODE_DYNAMIC_USER,
             ],
             'attr' => [
-                'class' => 'dependent-trigger',
-                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
+                'class' => 'toggle-trigger',
+                'data-toggle-group' => static::TOGGLE_GROUP_LOGIN_MODE,
             ],
             'constraints' => [
                 new NotBlank(),
@@ -121,9 +121,9 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_BUSINESS_UNIT, SelectType::class, [
             'label' => 'Default Business Unit',
             'attr' => [
-                'class' => 'dependent-child',
-                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
-                'data-dependent-type' => static::LOGIN_MODE_DYNAMIC_USER,
+                'class' => 'toggle-inner-item',
+                'data-toggle-group' => static::TOGGLE_GROUP_LOGIN_MODE,
+                'data-toggle-type' => static::LOGIN_MODE_DYNAMIC_USER,
             ],
         ]);
 
@@ -140,9 +140,9 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionSetupTransfer::FK_COMPANY_USER, SelectType::class, [
             'label' => 'Single User',
             'attr' => [
-                'class' => 'dependent-child',
-                'data-dependent-group' => static::DEPENDENT_GROUP_LOGIN_MODE,
-                'data-dependent-type' => static::LOGIN_MODE_SINGLE_USER,
+                'class' => 'toggle-inner-item',
+                'data-toggle-group' => static::TOGGLE_GROUP_LOGIN_MODE,
+                'data-toggle-type' => static::LOGIN_MODE_SINGLE_USER,
             ],
         ]);
 
