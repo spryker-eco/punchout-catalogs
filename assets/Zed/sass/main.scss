@@ -3,8 +3,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-'use strict';
+/* Toggle the elements */
+.toggle-item {
+    display: none;
 
-require('../sass/main.scss');
-require('./modules/form-toggler.js');
-require('./modules/main');
+    &.active {
+        display: block;
+    }
+}

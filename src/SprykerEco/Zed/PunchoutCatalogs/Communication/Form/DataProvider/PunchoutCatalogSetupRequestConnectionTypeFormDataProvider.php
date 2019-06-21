@@ -16,7 +16,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyU
 
 class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
 {
-    protected const DEPENDENT_GROUP_LOGIN_MODE = 'login-mode';
+    protected const TOGGLE_GROUP_LOGIN_MODE = 'login-mode';
 
     protected const KEY_RESULTS = 'results';
     protected const KEY_ID = 'id';

@@ -35,7 +35,8 @@ class PunchoutCatalogConnectionForm extends AbstractType
 
     protected const VALIDATION_GROUP_DISABLED = 'disabled';
 
-    protected const DEPENDENT_FIELD_GROUP_CONNECTION_TYPE = 'type';
+    protected const TOGGLE_GROUP_CONNECTION_TYPE = 'type';
+    protected const TOGGLE_GROUP_CONNECTION_FORMAT = 'format';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -110,6 +111,10 @@ class PunchoutCatalogConnectionForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
+            'attr' => [
+                'class' => 'toggle-trigger',
+                'data-toggle-group' => static::TOGGLE_GROUP_CONNECTION_FORMAT,
+            ],
         ]);
 
         return $this;
@@ -132,8 +137,8 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 new NotBlank(),
             ],
             'attr' => [
-                'class' => 'dependent-trigger',
-                'data-dependent-group' => static::DEPENDENT_FIELD_GROUP_CONNECTION_TYPE,
+                'class' => 'toggle-trigger',
+                'data-toggle-group' => static::TOGGLE_GROUP_CONNECTION_TYPE,
             ],
         ]);
 
@@ -153,6 +158,11 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'mapped' => false,
                 'validation_groups' => static::VALIDATION_GROUP_DISABLED,
                 'label' => false,
+                'attr' => [
+                    'class' => 'toggle-inner-item',
+                    'data-toggle-type' => $connectionFormat,
+                    'data-toggle-group' => static::TOGGLE_GROUP_CONNECTION_FORMAT,
+                ],
             ]);
         }
 
@@ -175,9 +185,9 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'validation_groups' => static::VALIDATION_GROUP_DISABLED,
                 'label' => false,
                 'attr' => [
-                    'class' => 'dependent-child',
-                    'data-dependent-type' => $connectionType,
-                    'data-dependent-group' => static::DEPENDENT_FIELD_GROUP_CONNECTION_TYPE,
+                    'class' => 'toggle-inner-item',
+                    'data-toggle-type' => $connectionType,
+                    'data-toggle-group' => static::TOGGLE_GROUP_CONNECTION_TYPE,
                 ],
             ]);
         }
