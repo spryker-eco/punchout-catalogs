@@ -110,6 +110,10 @@ class PunchoutCatalogConnectionForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
+            'attr' => [
+                'class' => 'toggle-trigger',
+                'data-toggle-group' => 'format',
+            ],
         ]);
 
         return $this;
@@ -153,6 +157,11 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'mapped' => false,
                 'validation_groups' => static::VALIDATION_GROUP_DISABLED,
                 'label' => false,
+                'attr' => [
+                    'class' => 'toggle-inner-item',
+                    'data-toggle-type' => $connectionFormat,
+                    'data-toggle-group' => 'format',
+                ],
             ]);
         }
 

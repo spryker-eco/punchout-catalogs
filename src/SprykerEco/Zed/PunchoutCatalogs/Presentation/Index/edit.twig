@@ -15,3 +15,13 @@
         </div>
     </div>
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script type="text/javascript" src="/assets/js/spryker-zed-punchout-catalogs-main.js"></script>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-punchout-catalogs-main.css">
+{% endblock %}
