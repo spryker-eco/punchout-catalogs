@@ -36,6 +36,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     protected const VALIDATION_GROUP_DISABLED = 'disabled';
 
     protected const TOGGLE_GROUP_CONNECTION_TYPE = 'type';
+    protected const TOGGLE_GROUP_CONNECTION_FORMAT = 'format';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -112,7 +113,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ],
             'attr' => [
                 'class' => 'toggle-trigger',
-                'data-toggle-group' => 'format',
+                'data-toggle-group' => static::TOGGLE_GROUP_CONNECTION_FORMAT,
             ],
         ]);
 
@@ -160,7 +161,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'attr' => [
                     'class' => 'toggle-inner-item',
                     'data-toggle-type' => $connectionFormat,
-                    'data-toggle-group' => 'format',
+                    'data-toggle-group' => static::TOGGLE_GROUP_CONNECTION_FORMAT,
                 ],
             ]);
         }
