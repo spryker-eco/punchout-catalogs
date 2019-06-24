@@ -18,10 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CompanyUserController extends AbstractController
 {
-    protected const KEY_ID = 'id';
-    protected const KEY_TEXT = 'text';
-    protected const KEY_RESULTS = 'results';
-
     protected const PARAM_ID_COMPANY_BUSINESS_UNIT = 'id-company-business-unit';
 
     /**
