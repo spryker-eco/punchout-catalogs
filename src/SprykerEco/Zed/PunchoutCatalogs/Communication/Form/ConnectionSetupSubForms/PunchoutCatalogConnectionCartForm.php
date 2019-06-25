@@ -73,7 +73,6 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     {
         $view->vars['min_description_length'] = static::MIN_DESCRIPTION_LENGTH;
         $view->vars['max_description_length'] = static::MAX_DESCRIPTION_LENGTH;
-
     }
 
     /**

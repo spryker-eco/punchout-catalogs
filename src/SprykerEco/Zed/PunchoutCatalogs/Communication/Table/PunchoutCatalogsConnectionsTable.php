@@ -41,6 +41,11 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const URL_EDIT_PUNCHOUT_CATALOG_CONNECTION = '/punchout-catalogs/index/edit';
 
     /**
+     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\EntryPointsController::viewAction()
+     */
+    protected const URL_PUNCHOUT_CATALOG_ENTRY_POINTS_VIEW = '/punchout-catalogs/entry-points/view';
+
+    /**
      * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::activateAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOG_CONNECTION_ACTIVATE = '/punchout-catalogs/connection/activate';
@@ -215,6 +220,13 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
                 static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
             ]),
             'Edit'
+        );
+
+        $buttons[] = $this->generateViewButton(
+            Url::generate(static::URL_PUNCHOUT_CATALOG_ENTRY_POINTS_VIEW, [
+                static::URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION => $punchoutCatalogConnection->getIdPunchoutCatalogConnection(),
+            ]),
+            'Entry Points'
         );
 
         $buttons[] = $this->generateConnectionStatusChangeButton($punchoutCatalogConnection);

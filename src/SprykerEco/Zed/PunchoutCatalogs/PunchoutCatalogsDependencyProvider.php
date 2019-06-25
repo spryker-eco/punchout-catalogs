@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeBridge;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyUserFacadeBridge;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToPunchoutCatalogBridge;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeBridge;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceBridge;
 
@@ -33,6 +34,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     public const FACADE_COMPANY_BUSINESS_UNIT = 'FACADE_COMPANY_BUSINESS_UNIT';
     public const FACADE_COMPANY_USER = 'FACADE_COMPANY_USER';
     public const FACADE_VAULT = 'FACADE_VAULT';
+    public const FACADE_PUNCHOUT_CATALOG = 'FACADE_PUNCHOUT_CATALOG';
 
     public const PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT = 'PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT';
     public const PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE = 'PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE';
@@ -53,6 +55,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
         $container = $this->addCompanyBusinessUnitFacade($container);
         $container = $this->addCompanyUserFacade($container);
+        $container = $this->addPunchoutCatalogFacade($container);
         $container = $this->addPunchoutCatalogConnectionFormatPlugins($container);
         $container = $this->addPunchoutCatalogConnectionTypePlugins($container);
         $container = $this->addPunchoutCatalogSetupRequestFormExtensionPlugins($container);
@@ -203,6 +206,22 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container->set(static::FACADE_VAULT, function (Container $container) {
             return new PunchoutCatalogsToVaultFacadeBridge(
                 $container->getLocator()->vault()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPunchoutCatalogFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PUNCHOUT_CATALOG, function (Container $container) {
+            return new PunchoutCatalogsToPunchoutCatalogBridge(
+                $container->getLocator()->punchoutCatalog()->facade()
             );
         });
 

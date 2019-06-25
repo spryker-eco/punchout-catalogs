@@ -20,6 +20,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsConnecti
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Table\PunchoutCatalogsTransactionLogTable;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyUserFacadeInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToPunchoutCatalogFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceInterface;
 use SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsDependencyProvider;
 use Symfony\Component\Form\FormInterface;
@@ -148,6 +149,14 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     public function getCompanyUserFacade(): PunchoutCatalogsToCompanyUserFacadeInterface
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::FACADE_COMPANY_USER);
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToPunchoutCatalogFacadeInterface
+     */
+    public function getPunchoutCatalogFacade(): PunchoutCatalogsToPunchoutCatalogFacadeInterface
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::FACADE_PUNCHOUT_CATALOG);
     }
 
     /**

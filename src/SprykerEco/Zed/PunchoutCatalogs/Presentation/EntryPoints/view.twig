@@ -1,0 +1,35 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Entry Points for Connection:' | trans ~ ' ' ~ punchoutCatalogConnection.name %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ backActionButton('/punchout-catalogs', 'List of PunchOut connections' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Entry Points' } %}
+        {% block widget_content %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{ 'Store Name' | trans }}</th>
+                        <th>{{ 'URL Entry Point' | trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for punchoutCatalogEntryPoint in punchoutCatalogEntryPoints %}
+                        <tr>
+                            <td>{{ punchoutCatalogEntryPoint.store.name }}</td>
+                            <td>
+                                <a href="{{ punchoutCatalogEntryPoint.url }}" target="_blank">{{ punchoutCatalogEntryPoint.url }}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

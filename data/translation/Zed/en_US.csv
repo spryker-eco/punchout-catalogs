@@ -61,3 +61,7 @@ Connection Format,Connection Format
 Connection Type,Connection Type
 "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied."
 Bundle Mode,Bundle Mode
+Entry Points,Entry Points
+Store Name,Store Name
+URL Entry Point,URL Entry Point
+Entry Points for Connection,Entry Points for Connection
