@@ -22,7 +22,7 @@ class ConnectionController extends AbstractController
     protected const PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::indexAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::indexAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
 

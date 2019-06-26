@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 class EntryPointsController extends AbstractController
 {
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::indexAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::indexAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
 
