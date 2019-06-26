@@ -36,22 +36,22 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const URL_PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::editAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\IndexController::editAction()
      */
     protected const URL_EDIT_PUNCHOUT_CATALOG_CONNECTION = '/punchout-catalogs/index/edit';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\EntryPointsController::viewAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\EntryPointsController::viewAction()
      */
     protected const URL_VIEW_PUNCHOUT_CATALOG_ENTRY_POINTS = '/punchout-catalogs/entry-points/view';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::activateAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::activateAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOG_CONNECTION_ACTIVATE = '/punchout-catalogs/connection/activate';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::deactivateAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\ConnectionController::deactivateAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOG_CONNECTION_DEACTIVATE = '/punchout-catalogs/connection/deactivate';
 
