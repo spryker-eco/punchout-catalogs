@@ -28,6 +28,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     protected const CONNECTION_USERNAME = 'Test username';
     protected const CONNECTION_TYPE = 'Test type';
     protected const CONNECTION_FORMAT = 'Test format';
+    protected const CONNECTION_PASSWORD = 'Test password';
     protected const NOT_EXISTING_TRANSACTION_ID = 0;
 
     /**
@@ -78,6 +79,61 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindConnectionByIdRetrievesPasswordFormVaultWhenItExists(): void
+    {
+        // Arrange
+        $idPunchoutCatalogConnection = $this->tester->havePunchoutCatalogConnection([
+            PunchoutCatalogConnectionTransfer::NAME => static::CONNECTION_NAME,
+            PunchoutCatalogConnectionTransfer::USERNAME => static::CONNECTION_USERNAME,
+            PunchoutCatalogConnectionTransfer::TYPE => static::CONNECTION_TYPE,
+            PunchoutCatalogConnectionTransfer::FORMAT => static::CONNECTION_FORMAT,
+            PunchoutCatalogConnectionTransfer::PASSWORD => static::CONNECTION_PASSWORD,
+            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $this->tester->createCompanyBusinessUnit()
+                ->getIdCompanyBusinessUnit(),
+        ])->getIdPunchoutCatalogConnection();
+
+        // Act
+        $punchoutCatalogConnectionTransfer = $this->tester->getFacade()
+            ->findConnectionById($idPunchoutCatalogConnection);
+
+        // Assert
+        $this->assertNotNull($punchoutCatalogConnectionTransfer);
+        $this->assertEquals(static::CONNECTION_PASSWORD, $punchoutCatalogConnectionTransfer->getPassword());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateConnectionCreatesStoresPasswordToVault(): void
+    {
+        // Arrange
+        $companyBusinessUnitEntity = $this->tester->createCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
+            ->setFkCompanyBusinessUnit($companyBusinessUnitEntity->getIdCompanyBusinessUnit())
+            ->setName(static::CONNECTION_NAME)
+            ->setUsername(static::CONNECTION_USERNAME)
+            ->setPassword(static::CONNECTION_PASSWORD)
+            ->setType(static::CONNECTION_TYPE)
+            ->setFormat(static::CONNECTION_FORMAT);
+
+        // Act
+        $punchoutCatalogResponseTransfer = $this->tester->getFacade()
+            ->createConnection($punchoutCatalogConnectionTransfer);
+
+        // Assert
+        $this->assertTrue($punchoutCatalogResponseTransfer->getIsSuccessful());
+
+        $password = $this->tester->retrieveConnectionPasswordFromVault(
+            $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                ->getIdPunchoutCatalogConnection()
+        );
+
+        $this->assertEquals(static::CONNECTION_PASSWORD, $password);
+    }
+
+    /**
+     * @return void
+     */
     public function testCreateConnectionCreatesConnectionWhenAllParametersAreSet(): void
     {
         // Arrange
@@ -86,6 +142,7 @@ class PunchoutCatalogsFacadeTest extends Unit
             ->setFkCompanyBusinessUnit($companyBusinessUnitEntity->getIdCompanyBusinessUnit())
             ->setName(static::CONNECTION_NAME)
             ->setUsername(static::CONNECTION_USERNAME)
+            ->setPassword(static::CONNECTION_PASSWORD)
             ->setType(static::CONNECTION_TYPE)
             ->setFormat(static::CONNECTION_FORMAT);
 

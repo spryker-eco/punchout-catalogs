@@ -22,6 +22,9 @@ class IndexController extends AbstractController
 {
     protected const PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
 
+    /**
+     * @uses  SprykerEco\Zed\PunchoutCatalogs\Communication\Controller::indexAction()
+     */
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
 
     protected const MESSAGE_CONNECTION_UPDATED = 'Connection updated';
@@ -73,6 +76,8 @@ class IndexController extends AbstractController
             }
 
             $this->handleResponseErrors($punchoutCatalogResponseTransfer);
+
+            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
         }
 
         return [
@@ -107,6 +112,8 @@ class IndexController extends AbstractController
 
         if ($punchoutCatalogConnectionEditForm->isSubmitted() && $punchoutCatalogConnectionEditForm->isValid()) {
             $this->processPunchoutCatalogConnectionEditForm($punchoutCatalogConnectionEditForm);
+
+            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
         }
 
         return [

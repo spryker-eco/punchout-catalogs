@@ -37,6 +37,11 @@ class PunchoutCatalogsBusinessTester extends Actor
     */
 
     /**
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter::PASSWORD_VAULT_DATA_TYPE
+     */
+    protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
+
+    /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
      */
     public function createCompany(): CompanyTransfer
@@ -64,5 +69,21 @@ class PunchoutCatalogsBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::FK_COMPANY => $this->createCompany()->getIdCompany(),
             ]
         );
+    }
+
+    /**
+     * @param int $idPunchoutCatalogConnection
+     *
+     * @return string|null
+     */
+    public function retrieveConnectionPasswordFromVault(int $idPunchoutCatalogConnection): ?string
+    {
+        return $this->getLocator()
+            ->vault()
+            ->facade()
+            ->retrieve(
+                static::VAULT_DATA_TYPE_PASSWORD,
+                $idPunchoutCatalogConnection
+            );
     }
 }
