@@ -163,8 +163,8 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
     public function getBundleModeChoices(): array
     {
         return [
-            'composite' => 'Composite',
-            'single' => 'Single',
+            'Composite' => 'composite',
+            'Single' => 'single',
         ];
     }
 
