@@ -51,7 +51,7 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
     {
         $punchoutCatalogTransactionEntity = $this->getFactory()
             ->getPunchoutCatalogTransactionPropelQuery()
-            ->joinWithPunchoutCatalogConnection()
+            ->leftJoinWithPunchoutCatalogConnection()
             ->filterByIdPunchoutCatalogTransaction($idPunchoutCatalogTransaction)
             ->findOne();
 

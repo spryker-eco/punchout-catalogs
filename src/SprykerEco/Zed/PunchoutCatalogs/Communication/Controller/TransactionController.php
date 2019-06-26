@@ -24,7 +24,7 @@ class TransactionController extends AbstractController
     /**
      * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::indexAction()
      */
-    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = 'punchout-catalogs/transaction/index';
+    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/transaction/index';
 
     /**
      * @return array
