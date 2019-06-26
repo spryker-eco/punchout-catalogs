@@ -7,3 +7,4 @@
 
 require('../sass/main.scss');
 require('./modules/form-toggler.js');
+require('./modules/main');

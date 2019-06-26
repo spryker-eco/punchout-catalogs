@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 class PunchoutCatalogsToCompanyBusinessUnitFacadeBridge implements PunchoutCatalogsToCompanyBusinessUnitFacadeInterface
 {
@@ -33,5 +34,25 @@ class PunchoutCatalogsToCompanyBusinessUnitFacadeBridge implements PunchoutCatal
     public function getCompanyBusinessUnitCollection(CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer): CompanyBusinessUnitCollectionTransfer
     {
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
+     */
+    public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer
+    {
+        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit);
+    }
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return int[]
+     */
+    public function getCompanyUserIdsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
+    {
+        return $this->companyBusinessUnitFacade->getCompanyUserIdsByIdCompanyBusinessUnit($idCompanyBusinessUnit);
     }
 }

@@ -72,6 +72,19 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
     protected function executeCreateConnectionTransaction(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
         $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsEntityManager->createPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        $punchoutCatalogConnectionTransfer->setSetup(
+            $this->punchoutCatalogsEntityManager->createPunchoutCatalogConnectionSetup(
+                $punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection(),
+                $punchoutCatalogConnectionTransfer->getSetup()
+            )
+        );
+        $punchoutCatalogConnectionTransfer->setCart(
+            $this->punchoutCatalogsEntityManager->createPunchoutCatalogConnectionCart(
+                $punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection(),
+                $punchoutCatalogConnectionTransfer->getCart()
+            )
+        );
+
         $this->storePassword($punchoutCatalogConnectionTransfer);
 
         return (new PunchoutCatalogResponseTransfer())
@@ -99,14 +112,20 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
     protected function executeUpdateConnectionTransaction(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogResponseTransfer
     {
         $punchoutCatalogConnectionTransfer->requireIdPunchoutCatalogConnection();
+        $existingPunchoutCatalogConnectionTransfer = $this->punchoutCatalogsRepository->findConnectionById(
+            $punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection()
+        );
 
-        if (!$this->punchoutCatalogsRepository->findConnectionById($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection())) {
+        if (!$existingPunchoutCatalogConnectionTransfer) {
             return (new PunchoutCatalogResponseTransfer())
                 ->addMessage((new MessageTransfer())->setValue(static::MESSAGE_ERROR_DURING_CONNECTION_UPDATE))
                 ->setIsSuccessful(false);
         }
 
         $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnectionSetup($punchoutCatalogConnectionTransfer->getSetup());
+        $this->punchoutCatalogsEntityManager->updatePunchoutCatalogConnectionCart($punchoutCatalogConnectionTransfer->getCart());
+
         $this->storePassword($punchoutCatalogConnectionTransfer);
 
         return (new PunchoutCatalogResponseTransfer())

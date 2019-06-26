@@ -16,11 +16,27 @@
         <property name="connection" type="PunchoutCatalogConnection" />
         <property name="message" type="string" />
         <property name="status" type="bool" />
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit" />
         <property name="type" type="string" />
         <property name="connectionSessionId" type="string" />
         <property name="rawData" type="string" />
         <property name="errorMessage" type="string" />
         <property name="createdAt" type="string" />
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionCart">
+        <property name="idPunchoutCatalogCart" type="int" />
+        <property name="maxDescriptionLength" type="int" />
+        <property name="defaultSupplierId" type="string" />
+        <property name="encoding" type="string" />
+        <property name="mapping" type="string" />
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionSetup">
+        <property name="idPunchoutCatalogSetup" type="int" />
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompanyUser" type="int" />
+        <property name="loginMode" type="string" />
     </transfer>
 
     <transfer name="PunchoutCatalogResponse">
@@ -43,6 +59,26 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
-        <property name="idCompany" type="int"/>
+        <property name="parentCompanyBusinessUnitId" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="companyUserIds" type="array"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email" />
+        <property name="firstName"/>
+        <property name="lastName"/>
     </transfer>
 </transfers>

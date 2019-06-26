@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Table;
 
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\PunchoutCatalog\Persistence\Map\PgwPunchoutCatalogConnectionTableMap;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
@@ -25,6 +26,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     protected const COL_ID_PUNCHOUT_CATALOG_CONNECTION = 'id_punchout_catalog_connection';
     protected const COL_NAME = 'name';
     protected const COL_COMPANY = 'company';
+    protected const COL_BUSINESS_UNIT = 'business_unit';
     protected const COL_TYPE = 'type';
     protected const COL_FORMAT = 'format';
     protected const COL_CREATED_AT = 'created_at';
@@ -78,9 +80,10 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PUNCHOUT_CATALOG_CONNECTION => '#',
             static::COL_NAME => 'Name',
+            static::COL_STATUS => 'Status',
             static::COL_TYPE => 'Type',
             static::COL_COMPANY => 'Company',
-            static::COL_STATUS => 'Status',
+            static::COL_BUSINESS_UNIT => 'Business Unit',
             static::COL_FORMAT => 'Format',
             static::COL_CREATED_AT => 'Created At',
             static::COL_ACTIONS => 'Actions',
@@ -91,6 +94,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             static::COL_NAME,
             static::COL_TYPE,
             static::COL_COMPANY,
+            static::COL_BUSINESS_UNIT,
             static::COL_STATUS,
             static::COL_FORMAT,
             static::COL_CREATED_AT,
@@ -100,6 +104,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             PgwPunchoutCatalogConnectionTableMap::COL_ID_PUNCHOUT_CATALOG_CONNECTION,
             PgwPunchoutCatalogConnectionTableMap::COL_NAME,
             SpyCompanyTableMap::COL_NAME,
+            SpyCompanyBusinessUnitTableMap::COL_NAME,
         ]);
 
         $config->setRawColumns([
@@ -145,8 +150,11 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
          $connectionPropelQuery
             ->joinWithCompanyBusinessUnit()
                 ->useCompanyBusinessUnitQuery()
-                ->joinCompany()
-                    ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
+                     ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT)
+                     ->joinCompany()
+                     ->useCompanyQuery()
+                            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
+                    ->endUse()
                 ->endUse();
 
         return $connectionPropelQuery;

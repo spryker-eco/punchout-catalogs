@@ -11,18 +11,36 @@
                 <controller>index</controller>
                 <action>index</action>
                 <visible>1</visible>
+                <pages>
+                    <edit-page>
+                        <label>Edit Transferred Cart Connection</label>
+                        <title>Edit Transferred Cart Connection</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>index</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </edit-page>
+                    <create-page>
+                        <label>Create Transferred Cart Connection</label>
+                        <title>Create Transferred Cart Connection</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>index</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </create-page>
+                </pages>
             </connection>
             <transaction-log>
-                <label>Transactions log</label>
-                <title>Transactions log</title>
+                <label>Transactions Log</label>
+                <title>Transactions Log</title>
                 <bundle>punchout-catalogs</bundle>
                 <controller>transaction</controller>
                 <action>index</action>
                 <visible>1</visible>
                 <pages>
                     <view-page>
-                        <label>View transactions log</label>
-                        <title>View transactions log</title>
+                        <label>View Transactions Log</label>
+                        <title>View Transactions Log</title>
                         <bundle>punchout-catalogs</bundle>
                         <controller>transaction</controller>
                         <action>view</action>

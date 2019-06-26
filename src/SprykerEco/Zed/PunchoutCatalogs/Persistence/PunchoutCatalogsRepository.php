@@ -26,6 +26,8 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
         $punchoutCatalogConnectionEntity = $this->getFactory()
             ->getPunchoutCatalogConnectionPropelQuery()
             ->filterByIdPunchoutCatalogConnection($connectionId)
+            ->leftJoinWithPgwPunchoutCatalogConnectionCart()
+            ->leftJoinWithPgwPunchoutCatalogConnectionSetup()
             ->findOne();
 
         if ($punchoutCatalogConnectionEntity === null) {

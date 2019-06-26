@@ -13,7 +13,6 @@ use Generated\Shared\DataBuilder\PunchoutCatalogTransactionBuilder;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction;
-use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class PunchoutCatalogsHelper extends Module

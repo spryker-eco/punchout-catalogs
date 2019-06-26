@@ -23,13 +23,15 @@ class IndexController extends AbstractController
     protected const PARAM_ID_PUNCHOUT_CATALOG_CONNECTION = 'id-punchout-catalog-connection';
 
     /**
-     * @uses  SprykerEco\Zed\PunchoutCatalogs\Communication\Controller::indexAction()
+     * @uses SprykerEco\Zed\PunchoutCatalogs\Communication\Controller::indexAction()
      */
     protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
 
-    protected const MESSAGE_CONNECTION_UPDATED = 'Connection updated';
+    protected const MESSAGE_CONNECTION_UPDATED = 'Connection "%connection_name%" was updated successfully.';
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
-    protected const MESSAGE_CONNECTION_ADDED = 'Connection added';
+    protected const MESSAGE_CONNECTION_ADDED = 'Connection "%connection_name%" was created successfully.';
+
+    protected const GLOSSARY_PARAM_CONNECTION_NAME = '%connection_name%';
 
     /**
      * @return array
@@ -72,7 +74,10 @@ class IndexController extends AbstractController
                 ->createConnection($punchoutCatalogConnectionsForm->getData());
 
             if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
-                $this->addSuccessMessage(static::MESSAGE_CONNECTION_ADDED);
+                $this->addSuccessMessage(static::MESSAGE_CONNECTION_ADDED, [
+                    static::GLOSSARY_PARAM_CONNECTION_NAME => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                        ->getName(),
+                ]);
             }
 
             $this->handleResponseErrors($punchoutCatalogResponseTransfer);
@@ -118,6 +123,7 @@ class IndexController extends AbstractController
 
         return [
             'punchoutCatalogConnectionForm' => $punchoutCatalogConnectionEditForm->createView(),
+            'idPunchoutCatalogConnection' => $idPunchoutCatalogConnection,
         ];
     }
 
@@ -132,7 +138,10 @@ class IndexController extends AbstractController
             ->updateConnection($punchoutCatalogConnectionEditForm->getData());
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_CONNECTION_UPDATED);
+            $this->addSuccessMessage(static::MESSAGE_CONNECTION_UPDATED, [
+                static::GLOSSARY_PARAM_CONNECTION_NAME => $punchoutCatalogResponseTransfer->getPunchoutCatalogConnection()
+                    ->getName(),
+            ]);
         }
 
         $this->handleResponseErrors($punchoutCatalogResponseTransfer);
