@@ -104,8 +104,9 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
                 ->setParentCompanyBusinessUnitId($parentCompanyBusinessUnitId)
         );
 
-        $companyBusinessUnitTransfers = $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()
-            ?: [$parentCompanyBusinessUnitTransfer];
+        $companyBusinessUnitTransfers = $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->count()
+            ? $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()
+            : [$parentCompanyBusinessUnitTransfer];
 
         $companyBusinessUnitChoices = [];
 
@@ -176,9 +177,9 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
     {
         return sprintf(
             '%s - %s',
-            $companyBusinessUnitTransfer->getName(),
             $companyBusinessUnitTransfer->getCompany()
-                ->getName()
+                ->getName(),
+            $companyBusinessUnitTransfer->getName()
         );
     }
 
