@@ -157,6 +157,17 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
     }
 
     /**
+     * @return string[]
+     */
+    public function getBundleModeChoices(): array
+    {
+        return [
+            'composite' => 'Composite',
+            'single' => 'Single',
+        ];
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return string

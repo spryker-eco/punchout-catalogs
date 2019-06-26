@@ -36,6 +36,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
 
     public const PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT = 'PLUGINS_PUNCHOUT_CATALOG_CONNECTION_FORMAT';
     public const PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE = 'PLUGINS_PUNCHOUT_CATALOG_CONNECTION_TYPE';
+    public const PLUGINS_PUNCHOUT_CATALOG_SETUP_REQUEST_FORM_EXTENSION = 'PLUGINS_PUNCHOUT_CATALOG_SETUP_REQUEST_FORM_EXTENSION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,6 +55,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addCompanyUserFacade($container);
         $container = $this->addPunchoutCatalogConnectionFormatPlugins($container);
         $container = $this->addPunchoutCatalogConnectionTypePlugins($container);
+        $container = $this->addPunchoutCatalogSetupRequestFormExtensionPlugins($container);
 
         return $container;
     }
@@ -236,6 +238,20 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPunchoutCatalogSetupRequestFormExtensionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PUNCHOUT_CATALOG_SETUP_REQUEST_FORM_EXTENSION, function (Container $container) {
+            return $this->getPunchoutCatalogSetupRequestFormExtensionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
     protected function getPunchoutCatalogConnectionFormatPlugins(): array
@@ -247,6 +263,14 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\SetupRequestPunchoutCatalogConnectionTypePlugin[]
      */
     protected function getPunchoutCatalogConnectionTypePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
+     */
+    protected function getPunchoutCatalogSetupRequestFormExtensionPlugins(): array
     {
         return [];
     }

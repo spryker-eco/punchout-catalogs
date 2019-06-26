@@ -30,6 +30,7 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addCartSubForm($builder)
+            ->executeSetupRequestFormExtensionPlugins($builder)
             ->addSetupSubForm($builder);
     }
 
@@ -59,6 +60,26 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
             'label' => false,
             'inherit_data' => false,
         ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function executeSetupRequestFormExtensionPlugins(FormBuilderInterface $builder)
+    {
+        $setupRequestPunchoutCatalogsFormExtensionPlugins = $this->getFactory()
+            ->getPunchoutCatalogSetupRequestFormExtensionPlugins();
+
+        foreach ($setupRequestPunchoutCatalogsFormExtensionPlugins as $setupRequestPunchoutCatalogsFormExtensionPlugin) {
+            $builder->add(md5($setupRequestPunchoutCatalogsFormExtensionPlugin->getType()), $setupRequestPunchoutCatalogsFormExtensionPlugin->getType(), [
+                'inherit_data' => true,
+                'label' => false,
+            ]);
+        }
 
         return $this;
     }
