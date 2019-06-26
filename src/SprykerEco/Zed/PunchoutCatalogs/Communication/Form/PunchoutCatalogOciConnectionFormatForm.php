@@ -22,9 +22,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class PunchoutCatalogOciConnectionFormatForm extends AbstractType
 {
-    protected const FIELD_LABEL_USERNAME = 'Username';
-    protected const FIELD_LABEL_PASSWORD = 'Password';
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -45,7 +42,7 @@ class PunchoutCatalogOciConnectionFormatForm extends AbstractType
     protected function addUsernameField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::USERNAME, TextType::class, [
-            'label' => static::FIELD_LABEL_USERNAME,
+            'label' => 'Username',
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 255]),
@@ -63,7 +60,7 @@ class PunchoutCatalogOciConnectionFormatForm extends AbstractType
     protected function addPasswordField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::PASSWORD, TextType::class, [
-            'label' => static::FIELD_LABEL_PASSWORD,
+            'label' => 'Password',
             'constraints' => [
                 new NotBlank(),
                 new Length(['min' => 255]),
