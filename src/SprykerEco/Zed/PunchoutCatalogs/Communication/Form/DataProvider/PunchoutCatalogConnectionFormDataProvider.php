@@ -9,6 +9,8 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface;
@@ -69,6 +71,8 @@ class PunchoutCatalogConnectionFormDataProvider
         }
 
         return (new PunchoutCatalogConnectionTransfer())
+            ->setCart(new PunchoutCatalogConnectionCartTransfer())
+            ->setSetup(new PunchoutCatalogConnectionSetupTransfer())
             ->setIsActive(true);
     }
 
