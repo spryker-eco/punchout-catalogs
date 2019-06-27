@@ -94,7 +94,11 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     protected function createLoginModeDependentFieldsModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
-            function (PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer) {
+            function (PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer = null) {
+                if (!$punchoutCatalogConnectionSetupTransfer) {
+                    return null;
+                }
+
                 if ($punchoutCatalogConnectionSetupTransfer->getLoginMode() === static::LOGIN_MODE_SINGLE_USER) {
                     $punchoutCatalogConnectionSetupTransfer->setFkCompanyBusinessUnit(null);
 

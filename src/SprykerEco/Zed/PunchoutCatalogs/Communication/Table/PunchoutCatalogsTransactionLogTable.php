@@ -182,13 +182,10 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
         $punchoutCatalogTransactionRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime(
             $punchoutCatalogTransaction->getCreatedAt()
         );
-        $punchoutCatalogTransactionRow[static::COL_COMPANY] = $punchoutCatalogTransaction->getCompanyBusinessUnit()
-            ->getCompany()
-            ->getName();
-        $punchoutCatalogTransactionRow[static::COL_BUSINESS_UNIT] = $punchoutCatalogTransaction->getCompanyBusinessUnit()
-            ->getName();
-        $punchoutCatalogTransactionRow[static::COL_CONNECTION_NAME] = $punchoutCatalogTransaction->getPunchoutCatalogConnection()
-            ->getName();
+        $punchoutCatalogTransactionRow = $this->addCompanyNameColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
+        $punchoutCatalogTransactionRow = $this->addCompanyBusinessUnitNameColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
+        $punchoutCatalogTransactionRow = $this->addConnectionNameColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
+
         $punchoutCatalogTransactionRow[static::COL_ACTIONS] = $this->buildLinks($punchoutCatalogTransaction);
 
         return $punchoutCatalogTransactionRow;
@@ -221,5 +218,57 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
         }
 
         return $this->generateLabel(static::STATUS_SUCCESSFUL, 'label-info');
+    }
+
+    /**
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction $punchoutCatalogTransaction
+     * @param array $punchoutCatalogTransactionRow
+     *
+     * @return array
+     */
+    protected function addCompanyBusinessUnitNameColumn(PgwPunchoutCatalogTransaction $punchoutCatalogTransaction, array $punchoutCatalogTransactionRow): array
+    {
+        $punchoutCatalogTransactionRow[static::COL_BUSINESS_UNIT] = '';
+        if ($punchoutCatalogTransaction->getCompanyBusinessUnit()) {
+            $punchoutCatalogTransactionRow[static::COL_BUSINESS_UNIT] = $punchoutCatalogTransaction->getCompanyBusinessUnit()
+                ->getName();
+        }
+
+        return $punchoutCatalogTransactionRow;
+    }
+
+    /**
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction $punchoutCatalogTransaction
+     * @param array $punchoutCatalogTransactionRow
+     *
+     * @return array
+     */
+    protected function addCompanyNameColumn(PgwPunchoutCatalogTransaction $punchoutCatalogTransaction, array $punchoutCatalogTransactionRow): array
+    {
+        $punchoutCatalogTransactionRow[static::COL_COMPANY] = '';
+        if ($punchoutCatalogTransaction->getCompanyBusinessUnit()) {
+            $punchoutCatalogTransactionRow[static::COL_COMPANY] = $punchoutCatalogTransaction->getCompanyBusinessUnit()
+                ->getCompany()
+                ->getName();
+        }
+
+        return $punchoutCatalogTransactionRow;
+    }
+
+    /**
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction $punchoutCatalogTransaction
+     * @param array $punchoutCatalogTransactionRow
+     *
+     * @return array
+     */
+    protected function addConnectionNameColumn(PgwPunchoutCatalogTransaction $punchoutCatalogTransaction, array $punchoutCatalogTransactionRow): array
+    {
+        $punchoutCatalogTransactionRow[static::COL_CONNECTION_NAME] = '';
+        if ($punchoutCatalogTransaction->getPunchoutCatalogConnection()) {
+            $punchoutCatalogTransactionRow[static::COL_CONNECTION_NAME] = $punchoutCatalogTransaction->getPunchoutCatalogConnection()
+                ->getName();
+        }
+
+        return $punchoutCatalogTransactionRow;
     }
 }
