@@ -50,7 +50,6 @@ class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
             'constraints' => [
                 new NotBlank(),
             ],
-            'inherit_data' => true,
             'property_path' => PunchoutCatalogConnectionTransfer::CART . '.' . PunchoutCatalogConnectionCartTransfer::BUNDLE_MODE,
         ]);
 
