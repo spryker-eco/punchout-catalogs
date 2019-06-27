@@ -38,7 +38,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
     protected const URL_PARAM_ID_PUNCHOUT_CATALOG_TRANSACTION = 'id-punchout-catalog-transaction';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::viewAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::viewAction()
      */
     protected const URL_PUNCHOUT_CATALOG_TRANSACTION_VIEW = '/punchout-catalogs/transaction/view';
 

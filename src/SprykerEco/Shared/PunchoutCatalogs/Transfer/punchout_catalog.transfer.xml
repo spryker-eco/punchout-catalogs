@@ -24,6 +24,20 @@
         <property name="createdAt" type="string" />
     </transfer>
 
+    <transfer name="PunchoutCatalogEntryPoint">
+        <property name="store" type="Store" />
+        <property name="url" type="string" />
+        <property name="idCompanyBusinessUnit" type="int" />
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="PunchoutCatalogEntryPointFilter">
+        <property name="idCompanyBusinessUnit" type="int" />
+    </transfer>
+
     <transfer name="PunchoutCatalogConnectionCart">
         <property name="idPunchoutCatalogCart" type="int" />
         <property name="maxDescriptionLength" type="int" />

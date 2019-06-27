@@ -22,9 +22,9 @@ class TransactionController extends AbstractController
     protected const MESSAGE_TRANSACTION_NOT_FOUND = 'Transaction not found';
 
     /**
-     * @uses \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::indexAction()
+     * @see \SprykerEco\Zed\PunchoutCatalogs\Communication\Controller\TransactionController::indexAction()
      */
-    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/transaction/index';
+    protected const ROUTE_PUNCHOUT_CATALOGS_TRANSACTION_LIST_PAGE = '/punchout-catalogs/transaction/index';
 
     /**
      * @return array
@@ -67,7 +67,7 @@ class TransactionController extends AbstractController
         if (!$punchoutCatalogTransactionTransfer) {
             $this->addErrorMessage(static::MESSAGE_TRANSACTION_NOT_FOUND);
 
-            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
+            return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_TRANSACTION_LIST_PAGE);
         }
 
         return [

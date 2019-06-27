@@ -28,6 +28,14 @@
                         <action>create</action>
                         <visible>0</visible>
                     </create-page>
+                    <entry-points-page>
+                        <label>Entry Points</label>
+                        <title>Entry Points</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>entry-points</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </entry-points-page>
                 </pages>
             </connection>
             <transaction-log>
