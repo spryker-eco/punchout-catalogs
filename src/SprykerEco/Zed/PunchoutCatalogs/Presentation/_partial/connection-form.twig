@@ -21,9 +21,33 @@
     <hr>
     {{ form_row(punchoutCatalogConnectionForm.type) }}
     {% for key,choice in punchoutCatalogConnectionForm.type.vars.choices %}
-        {{ form_row(attribute(punchoutCatalogConnectionForm, choice.value)) }}
+        {{ _self.renderFormWithTemplateRecursive(attribute(punchoutCatalogConnectionForm, choice.value)) }}
     {% endfor %}
 
     <input type="submit" class="btn btn-create safe-submit" value="{{ submitLabel | trans }}" />
     {{ form_end(punchoutCatalogConnectionForm) }}
 </div>
+
+
+{% macro renderFormWithTemplateRecursive(form) %}
+    {% if form.children is not empty %}
+        {% for subForm in form.children %}
+            {{ _self.renderFormWithTemplateRecursive(subForm) }}
+        {% endfor %}
+    {% else %}
+        {{ _self.renderFormFieldWithTemplate(form) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro renderFormFieldWithTemplate(formField) %}
+    <div class="form-group">
+        {{ form_label(formField) }}
+        {{ form_errors(formField) }}
+
+        {% if formField.vars.attr.template_path is defined %}
+            {% include formField.vars.attr.template_path with {'form': formField} %}
+        {% else %}
+            {{ form_widget(formField) }}
+        {% endif %}
+    </div>
+{% endmacro %}

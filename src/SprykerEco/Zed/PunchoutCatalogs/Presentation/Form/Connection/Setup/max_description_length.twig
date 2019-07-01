@@ -1,3 +1,3 @@
-{{ form_row(form) }}
+{{ form_widget(form) }}
 
-{{ "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied." | trans({'min': min_description_length, 'max': max_description_length}) }}
+<p class="text-muted">{{ "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied." | trans({'%min%': form.parent.vars.min_description_length, '%max%': form.parent.vars.max_description_length}) }}</p>
