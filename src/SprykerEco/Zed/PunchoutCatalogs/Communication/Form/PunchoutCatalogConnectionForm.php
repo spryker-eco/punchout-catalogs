@@ -20,6 +20,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
@@ -184,6 +185,9 @@ class PunchoutCatalogConnectionForm extends AbstractType
                 'mapped' => false,
                 'validation_groups' => static::VALIDATION_GROUP_DISABLED,
                 'label' => false,
+                'constraints' => [
+                    new Valid(),
+                ],
                 'attr' => [
                     'class' => 'toggle-inner-item',
                     'data-toggle-type' => $connectionType,
@@ -274,6 +278,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             [
                 'inherit_data' => true,
                 'label' => false,
+                'validation_groups' => null,
             ]
         ));
     }

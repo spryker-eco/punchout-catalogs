@@ -45,7 +45,7 @@ class PunchoutCatalogCXmlConnectionFormatForm extends AbstractType
             'label' => 'Sender ID',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 255]),
+                new Length(['max' => 255]),
             ],
         ]);
 
@@ -63,7 +63,7 @@ class PunchoutCatalogCXmlConnectionFormatForm extends AbstractType
             'label' => 'Shared Secret',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 255]),
+                new Length(['max' => 255]),
             ],
         ]);
 
