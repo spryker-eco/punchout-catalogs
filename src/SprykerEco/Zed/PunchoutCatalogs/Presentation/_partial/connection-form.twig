@@ -40,7 +40,7 @@
 {% endmacro %}
 
 {% macro renderFormFieldWithTemplate(formField) %}
-    <div class="form-group">
+    <div class="form-group {% if formField.vars.errors|length %}has-error{% endif %}">
         {{ form_label(formField) }}
         {{ form_errors(formField) }}
 
