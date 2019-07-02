@@ -291,7 +291,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
     protected function addAddMappingField(FormBuilderInterface $builder)
     {
         $builder->add(PunchoutCatalogConnectionTransfer::MAPPING, TextareaType::class, [
-            'label' => 'Mapping',
+            'label' => 'Request Mapping',
             'required' => false,
         ]);
 

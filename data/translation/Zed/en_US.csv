@@ -55,7 +55,7 @@ Default Business Unit,Default Business Unit
 base64,base64
 url-encoded,url-encoded
 No Encoding,No Encoding
-Mapping,Mapping
+Request Mapping,Mapping anfragen
 single_request,Single Request
 General,General
 Connection Format,Connection Format
