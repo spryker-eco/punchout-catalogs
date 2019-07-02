@@ -25,7 +25,7 @@ class IndexController extends AbstractController
     /**
      * @see SprykerEco\Zed\PunchoutCatalogs\Communication\Controller::indexAction()
      */
-    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs/';
+    protected const ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE = '/punchout-catalogs';
 
     protected const MESSAGE_CONNECTION_UPDATED = 'Connection "%connection_name%" was updated successfully.';
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
