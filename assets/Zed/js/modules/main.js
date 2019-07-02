@@ -6,7 +6,7 @@
 'use strict';
 
 $(document).ready(function() {
-    $('#punchoutCatalogConnection_single_request_setup_fkCompanyBusinessUnit').select2({
+    $('#punchoutCatalogConnection_setup_request_setup_fkCompanyBusinessUnit').select2({
       ajax: {
         url: function () {
             return '/punchout-catalogs/company-business-unit?id-parent-company-business-unit=' + $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
@@ -17,7 +17,7 @@ $(document).ready(function() {
       },
     });
 
-    $('#punchoutCatalogConnection_single_request_setup_fkCompanyUser').select2({
+    $('#punchoutCatalogConnection_setup_request_setup_fkCompanyUser').select2({
         ajax: {
             url: function () {
                 return '/punchout-catalogs/company-user?id-company-business-unit=' + $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();

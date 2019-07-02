@@ -116,6 +116,7 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
             static::COL_STATUS,
             static::COL_FORMAT,
             static::COL_ACTIONS,
+            static::COL_TYPE,
         ]);
 
         return $config;
@@ -194,6 +195,10 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
         $punchoutCatalogConnectionRow[static::COL_STATUS] = $this->getStatusLabel($punchoutCatalogConnection);
         $punchoutCatalogConnectionRow[static::COL_FORMAT] = $this->generateLabel(
             $punchoutCatalogConnection->getFormat(),
+            'label-secondary'
+        );
+        $punchoutCatalogConnectionRow[static::COL_TYPE] = $this->generateLabel(
+            $punchoutCatalogConnection->getType(),
             'label-secondary'
         );
         $punchoutCatalogConnectionRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime(

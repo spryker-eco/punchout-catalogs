@@ -26,7 +26,7 @@ class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin imp
      */
     public function getConnectionType(): string
     {
-        return 'single_request';
+        return 'setup_request';
     }
 
     /**

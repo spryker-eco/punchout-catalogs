@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\ConnectionSetupSubForms\PunchoutCatalogConnectionCartForm;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\ConnectionSetupSubForms\PunchoutCatalogConnectionSetupForm;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
@@ -44,6 +45,9 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionTransfer::CART, PunchoutCatalogConnectionCartForm::class, [
             'label' => false,
             'inherit_data' => false,
+            'constraints' => [
+                new Valid(),
+            ],
         ]);
 
         return $this;
@@ -59,6 +63,9 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionTransfer::SETUP, PunchoutCatalogConnectionSetupForm::class, [
             'label' => false,
             'inherit_data' => false,
+            'constraints' => [
+                new Valid(),
+            ],
         ]);
 
         return $this;
@@ -78,6 +85,9 @@ class PunchoutCatalogSetupRequestConnectionTypeForm extends AbstractType
             $builder->add(md5($setupRequestPunchoutCatalogsFormExtensionPlugin->getType()), $setupRequestPunchoutCatalogsFormExtensionPlugin->getType(), [
                 'inherit_data' => true,
                 'label' => false,
+                'constraints' => [
+                    new Valid(),
+                ],
             ]);
         }
 

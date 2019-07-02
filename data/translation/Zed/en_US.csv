@@ -55,13 +55,13 @@ Default Business Unit,Default Business Unit
 base64,base64
 url-encoded,url-encoded
 No Encoding,No Encoding
-Mapping,Mapping
-single_request,Single Request
+Request Mapping,Mapping anfragen
+setup_request,Setup Request
 General,General
 Connection Format,Connection Format
 Connection Type,Connection Type
 "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied."
-Bundle Mode,Bundle Mode
+Bundle Support,Bundle Mode
 Entry Points,Entry Points
 Store Name,Store Name
 URL Entry Point,URL Entry Point

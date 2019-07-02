@@ -45,7 +45,7 @@ class PunchoutCatalogOciConnectionFormatForm extends AbstractType
             'label' => 'Username',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 255]),
+                new Length(['max' => 255]),
             ],
         ]);
 
@@ -63,7 +63,7 @@ class PunchoutCatalogOciConnectionFormatForm extends AbstractType
             'label' => 'Password',
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 255]),
+                new Length(['max' => 255]),
             ],
         ]);
 

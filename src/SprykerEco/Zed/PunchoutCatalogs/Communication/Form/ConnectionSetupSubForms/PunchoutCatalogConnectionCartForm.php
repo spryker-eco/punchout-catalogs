@@ -164,13 +164,13 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     {
         return new CallbackTransformer(
             function (string $maxDescriptionLength) {
-                if (!$maxDescriptionLength) {
-                    return static::MAX_DESCRIPTION_LENGTH;
-                }
-
                 return $maxDescriptionLength;
             },
             function (string $maxDescriptionLength) {
+                if (!$maxDescriptionLength) {
+                    return (string)static::MAX_DESCRIPTION_LENGTH;
+                }
+
                 return $maxDescriptionLength;
             }
         );
