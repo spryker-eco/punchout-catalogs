@@ -46,7 +46,7 @@ class PunchoutCatalogSetupRequestBundleModeForm extends AbstractType
 
         $builder->add(PunchoutCatalogConnectionCartTransfer::BUNDLE_MODE, ChoiceType::class, [
             'choices' => $choices,
-            'label' => 'Bundle Mode',
+            'label' => 'Bundle Support',
             'constraints' => [
                 new NotBlank(),
             ],

@@ -61,7 +61,7 @@ General,Allgemeines
 Connection Format,Verbindungsformat
 Connection Type,Verbindungstyp
 "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","Eine Zahl zwischen %min% und %max%. Wenn nicht definiert, wird das maximale Längenlimit angewendet."
-Bundle Mode,Bundle-Modus
+Bundle Support,Unterstützung von Bündeln
 Entry Points,Einstiegspunkte
 Store Name,Geschäftsname
 URL Entry Point,URL-Einstiegspunkt
