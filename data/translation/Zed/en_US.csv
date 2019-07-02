@@ -56,7 +56,7 @@ base64,base64
 url-encoded,url-encoded
 No Encoding,No Encoding
 Request Mapping,Mapping anfragen
-single_request,Single Request
+setup_request,Setup Request
 General,General
 Connection Format,Connection Format
 Connection Type,Connection Type
