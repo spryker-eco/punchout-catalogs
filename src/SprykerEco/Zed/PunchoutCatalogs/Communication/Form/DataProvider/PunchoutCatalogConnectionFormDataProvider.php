@@ -70,12 +70,8 @@ class PunchoutCatalogConnectionFormDataProvider
             return $punchoutCatalogConnectionTransfer;
         }
 
-        /** @TODO remove when totals mode functionality will be implemented */
-        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionCartTransfer())
-            ->setTotalsMode('NOT_IMPLEMENTED');
-
         return (new PunchoutCatalogConnectionTransfer())
-            ->setCart($punchoutCatalogConnectionTransfer)
+            ->setCart(new PunchoutCatalogConnectionCartTransfer())
             ->setSetup(new PunchoutCatalogConnectionSetupTransfer())
             ->setIsActive(true);
     }

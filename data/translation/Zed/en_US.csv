@@ -55,7 +55,7 @@ Default Business Unit,Default Business Unit
 base64,base64
 url-encoded,url-encoded
 No Encoding,No Encoding
-Request Mapping,Mapping anfragen
+Request Mapping,Request Mapping
 setup_request,Setup Request
 General,General
 Connection Format,Connection Format
@@ -67,3 +67,7 @@ Store Name,Store Name
 URL Entry Point,URL Entry Point
 Entry Points for Connection,Entry Points for Connection
 Connections,Connections
+Totals Mode,Totals Mode
+Header (does not work with OCI),Header (does not work with OCI)
+Line,Line
+"You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one."
