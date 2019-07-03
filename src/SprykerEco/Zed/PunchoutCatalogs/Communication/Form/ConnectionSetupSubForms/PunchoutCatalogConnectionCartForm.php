@@ -216,9 +216,9 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
             'callback' => function (string $totalsMode, ExecutionContextInterface $context) {
                 $connectionFormat = $context->getRoot()
                      ->get(PunchoutCatalogConnectionTransfer::FORMAT)
-                    ->getData();
+                     ->getData();
 
-                $allowedConnectionFormats = static::ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES[$totalsMode];
+                $allowedConnectionFormats = static::ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES[$totalsMode] ?? [];
 
                 if (!in_array($connectionFormat, $allowedConnectionFormats)) {
                     $context->addViolation(
