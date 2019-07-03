@@ -94,7 +94,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     protected function createLoginModeDependentFieldsModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
-            function (PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer = null) {
+            function (?PunchoutCatalogConnectionSetupTransfer $punchoutCatalogConnectionSetupTransfer = null) {
                 if (!$punchoutCatalogConnectionSetupTransfer) {
                     return null;
                 }
