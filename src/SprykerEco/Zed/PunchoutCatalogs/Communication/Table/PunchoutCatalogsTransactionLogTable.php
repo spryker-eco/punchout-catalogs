@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Table;
 
+use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\PunchoutCatalog\Persistence\Map\PgwPunchoutCatalogConnectionTableMap;
@@ -27,8 +28,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
 
     protected const COL_ID_PUNCHOUT_CATALOG_TRANSACTION = 'id_punchout_catalog_transaction';
     protected const COL_TYPE = 'type';
-    protected const COL_COMPANY = 'company';
-    protected const COL_BUSINESS_UNIT = 'business_unit';
+    protected const COL_BUSINESS_UNIT = PgwPunchoutCatalogTransactionTableMap::COL_FK_COMPANY_BUSINESS_UNIT;
     protected const COL_CONNECTION_NAME = PgwPunchoutCatalogConnectionTableMap::COL_NAME;
     protected const COL_STATUS = 'status';
     protected const COL_CREATED_AT = 'created_at';
@@ -72,7 +72,6 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
         $config->setHeader([
             static::COL_ID_PUNCHOUT_CATALOG_TRANSACTION => 'ID',
             static::COL_TYPE => 'Message Type',
-            static::COL_COMPANY => 'Company',
             static::COL_BUSINESS_UNIT => 'Business Unit',
             static::COL_CONNECTION_NAME => 'Connection Name',
             static::COL_STATUS => 'Status',
@@ -84,7 +83,6 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
         $config->setSortable([
             static::COL_ID_PUNCHOUT_CATALOG_TRANSACTION,
             static::COL_TYPE,
-            static::COL_COMPANY,
             static::COL_BUSINESS_UNIT,
             static::COL_CONNECTION_NAME,
             static::COL_STATUS,
@@ -97,8 +95,6 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
             PgwPunchoutCatalogTransactionTableMap::COL_TYPE,
             PgwPunchoutCatalogTransactionTableMap::COL_CONNECTION_SESSION_ID,
             PgwPunchoutCatalogConnectionTableMap::COL_NAME,
-            SpyCompanyTableMap::COL_NAME,
-            SpyCompanyBusinessUnitTableMap::COL_NAME,
         ]);
 
         $config->setRawColumns([
@@ -140,17 +136,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
      */
     protected function prepareQuery(PgwPunchoutCatalogTransactionQuery $punchoutCatalogTransactionPropelQuery): PgwPunchoutCatalogTransactionQuery
     {
-        $punchoutCatalogTransactionPropelQuery
-            ->leftJoinPunchoutCatalogConnection()
-            ->leftJoinWithCompanyBusinessUnit()
-            ->useCompanyBusinessUnitQuery()
-                ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT)
-                ->useCompanyQuery(null, Criteria::LEFT_JOIN)
-                    ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
-                ->endUse()
-            ->endUse();
-
-        return $punchoutCatalogTransactionPropelQuery;
+        return $punchoutCatalogTransactionPropelQuery->leftJoinPunchoutCatalogConnection();
     }
 
     /**
@@ -182,8 +168,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
         $punchoutCatalogTransactionRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime(
             $punchoutCatalogTransaction->getCreatedAt()
         );
-        $punchoutCatalogTransactionRow = $this->addCompanyNameColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
-        $punchoutCatalogTransactionRow = $this->addCompanyBusinessUnitNameColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
+        $punchoutCatalogTransactionRow = $this->addCompanyBusinessUnitColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
         $punchoutCatalogTransactionRow = $this->addConnectionNameColumn($punchoutCatalogTransaction, $punchoutCatalogTransactionRow);
 
         $punchoutCatalogTransactionRow[static::COL_ACTIONS] = $this->buildLinks($punchoutCatalogTransaction);
@@ -226,31 +211,9 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
      *
      * @return array
      */
-    protected function addCompanyBusinessUnitNameColumn(PgwPunchoutCatalogTransaction $punchoutCatalogTransaction, array $punchoutCatalogTransactionRow): array
+    protected function addCompanyBusinessUnitColumn(PgwPunchoutCatalogTransaction $punchoutCatalogTransaction, array $punchoutCatalogTransactionRow): array
     {
-        $punchoutCatalogTransactionRow[static::COL_BUSINESS_UNIT] = '';
-        if ($punchoutCatalogTransaction->getCompanyBusinessUnit()) {
-            $punchoutCatalogTransactionRow[static::COL_BUSINESS_UNIT] = $punchoutCatalogTransaction->getCompanyBusinessUnit()
-                ->getName();
-        }
-
-        return $punchoutCatalogTransactionRow;
-    }
-
-    /**
-     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction $punchoutCatalogTransaction
-     * @param array $punchoutCatalogTransactionRow
-     *
-     * @return array
-     */
-    protected function addCompanyNameColumn(PgwPunchoutCatalogTransaction $punchoutCatalogTransaction, array $punchoutCatalogTransactionRow): array
-    {
-        $punchoutCatalogTransactionRow[static::COL_COMPANY] = '';
-        if ($punchoutCatalogTransaction->getCompanyBusinessUnit()) {
-            $punchoutCatalogTransactionRow[static::COL_COMPANY] = $punchoutCatalogTransaction->getCompanyBusinessUnit()
-                ->getCompany()
-                ->getName();
-        }
+        $punchoutCatalogTransactionRow[static::COL_BUSINESS_UNIT] = $punchoutCatalogTransaction->getFkCompanyBusinessUnit() ?: 'NULL';
 
         return $punchoutCatalogTransactionRow;
     }

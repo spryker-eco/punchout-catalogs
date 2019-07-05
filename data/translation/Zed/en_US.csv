@@ -71,3 +71,4 @@ Totals Mode,Totals Mode
 Header (does not work with OCI),Header (does not work with OCI)
 Line,Line
 "You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one."
+NULL,NULL
