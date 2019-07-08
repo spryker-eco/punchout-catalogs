@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -217,7 +216,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             }
 
             $this->addActiveDependentFieldSubFormToConnectionForm(
-                $event->getForm(),
+                $event,
                 $connectionFormatSubFormTypes,
                 $format
             );
@@ -243,7 +242,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             }
 
             $this->addActiveDependentFieldSubFormToConnectionForm(
-                $event->getForm(),
+                $event,
                 $connectionTypeSubFormTypes,
                 $type
             );
@@ -254,33 +253,33 @@ class PunchoutCatalogConnectionForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormEvent $event
      * @param string $subFormsOptionName
      * @param string $selectedSubFormName
      *
      * @return void
      */
-    protected function addActiveDependentFieldSubFormToConnectionForm(FormInterface $form, string $subFormsOptionName, string $selectedSubFormName): void
+    protected function addActiveDependentFieldSubFormToConnectionForm(FormEvent $event, string $subFormsOptionName, string $selectedSubFormName): void
     {
-        $options = $form->getConfig()->getOptions();
-        $associatedFormType = $options[$subFormsOptionName][$selectedSubFormName] ?? null;
+        $form = $event->getForm();
+        $formOptions = $form->getConfig()->getOptions();
+        $subForms = $formOptions[$subFormsOptionName];
 
-        if (!$selectedSubFormName || !$associatedFormType) {
-            return;
+        foreach ($subForms as $subFormName => $subFormType) {
+            $existingFieldOptions = $form->get($subFormName)
+                ->getConfig()
+                ->getOptions();
+
+            $isActiveSubForm = $subFormName === $selectedSubFormName;
+
+            $form->add($subFormName, $subFormType, array_merge(
+                $existingFieldOptions,
+                [
+                    'inherit_data' => $isActiveSubForm,
+                    'validation_groups' => $isActiveSubForm ? null : static::VALIDATION_GROUP_DISABLED,
+                ]
+            ));
         }
-
-        $options = $form->get($selectedSubFormName)
-            ->getConfig()
-            ->getOptions();
-
-        $form->add($selectedSubFormName, $associatedFormType, array_merge(
-            $options,
-            [
-                'inherit_data' => true,
-                'label' => false,
-                'validation_groups' => null,
-            ]
-        ));
     }
 
     /**
