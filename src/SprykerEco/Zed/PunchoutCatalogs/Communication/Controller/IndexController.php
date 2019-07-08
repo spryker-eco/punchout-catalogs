@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Controller;
 
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogConnectionForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,7 +66,7 @@ class IndexController extends AbstractController
     public function createAction(Request $request)
     {
         $punchoutCatalogConnectionsForm = $this->getFactory()
-            ->getPunchoutCatalogConnectionForm();
+            ->getPunchoutCatalogConnectionForm(null, $request->request->has(PunchoutCatalogConnectionForm::FORM_NAME));
 
         $punchoutCatalogConnectionsForm->handleRequest($request);
 
@@ -111,7 +112,10 @@ class IndexController extends AbstractController
         }
 
         $punchoutCatalogConnectionEditForm = $this->getFactory()
-            ->getPunchoutCatalogConnectionForm($punchoutCatalogConnectionTransfer);
+            ->getPunchoutCatalogConnectionForm(
+                $punchoutCatalogConnectionTransfer,
+                $request->request->has(PunchoutCatalogConnectionForm::FORM_NAME)
+            );
 
         $punchoutCatalogConnectionEditForm->handleRequest($request);
 

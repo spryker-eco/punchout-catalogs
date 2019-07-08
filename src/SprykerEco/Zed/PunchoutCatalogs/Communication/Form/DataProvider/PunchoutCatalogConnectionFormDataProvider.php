@@ -48,14 +48,17 @@ class PunchoutCatalogConnectionFormDataProvider
     }
 
     /**
+     * @param bool $isSubmited
+     *
      * @return array
      */
-    public function getOptions(): array
+    public function getOptions(bool $isSubmited): array
     {
         return [
             PunchoutCatalogConnectionForm::OPTION_BUSINESS_UNIT_CHOICES => $this->prepareCompanyBusinessUnitChoices(),
             PunchoutCatalogConnectionForm::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES => $this->prepareConnectionFormatSubForms(),
             PunchoutCatalogConnectionForm::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES => $this->prepareConnectionTypeSubForms(),
+            PunchoutCatalogConnectionForm::OPTION_IS_SUBMITED => $isSubmited,
         ];
     }
 

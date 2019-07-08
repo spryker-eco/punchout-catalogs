@@ -30,9 +30,12 @@ use Symfony\Component\Validator\Constraints\Valid;
  */
 class PunchoutCatalogConnectionForm extends AbstractType
 {
+    public const FORM_NAME = 'punchoutCatalogConnection';
+
     public const OPTION_BUSINESS_UNIT_CHOICES = 'OPTION_BUSINESS_UNIT_CHOICES';
     public const OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES = 'OPTION_CONNECTION_FORMAT_FORMS';
     public const OPTION_CONNECTION_TYPE_SUB_FORM_TYPES = 'OPTION_CONNECTION_TYPE_SUB_FORM_TYPES';
+    public const OPTION_IS_SUBMITED = 'IS_SUBMITED';
 
     protected const VALIDATION_GROUP_DISABLED = 'disabled';
 
@@ -67,6 +70,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             static::OPTION_BUSINESS_UNIT_CHOICES,
             static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES,
             static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES,
+            static::OPTION_IS_SUBMITED
         ]);
     }
 
@@ -75,7 +79,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'punchoutCatalogConnection';
+        return static::FORM_NAME;
     }
 
     /**
@@ -167,7 +171,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ]);
         }
 
-        $this->addConnectionFormatDynamicSubFormListener($builder);
+        $this->addConnectionFormatDynamicSubFormListener($builder, $options);
 
         return $this;
     }
@@ -196,7 +200,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
             ]);
         }
 
-        $this->addConnectionTypeDynamicSubFormListener($builder);
+        $this->addConnectionTypeDynamicSubFormListener($builder, $options);
 
         return $this;
     }
@@ -206,7 +210,7 @@ class PunchoutCatalogConnectionForm extends AbstractType
      *
      * @return void
      */
-    protected function addConnectionFormatDynamicSubFormListener(FormBuilderInterface $builder): void
+    protected function addConnectionFormatDynamicSubFormListener(FormBuilderInterface $builder, array $options): void
     {
         $connectionFormatSubFormTypes = static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES;
         $formModificationCallback = function (FormEvent $event) use ($connectionFormatSubFormTypes) {
@@ -223,16 +227,19 @@ class PunchoutCatalogConnectionForm extends AbstractType
             );
         };
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback);
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
+        $builder->addEventListener(
+            $options[static::OPTION_IS_SUBMITED] ? FormEvents::PRE_SUBMIT : FormEvents::PRE_SET_DATA,
+            $formModificationCallback
+        );
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
      *
      * @return void
      */
-    protected function addConnectionTypeDynamicSubFormListener(FormBuilderInterface $builder): void
+    protected function addConnectionTypeDynamicSubFormListener(FormBuilderInterface $builder, array $options): void
     {
         $connectionTypeSubFormTypes = static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES;
         $formModificationCallback = function (FormEvent $event) use ($connectionTypeSubFormTypes) {
@@ -249,8 +256,10 @@ class PunchoutCatalogConnectionForm extends AbstractType
             );
         };
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, $formModificationCallback)
-            ->addEventListener(FormEvents::PRE_SUBMIT, $formModificationCallback);
+        $builder->addEventListener(
+            $options[static::OPTION_IS_SUBMITED] ? FormEvents::PRE_SUBMIT : FormEvents::PRE_SET_DATA,
+            $formModificationCallback
+        );
     }
 
     /**
@@ -277,7 +286,6 @@ class PunchoutCatalogConnectionForm extends AbstractType
             $options,
             [
                 'inherit_data' => true,
-                'label' => false,
                 'validation_groups' => null,
             ]
         ));
