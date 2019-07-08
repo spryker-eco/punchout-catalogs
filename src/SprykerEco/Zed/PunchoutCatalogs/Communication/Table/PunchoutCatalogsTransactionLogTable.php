@@ -7,14 +7,10 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Table;
 
-use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
-use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
-use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\PunchoutCatalog\Persistence\Map\PgwPunchoutCatalogConnectionTableMap;
 use Orm\Zed\PunchoutCatalog\Persistence\Map\PgwPunchoutCatalogTransactionTableMap;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
-use Propel\Runtime\ActiveQuery\Criteria as Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
