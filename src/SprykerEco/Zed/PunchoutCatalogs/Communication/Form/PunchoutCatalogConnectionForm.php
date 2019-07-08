@@ -272,14 +272,12 @@ class PunchoutCatalogConnectionForm extends AbstractType
 
             $isActiveSubForm = $subFormName === $selectedSubFormName;
 
-            $options = [
-                'inherit_data' => $isActiveSubForm,
-                'validation_groups' => $isActiveSubForm ? null : static::VALIDATION_GROUP_DISABLED,
-            ];
-
             $form->add($subFormName, $subFormType, array_merge(
                 $existingFieldOptions,
-                $options
+                [
+                    'inherit_data' => $isActiveSubForm,
+                    'validation_groups' => $isActiveSubForm ? null : static::VALIDATION_GROUP_DISABLED,
+                ]
             ));
         }
     }
