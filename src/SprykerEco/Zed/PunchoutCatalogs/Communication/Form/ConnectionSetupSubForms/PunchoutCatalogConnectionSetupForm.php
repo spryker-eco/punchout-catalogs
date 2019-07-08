@@ -32,7 +32,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
     protected const TOGGLE_GROUP_LOGIN_MODE = 'login-mode';
 
     protected const LOGIN_MODE_SINGLE_USER = 'single_user';
-    protected const LOGIN_MODE_DYNAMIC_USER = 'dynamic_user';
+    protected const LOGIN_MODE_DYNAMIC_USER_CREATION = 'dynamic_user_creation';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -72,7 +72,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             'label' => 'Login Mode',
             'choices' => [
                 'Single User' => static::LOGIN_MODE_SINGLE_USER,
-                'Dynamic User Creation' => static::LOGIN_MODE_DYNAMIC_USER,
+                'Dynamic User Creation' => static::LOGIN_MODE_DYNAMIC_USER_CREATION,
             ],
             'attr' => [
                 'class' => 'toggle-trigger',
@@ -127,7 +127,7 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             'attr' => [
                 'class' => 'toggle-inner-item',
                 'data-toggle-group' => static::TOGGLE_GROUP_LOGIN_MODE,
-                'data-toggle-type' => static::LOGIN_MODE_DYNAMIC_USER,
+                'data-toggle-type' => static::LOGIN_MODE_DYNAMIC_USER_CREATION,
             ],
         ]);
 
