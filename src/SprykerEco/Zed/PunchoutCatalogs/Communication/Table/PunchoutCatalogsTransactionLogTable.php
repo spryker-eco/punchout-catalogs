@@ -39,7 +39,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
     protected const URL_PUNCHOUT_CATALOG_TRANSACTION_VIEW = '/punchout-catalogs/transaction/view';
 
     /**
-     * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
+     * @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery
      */
     protected $punchoutCatalogTransactionPropelQuery;
 
@@ -108,18 +108,18 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection[] $punchoutCatalogConnections */
-        $punchoutCatalogConnectionCollection = $this->runQuery(
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction[] $punchoutCatalogTransactionCollection */
+        $punchoutCatalogTransactionCollection = $this->runQuery(
             $this->prepareQuery($this->punchoutCatalogTransactionPropelQuery),
             $config,
             true
         );
 
-        if ($punchoutCatalogConnectionCollection->count() === 0) {
+        if ($punchoutCatalogTransactionCollection->count() === 0) {
             return [];
         }
 
-        return $this->mapPunchoutCatalogTransactions($punchoutCatalogConnectionCollection);
+        return $this->mapPunchoutCatalogTransactions($punchoutCatalogTransactionCollection);
     }
 
     /**
@@ -136,7 +136,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection[] $punchoutCatalogTransactions
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction[] $punchoutCatalogTransactions
      *
      * @return array
      */
