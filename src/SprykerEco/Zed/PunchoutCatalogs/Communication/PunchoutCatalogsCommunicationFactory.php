@@ -57,11 +57,10 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null $punchoutCatalogConnectionTransfer
-     * @param bool $isSubmited
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getPunchoutCatalogConnectionForm(?PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer = null, bool $isSubmited): FormInterface
+    public function getPunchoutCatalogConnectionForm(?PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer = null): FormInterface
     {
         $idPunchoutCatalogConnectionFormDataProvider = $this->createPunchoutCatalogConnectionFormDataProvider();
 
@@ -69,7 +68,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
             ->create(
                 PunchoutCatalogConnectionForm::class,
                 $idPunchoutCatalogConnectionFormDataProvider->getData($punchoutCatalogConnectionTransfer),
-                $idPunchoutCatalogConnectionFormDataProvider->getOptions($isSubmited)
+                $idPunchoutCatalogConnectionFormDataProvider->getOptions()
             );
     }
 

@@ -175,7 +175,8 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             $form = $event->getForm();
 
             $parentCompanyBusinessUnitId = $form
-                ->getRoot()
+                ->getParent()
+                ->getParent()
                 ->get(PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT)
                 ->getData();
 
@@ -211,7 +212,8 @@ class PunchoutCatalogConnectionSetupForm extends AbstractType
             $form = $event->getForm();
 
             $parentCompanyBusinessUnitId = $form
-                ->getRoot()
+                ->getParent()
+                ->getParent()
                 ->get(PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT)
                 ->getData();
 
