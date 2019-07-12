@@ -33,7 +33,7 @@ class CompanyBusinessUnitController extends AbstractController
 
         $companyBusinessUnitChoices = $this->getFactory()
             ->createPunchoutCatalogSetupRequestConnectionTypeFormDataProvider()
-            ->getCompanyBusinessUnitChoicesForSelect2($parentCompanyBusinessUnitId);
+            ->getFormattedCompanyBusinessUnitChoices($parentCompanyBusinessUnitId);
 
         return $this->jsonResponse($companyBusinessUnitChoices);
     }

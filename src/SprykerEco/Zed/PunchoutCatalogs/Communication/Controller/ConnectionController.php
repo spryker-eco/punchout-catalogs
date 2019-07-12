@@ -30,6 +30,8 @@ class ConnectionController extends AbstractController
     protected const MESSAGE_CONNECTION_ACTIVATED = 'Connection "%connection_name%" was activated.';
     protected const MESSAGE_CONNECTION_DEACTIVATED = 'Connection "%connection_name%" was deactivated.';
 
+    protected const MESSAGE_PARAM_CONNECTION_NAME = '%connection_name%';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -56,7 +58,7 @@ class ConnectionController extends AbstractController
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_CONNECTION_ACTIVATED, [
-                '%connection_name%' => $punchoutCatalogConnectionTransfer->getName(),
+                static::MESSAGE_PARAM_CONNECTION_NAME => $punchoutCatalogConnectionTransfer->getName(),
             ]);
 
             return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
@@ -93,7 +95,7 @@ class ConnectionController extends AbstractController
 
         if ($punchoutCatalogResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_CONNECTION_DEACTIVATED, [
-                '%connection_name%' => $punchoutCatalogConnectionTransfer->getName(),
+                static::MESSAGE_PARAM_CONNECTION_NAME => $punchoutCatalogConnectionTransfer->getName(),
             ]);
 
             return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);

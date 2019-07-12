@@ -155,13 +155,13 @@ class PunchoutCatalogsConnectionsTable extends AbstractTable
     {
          $connectionPropelQuery
             ->joinWithCompanyBusinessUnit()
-                ->useCompanyBusinessUnitQuery()
-                     ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT)
-                     ->joinCompany()
-                     ->useCompanyQuery()
-                            ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
-                    ->endUse()
-                ->endUse();
+            ->useCompanyBusinessUnitQuery()
+                 ->withColumn(SpyCompanyBusinessUnitTableMap::COL_NAME, static::COL_BUSINESS_UNIT)
+                 ->joinCompany()
+                 ->useCompanyQuery()
+                        ->withColumn(SpyCompanyTableMap::COL_NAME, static::COL_COMPANY)
+                ->endUse()
+            ->endUse();
 
         return $connectionPropelQuery;
     }

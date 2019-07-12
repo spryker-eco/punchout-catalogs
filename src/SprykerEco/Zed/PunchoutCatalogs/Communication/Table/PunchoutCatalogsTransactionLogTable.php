@@ -132,7 +132,7 @@ class PunchoutCatalogsTransactionLogTable extends AbstractTable
      */
     protected function prepareQuery(PgwPunchoutCatalogTransactionQuery $punchoutCatalogTransactionPropelQuery): PgwPunchoutCatalogTransactionQuery
     {
-        return $punchoutCatalogTransactionPropelQuery->leftJoinPunchoutCatalogConnection();
+        return $punchoutCatalogTransactionPropelQuery->leftJoinWithPunchoutCatalogConnection();
     }
 
     /**

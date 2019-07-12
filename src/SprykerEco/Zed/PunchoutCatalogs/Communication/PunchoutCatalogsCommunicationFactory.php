@@ -160,7 +160,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
     public function getPunchoutCatalogConnectionFormatPlugins(): array
     {
@@ -168,7 +168,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
     public function getPunchoutCatalogConnectionTypePlugins(): array
     {
@@ -176,7 +176,7 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
      */
     public function getPunchoutCatalogSetupRequestFormExtensionPlugins(): array
     {

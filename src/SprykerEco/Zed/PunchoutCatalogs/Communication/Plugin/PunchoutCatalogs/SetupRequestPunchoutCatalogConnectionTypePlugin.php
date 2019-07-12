@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin;
+namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogs;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogOciConnectionFormatForm;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogSetupRequestConnectionTypeForm;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Communication\PunchoutCatalogsCommunicationFactory getFactory()
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
  * @method \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface getFacade()
  */
-class OciPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implements PunchoutCatalogConnectionFormatPluginInterface
+class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin implements PunchoutCatalogConnectionTypePluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,14 +24,14 @@ class OciPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implements
      *
      * @return string
      */
-    public function getConnectionFormat(): string
+    public function getConnectionType(): string
     {
-        return 'oci';
+        return 'setup_request';
     }
 
     /**
      * {@inheritdoc}
-     * - Returns a form that is capable of handling all attributes related to the OCI connection format.
+     * - Returns a form that is capable of handling all attributes related to the setup_request connection type.
      *
      * @api
      *
@@ -39,6 +39,6 @@ class OciPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implements
      */
     public function getType(): string
     {
-        return PunchoutCatalogOciConnectionFormatForm::class;
+        return PunchoutCatalogSetupRequestConnectionTypeForm::class;
     }
 }

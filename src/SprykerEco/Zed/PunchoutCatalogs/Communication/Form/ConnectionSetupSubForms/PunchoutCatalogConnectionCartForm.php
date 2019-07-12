@@ -37,6 +37,11 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected const MIN_DESCRIPTION_LENGTH = 16;
     protected const MAX_DESCRIPTION_LENGTH = 99999;
 
+    protected const MESSAGE_PARAM_TOTALS_MODE = '%totals_mode%';
+    protected const MESSAGE_PARAM_CONNECTION_FORMAT = '%connection_format%';
+
+    protected const MESSAGE_INCOMPATIBLE_TOTALS_MODE_AND_CONNECTION_FORMAT = 'You can’t use "%s" for "%s" connection - please choose another one.';
+
     protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/Form/Connection/Setup/max_description_length.twig';
 
     protected const ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES = [
@@ -222,10 +227,14 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
 
                 if (!in_array($connectionFormat, $allowedConnectionFormats)) {
                     $context->addViolation(
-                        'You can’t use "%totals_mode%" for "%connection_format%" connection - please choose another one.',
+                        sprintf(
+                            static::MESSAGE_INCOMPATIBLE_TOTALS_MODE_AND_CONNECTION_FORMAT,
+                            static::MESSAGE_PARAM_TOTALS_MODE,
+                            static::MESSAGE_PARAM_CONNECTION_FORMAT
+                        ),
                         [
-                            '%connection_format%' => $connectionFormat,
-                            '%totals_mode%' => $totalsMode,
+                            static::MESSAGE_PARAM_TOTALS_MODE => $totalsMode,
+                            static::MESSAGE_PARAM_CONNECTION_FORMAT => $connectionFormat,
                         ]
                     );
                 }

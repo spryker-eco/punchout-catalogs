@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin;
+namespace SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin;
 
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 

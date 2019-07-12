@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin;
+namespace SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin;
 
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 
-interface PunchoutCatalogConnectionTypePluginInterface extends FormTypeInterface
+interface PunchoutCatalogConnectionFormatPluginInterface extends FormTypeInterface
 {
     /**
      * Specification:
-     * - Retrieves the type of the connection.
+     * - Retrieves the format of the connection.
      * - Value is a lowercase key, capable for glossary key.
      *
-     * Example: setup_request
+     * Example: cxml
      *
      * @api
      *
      * @return string
      */
-    public function getConnectionType(): string;
+    public function getConnectionFormat(): string;
 
     /**
      * Specification:
-     * - Retrieves a form that is capable of handling all attributes related to the given connection type.
+     * - Retrieves a form that is capable of handling all attributes related to the given connection format.
      *
      * @api
      *

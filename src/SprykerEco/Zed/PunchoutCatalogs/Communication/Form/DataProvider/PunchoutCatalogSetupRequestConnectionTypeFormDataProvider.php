@@ -49,19 +49,19 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
      *
      * @return array
      */
-    public function getCompanyBusinessUnitChoicesForSelect2(int $parentCompanyBusinessUnitId): array
+    public function getFormattedCompanyBusinessUnitChoices(int $parentCompanyBusinessUnitId): array
     {
-        $companyBusinessUnitChoicesForSelect2 = [];
+        $formattedCompanyBusinessUnitChoices = [];
 
         foreach ($this->getCompanyBusinessUnitChoices($parentCompanyBusinessUnitId) as $label => $idCompanyBusinessUnit) {
-            $companyBusinessUnitChoicesForSelect2[] = [
+            $formattedCompanyBusinessUnitChoices[] = [
                 static::KEY_ID => $idCompanyBusinessUnit,
                 static::KEY_TEXT => $label,
             ];
         }
 
         return [
-            static::KEY_RESULTS => $companyBusinessUnitChoicesForSelect2,
+            static::KEY_RESULTS => $formattedCompanyBusinessUnitChoices,
         ];
     }
 
@@ -70,19 +70,19 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
      *
      * @return array
      */
-    public function getCompanyUserChoicesForSelect2(int $parentCompanyBusinessUnitId): array
+    public function getFormattedCompanyUserChoices(int $parentCompanyBusinessUnitId): array
     {
-        $companyUserChoicesForSelect2 = [];
+        $formattedCompanyUserChoices = [];
 
         foreach ($this->getCompanyUserChoices($parentCompanyBusinessUnitId) as $label => $idCompanyUser) {
-            $companyUserChoicesForSelect2[] = [
+            $formattedCompanyUserChoices[] = [
                 static::KEY_ID => $idCompanyUser,
                 static::KEY_TEXT => $label,
             ];
         }
 
         return [
-            static::KEY_RESULTS => $companyUserChoicesForSelect2,
+            static::KEY_RESULTS => $formattedCompanyUserChoices,
         ];
     }
 

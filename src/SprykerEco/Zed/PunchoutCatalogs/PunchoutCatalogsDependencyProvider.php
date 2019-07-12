@@ -271,7 +271,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
     protected function getPunchoutCatalogConnectionFormatPlugins(): array
     {
@@ -279,7 +279,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\SetupRequestPunchoutCatalogConnectionTypePlugin[]
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
     protected function getPunchoutCatalogConnectionTypePlugins(): array
     {
@@ -287,7 +287,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
-     * @return \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface[]
      */
     protected function getPunchoutCatalogSetupRequestFormExtensionPlugins(): array
     {

@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin;
+namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogs;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogSetupRequestConnectionTypeForm;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogCXmlConnectionFormatForm;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Communication\PunchoutCatalogsCommunicationFactory getFactory()
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
  * @method \SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface getFacade()
  */
-class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin implements PunchoutCatalogConnectionTypePluginInterface
+class CXmlPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implements PunchoutCatalogConnectionFormatPluginInterface
 {
     /**
      * {@inheritdoc}
@@ -24,14 +24,14 @@ class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin imp
      *
      * @return string
      */
-    public function getConnectionType(): string
+    public function getConnectionFormat(): string
     {
-        return 'setup_request';
+        return 'cxml';
     }
 
     /**
      * {@inheritdoc}
-     * - Returns a form that is capable of handling all attributes related to the setup_request connection type.
+     * - Returns a form that is capable of handling all attributes related to the cXml connection format.
      *
      * @api
      *
@@ -39,6 +39,6 @@ class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin imp
      */
     public function getType(): string
     {
-        return PunchoutCatalogSetupRequestConnectionTypeForm::class;
+        return PunchoutCatalogCXmlConnectionFormatForm::class;
     }
 }

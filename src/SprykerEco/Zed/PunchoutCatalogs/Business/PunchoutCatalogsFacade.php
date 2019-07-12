@@ -24,15 +24,15 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
      *
      * @api
      *
-     * @param int $connectionId
+     * @param int $idConnection
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
-    public function findConnectionById(int $connectionId): ?PunchoutCatalogConnectionTransfer
+    public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer
     {
         return $this->getFactory()
             ->createPunchoutCatalogsReader()
-            ->findConnectionById($connectionId);
+            ->findConnectionById($idConnection);
     }
 
     /**

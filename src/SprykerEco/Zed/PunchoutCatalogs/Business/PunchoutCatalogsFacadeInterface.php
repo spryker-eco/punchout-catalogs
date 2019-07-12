@@ -19,11 +19,11 @@ interface PunchoutCatalogsFacadeInterface
      *
      * @api
      *
-     * @param int $connectionId
+     * @param int $idConnection
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
-    public function findConnectionById(int $connectionId): ?PunchoutCatalogConnectionTransfer;
+    public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer;
 
     /**
      * Specification:

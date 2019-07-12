@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
     <transfer name="PunchoutCatalogConnection">
         <property name="idPunchoutCatalogConnection" type="int" />
         <property name="fkCompanyBusinessUnit" type="int" />
@@ -16,7 +17,7 @@
         <property name="connection" type="PunchoutCatalogConnection" />
         <property name="message" type="string" />
         <property name="status" type="bool" />
-        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int" />
         <property name="type" type="string" />
         <property name="connectionSessionId" type="string" />
         <property name="rawData" type="string" />
@@ -49,24 +50,24 @@
 
     <transfer name="PunchoutCatalogConnectionSetup">
         <property name="idPunchoutCatalogSetup" type="int" />
-        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int" />
         <property name="fkCompanyUser" type="int" />
         <property name="loginMode" type="string" />
     </transfer>
 
     <transfer name="PunchoutCatalogResponse">
-        <property name="messages" type="Message[]" singular="message"/>
-        <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection"/>
+        <property name="messages" type="Message[]" singular="message" />
+        <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection" />
         <property name="isSuccessful" type="bool" />
     </transfer>
 
     <transfer name="CompanyBusinessUnit">
-        <property name="company" type="Company"/>
-        <property name="name" type="string"/>
+        <property name="company" type="Company" />
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Company">
-        <property name="name" type="string"/>
+        <property name="name" type="string" />
     </transfer>
 
     <transfer name="Message">
@@ -74,26 +75,27 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
-        <property name="parentCompanyBusinessUnitId" type="int"/>
+        <property name="parentCompanyBusinessUnitId" type="int" />
     </transfer>
 
     <transfer name="CompanyUserCollection">
-        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
-        <property name="pagination" type="Pagination"/>
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser" />
+        <property name="pagination" type="Pagination" />
     </transfer>
 
     <transfer name="CompanyUserCriteriaFilter">
-        <property name="companyUserIds" type="array"/>
+        <property name="companyUserIds" type="array" />
     </transfer>
 
     <transfer name="CompanyUser">
-        <property name="idCompanyUser" type="int"/>
-        <property name="customer" type="Customer"/>
+        <property name="idCompanyUser" type="int" />
+        <property name="customer" type="Customer" />
     </transfer>
 
     <transfer name="Customer">
         <property name="email" />
-        <property name="firstName"/>
-        <property name="lastName"/>
+        <property name="firstName" />
+        <property name="lastName" />
     </transfer>
+
 </transfers>

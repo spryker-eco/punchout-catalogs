@@ -36,13 +36,13 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
     }
 
     /**
-     * @param int $connectionId
+     * @param int $idConnection
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
-    public function findConnectionById(int $connectionId): ?PunchoutCatalogConnectionTransfer
+    public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer
     {
-        $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsRepository->findConnectionById($connectionId);
+        $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsRepository->findConnectionById($idConnection);
 
         if (!$punchoutCatalogConnectionTransfer) {
             return $punchoutCatalogConnectionTransfer;

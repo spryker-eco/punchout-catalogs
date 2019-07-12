@@ -23,19 +23,19 @@ class PunchoutCatalogConnectionFormDataProvider
     protected $companyBusinessUnitFacade;
 
     /**
-     * @var \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionFormatPluginInterface[]
      */
     protected $punchoutCatalogConnectionFormatPlugins;
 
     /**
-     * @var \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionTypePluginInterface[]
      */
     protected $punchoutCatalogConnectionTypePlugins;
 
     /**
      * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $punchoutCatalogConnectionFormatPlugins
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogConnectionTypePluginInterface[] $punchoutCatalogConnectionTypePlugins
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionFormatPluginInterface[] $punchoutCatalogConnectionFormatPlugins
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionTypePluginInterface[] $punchoutCatalogConnectionTypePlugins
      */
     public function __construct(
         PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
