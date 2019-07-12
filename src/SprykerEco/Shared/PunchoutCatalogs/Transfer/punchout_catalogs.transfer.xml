@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PunchoutCatalogConnection">
+        <property name="idPunchoutCatalogConnection" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="name" type="string"/>
+        <property name="mapping" type="string"/>
+        <property name="type" type="string"/>
+        <property name="format" type="string"/>
+        <property name="username" type="string"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogTransaction">
+        <property name="idPunchoutCatalogTransaction" type="int"/>
+        <property name="connection" type="PunchoutCatalogConnection"/>
+        <property name="message" type="string"/>
+        <property name="status" type="bool"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="type" type="string"/>
+        <property name="connectionSessionId" type="string"/>
+        <property name="rawData" type="string"/>
+        <property name="errorMessage" type="string"/>
+        <property name="createdAt" type="string"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogEntryPoint">
+        <property name="store" type="Store"/>
+        <property name="url" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogEntryPointFilter">
+        <property name="idCompanyBusinessUnit" type="int"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionCart">
+        <property name="idPunchoutCatalogCart" type="int"/>
+        <property name="maxDescriptionLength" type="int"/>
+        <property name="defaultSupplierId" type="string"/>
+        <property name="encoding" type="string"/>
+        <property name="totalsMode" type="string"/>
+        <property name="mapping" type="string"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionSetup">
+        <property name="idPunchoutCatalogSetup" type="int"/>
+        <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompanyUser" type="int"/>
+        <property name="loginMode" type="string"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogResponse">
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="company" type="Company"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Company">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCriteriaFilter">
+        <property name="parentCompanyBusinessUnitId" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUserCollection">
+        <property name="companyUsers" type="CompanyUser[]" singular="companyUser"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CompanyUserCriteriaFilter">
+        <property name="companyUserIds" type="array"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="email"/>
+        <property name="firstName"/>
+        <property name="lastName"/>
+    </transfer>
+
+</transfers>
