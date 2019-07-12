@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogs;
 
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogSetupRequestBundleModeForm;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogSetupRequestFormExtensionPluginInterface;
 
 class BundleModePunchoutCatalogSetupRequestFormExtensionPlugin implements PunchoutCatalogSetupRequestFormExtensionPluginInterface
 {

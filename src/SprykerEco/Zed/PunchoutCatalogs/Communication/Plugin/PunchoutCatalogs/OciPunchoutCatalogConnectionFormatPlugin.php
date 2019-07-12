@@ -9,6 +9,7 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\PunchoutCatalogs;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\PunchoutCatalogOciConnectionFormatForm;
+use SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionFormatPluginInterface;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\Communication\PunchoutCatalogsCommunicationFactory getFactory()
