@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs;
 
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
@@ -28,6 +29,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_SETUP = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_SETUP';
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART = 'PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART';
     public const PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION = 'PROPEL_QUERY_PUNCHOUT_CATALOG_TRANSACTION';
+    public const PROPEL_QUERY_COMPANY_BUSINESS_UNIT = 'PROPEL_QUERY_COMPANY_BUSINESS_UNIT';
 
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
@@ -75,6 +77,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addPunchoutCatalogConnectionSetupPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionCartPropelQuery($container);
         $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
+        $container = $this->addCompanyBusinessUnitQuery($container);
 
         return $container;
     }
@@ -292,5 +295,19 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
     protected function getPunchoutCatalogSetupRequestFormExtensionPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyBusinessUnitQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT, function (Container $container) {
+            return SpyCompanyBusinessUnitQuery::create();
+        });
+
+        return $container;
     }
 }

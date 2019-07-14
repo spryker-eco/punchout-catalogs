@@ -68,6 +68,7 @@
 
     <transfer name="Company">
         <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="Message">
@@ -75,7 +76,7 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
-        <property name="parentCompanyBusinessUnitId" type="int"/>
+        <property name="companyBusinessUnitIds" type="array"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">

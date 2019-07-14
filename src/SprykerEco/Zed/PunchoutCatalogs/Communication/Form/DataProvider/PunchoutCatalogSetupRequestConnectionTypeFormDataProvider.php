@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyUserFacadeInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
 
 class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
 {
@@ -33,15 +34,23 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
     protected $companyUserFacade;
 
     /**
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
+     */
+    protected $punchoutCatalogsRepository;
+
+    /**
      * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade
      * @param \SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToCompanyUserFacadeInterface $companyUserFacade
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
      */
     public function __construct(
         PunchoutCatalogsToCompanyBusinessUnitFacadeInterface $companyBusinessUnitFacade,
-        PunchoutCatalogsToCompanyUserFacadeInterface $companyUserFacade
+        PunchoutCatalogsToCompanyUserFacadeInterface $companyUserFacade,
+        PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
     ) {
         $this->companyBusinessUnitFacade = $companyBusinessUnitFacade;
         $this->companyUserFacade = $companyUserFacade;
+        $this->punchoutCatalogsRepository = $punchoutCatalogsRepository;
     }
 
     /**
@@ -93,20 +102,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
      */
     public function getCompanyBusinessUnitChoices(int $parentCompanyBusinessUnitId): array
     {
-        $parentCompanyBusinessUnitTransfer = $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($parentCompanyBusinessUnitId);
-
-        if (!$parentCompanyBusinessUnitTransfer) {
-            return [];
-        }
-
-        $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
-            (new CompanyBusinessUnitCriteriaFilterTransfer())
-                ->setParentCompanyBusinessUnitId($parentCompanyBusinessUnitId)
-        );
-
-        $companyBusinessUnitTransfers = $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()->count()
-            ? $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()
-            : [$parentCompanyBusinessUnitTransfer];
+        $companyBusinessUnitTransfers = $this->getCompanyBusinessUnits($parentCompanyBusinessUnitId);
 
         $companyBusinessUnitChoices = [];
 
@@ -125,7 +121,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
      */
     public function getCompanyUserChoices(int $parentCompanyBusinessUnitId): array
     {
-        $companyUserIds = $this->companyBusinessUnitFacade->getCompanyUserIdsByIdCompanyBusinessUnit($parentCompanyBusinessUnitId);
+        $companyUserIds = $this->punchoutCatalogsRepository->getActiveCompanyUserIdsByIdCompanyBusinessUnit($parentCompanyBusinessUnitId);
 
         if (!$companyUserIds) {
             return $companyUserIds;
@@ -133,7 +129,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
 
         $companyUserCollectionTransfer = $this->companyUserFacade->getCompanyUserCollection(
             (new CompanyUserCriteriaFilterTransfer())
-                    ->setCompanyUserIds($companyUserIds)
+                ->setCompanyUserIds($companyUserIds)
         );
 
         $companyUsers = [];
@@ -198,5 +194,33 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
             $customerTransfer->getLastName(),
             $customerTransfer->getEmail()
         );
+    }
+
+    /**
+     * @param int $parentCompanyBusinessUnitId
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer[]
+     */
+    protected function getCompanyBusinessUnits(int $parentCompanyBusinessUnitId): array
+    {
+        $parentCompanyBusinessUnitTransfer = $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($parentCompanyBusinessUnitId);
+
+        if (!$parentCompanyBusinessUnitTransfer) {
+            return [];
+        }
+
+        $companyBusinessUnitIds = $this->punchoutCatalogsRepository->getActiveCompanyBusinessUnitIdsByParentCompanyBuesinessUnitId($parentCompanyBusinessUnitId);
+
+        if (!$companyBusinessUnitIds) {
+            return [$parentCompanyBusinessUnitTransfer];
+        }
+
+        $companyBusinessUnitCollectionTransfer = $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection(
+            (new CompanyBusinessUnitCriteriaFilterTransfer())
+                ->setCompanyBusinessUnitIds($companyBusinessUnitIds)
+        );
+
+        return $companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits()
+            ->getArrayCopy();
     }
 }

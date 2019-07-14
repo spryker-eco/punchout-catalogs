@@ -26,11 +26,4 @@ interface PunchoutCatalogsToCompanyBusinessUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null
      */
     public function findCompanyBusinessUnitById(int $idCompanyBusinessUnit): ?CompanyBusinessUnitTransfer;
-
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return int[]
-     */
-    public function getCompanyUserIdsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array;
 }

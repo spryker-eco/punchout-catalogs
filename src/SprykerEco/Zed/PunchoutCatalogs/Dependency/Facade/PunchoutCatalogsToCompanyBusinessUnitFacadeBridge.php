@@ -45,14 +45,4 @@ class PunchoutCatalogsToCompanyBusinessUnitFacadeBridge implements PunchoutCatal
     {
         return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit);
     }
-
-    /**
-     * @param int $idCompanyBusinessUnit
-     *
-     * @return int[]
-     */
-    public function getCompanyUserIdsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
-    {
-        return $this->companyBusinessUnitFacade->getCompanyUserIdsByIdCompanyBusinessUnit($idCompanyBusinessUnit);
-    }
 }

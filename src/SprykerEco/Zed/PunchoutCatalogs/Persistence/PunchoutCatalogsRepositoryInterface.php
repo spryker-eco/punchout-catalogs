@@ -25,4 +25,18 @@ interface PunchoutCatalogsRepositoryInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
      */
     public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer;
+
+    /**
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return int[]
+     */
+    public function getActiveCompanyUserIdsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array;
+
+    /**
+     * @param int $parentCompanyBusinessUnitId
+     *
+     * @return int[]
+     */
+    public function getActiveCompanyBusinessUnitIdsByParentCompanyBuesinessUnitId(int $parentCompanyBusinessUnitId): array;
 }

@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
@@ -81,5 +82,13 @@ class PunchoutCatalogsPersistenceFactory extends AbstractPersistenceFactory
     public function getPunchoutCatalogConnectionCartPropelQuery(): PgwPunchoutCatalogConnectionCartQuery
     {
         return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART);
+    }
+
+    /**
+     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery
+     */
+    public function getCompanyBusinessUnitPropelQuery(): SpyCompanyBusinessUnitQuery
+    {
+        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_COMPANY_BUSINESS_UNIT);
     }
 }

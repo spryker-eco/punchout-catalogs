@@ -62,13 +62,13 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getPunchoutCatalogConnectionForm(?PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer = null): FormInterface
     {
-        $idPunchoutCatalogConnectionFormDataProvider = $this->createPunchoutCatalogConnectionFormDataProvider();
+        $punchoutCatalogConnectionFormDataProvider = $this->createPunchoutCatalogConnectionFormDataProvider();
 
         return $this->getFormFactory()
             ->create(
                 PunchoutCatalogConnectionForm::class,
-                $idPunchoutCatalogConnectionFormDataProvider->getData($punchoutCatalogConnectionTransfer),
-                $idPunchoutCatalogConnectionFormDataProvider->getOptions()
+                $punchoutCatalogConnectionFormDataProvider->getData($punchoutCatalogConnectionTransfer),
+                $punchoutCatalogConnectionFormDataProvider->getOptions()
             );
     }
 
@@ -91,7 +91,8 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     {
         return new PunchoutCatalogSetupRequestConnectionTypeFormDataProvider(
             $this->getCompanyBusinessUnitFacade(),
-            $this->getCompanyUserFacade()
+            $this->getCompanyUserFacade(),
+            $this->getRepository()
         );
     }
 

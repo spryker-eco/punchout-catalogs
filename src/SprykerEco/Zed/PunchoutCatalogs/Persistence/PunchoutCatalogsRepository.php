@@ -9,6 +9,9 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
+use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -65,5 +68,52 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
                 $punchoutCatalogTransactionEntity,
                 new PunchoutCatalogTransactionTransfer()
             );
+    }
+
+    /**
+     * @module CompanyUser
+     * @module Company
+     * @module Customer
+     *
+     * @param int $idCompanyBusinessUnit
+     *
+     * @return int[]
+     */
+    public function getActiveCompanyUserIdsByIdCompanyBusinessUnit(int $idCompanyBusinessUnit): array
+    {
+        return $this->getFactory()
+            ->getCompanyBusinessUnitPropelQuery()
+            ->useCompanyQuery(null, Criteria::INNER_JOIN)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->useCompanyUserQuery(null, Criteria::INNER_JOIN)
+                ->useCustomerQuery(null, Criteria::INNER_JOIN)
+                    ->filterByAnonymizedAt(null)
+                ->endUse()
+            ->endUse()
+            ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @module Company
+     *
+     * @param int $parentCompanyBusinessUnitId
+     *
+     * @return int[]
+     */
+    public function getActiveCompanyBusinessUnitIdsByParentCompanyBuesinessUnitId(int $parentCompanyBusinessUnitId): array
+    {
+        return $this->getFactory()
+            ->getCompanyBusinessUnitPropelQuery()
+            ->useCompanyQuery(null, Criteria::INNER_JOIN)
+                ->filterByIsActive(true)
+            ->endUse()
+            ->filterByFkParentCompanyBusinessUnit($parentCompanyBusinessUnitId)
+            ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
+            ->find()
+            ->toArray();
     }
 }

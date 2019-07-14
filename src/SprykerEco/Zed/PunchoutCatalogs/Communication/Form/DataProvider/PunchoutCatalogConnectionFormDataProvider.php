@@ -88,6 +88,10 @@ class PunchoutCatalogConnectionFormDataProvider
         $companyBusinessUnitChoices = [];
 
         foreach ($companyBusinessUnitCollection->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {
+            if (!$companyBusinessUnitTransfer->getCompany()->getIsActive()) {
+                continue;
+            }
+
             $companyBusinessUnitChoices[$this->buildCompanyBusinessUnitLabel($companyBusinessUnitTransfer)]
                 = $companyBusinessUnitTransfer->getIdCompanyBusinessUnit();
         }
