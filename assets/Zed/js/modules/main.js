@@ -9,7 +9,13 @@ $(document).ready(function() {
     $('#punchoutCatalogConnection_setup_request_setup_fkCompanyBusinessUnit').select2({
       ajax: {
         url: function () {
-            return '/punchout-catalogs/company-business-unit?id-parent-company-business-unit=' + $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
+            var idCompanyBusinessUnit = $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
+
+            if (!idCompanyBusinessUnit) {
+                return 'javascript:void(0)';
+            }
+
+            return '/punchout-catalogs/company-business-unit?id-parent-company-business-unit=' + idCompanyBusinessUnit;
         },
         delay: 250,
         dataType: 'json',
@@ -20,7 +26,13 @@ $(document).ready(function() {
     $('#punchoutCatalogConnection_setup_request_setup_fkCompanyUser').select2({
         ajax: {
             url: function () {
-                return '/punchout-catalogs/company-user?id-company-business-unit=' + $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
+                var idCompanyBusinessUnit = $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
+
+                if (!idCompanyBusinessUnit) {
+                    return 'javascript:void(0)';
+                }
+
+                return '/punchout-catalogs/company-user?id-company-business-unit=' + idCompanyBusinessUnit;
             },
             delay: 250,
             dataType: 'json',
