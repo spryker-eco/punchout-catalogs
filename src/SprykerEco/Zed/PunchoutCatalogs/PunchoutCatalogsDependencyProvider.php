@@ -49,7 +49,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        parent::provideCommunicationLayerDependencies($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addUtilDateTimeService($container);
         $container = $this->addPunchoutCatalogConnectionPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionSetupPropelQuery($container);
