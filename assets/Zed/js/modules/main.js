@@ -6,38 +6,40 @@
 'use strict';
 
 $(document).ready(function() {
-    $('#punchoutCatalogConnection_setup_request_setup_fkCompanyBusinessUnit').select2({
-      ajax: {
-        url: function () {
-            var idCompanyBusinessUnit = $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
+    $('#punchoutCatalogConnection_fkCompanyBusinessUnit').on('change', function () {
+        var parentCompanyBusinessUnitId = $(this),
+            companyBusinessUnitField = $('#punchoutCatalogConnection_setup_request_setup_fkCompanyBusinessUnit'),
+            companyUserField = $('#punchoutCatalogConnection_setup_request_setup_fkCompanyUser');
 
-            if (!idCompanyBusinessUnit) {
-                return 'javascript:void(0)';
-            }
+        if (!parentCompanyBusinessUnitId) {
+            companyBusinessUnitField.select2();
+            companyUserField.select2();
 
-            return '/punchout-catalogs/company-business-unit?id-parent-company-business-unit=' + idCompanyBusinessUnit;
-        },
-        delay: 250,
-        dataType: 'json',
-        cache: true,
-      },
-    });
+            return;
+        }
 
-    $('#punchoutCatalogConnection_setup_request_setup_fkCompanyUser').select2({
-        ajax: {
-            url: function () {
-                var idCompanyBusinessUnit = $('#punchoutCatalogConnection_fkCompanyBusinessUnit').val();
+        companyBusinessUnitField.select2({
+            ajax: {
+                url: function () {
 
-                if (!idCompanyBusinessUnit) {
-                    return 'javascript:void(0)';
-                }
-
-                return '/punchout-catalogs/company-user?id-company-business-unit=' + idCompanyBusinessUnit;
+                    return '/punchout-catalogs/company-business-unit?id-parent-company-business-unit=' + parentCompanyBusinessUnitId;
+                },
+                delay: 250,
+                dataType: 'json',
+                cache: true,
             },
-            delay: 250,
-            dataType: 'json',
-            cache: true,
-        },
+        });
+
+        companyUserField.select2({
+            ajax: {
+                url: function () {
+                    return '/punchout-catalogs/company-user?id-company-business-unit=' + parentCompanyBusinessUnitId;
+                },
+                delay: 250,
+                dataType: 'json',
+                cache: true,
+            },
+        });
     });
 
     $('#punchoutCatalogConnection_fkCompanyBusinessUnit').select2();
