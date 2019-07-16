@@ -113,22 +113,6 @@ class PunchoutCatalogsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery
-     */
-    public function getPunchoutCatalogConnectionSetupPropelQuery(): PgwPunchoutCatalogConnectionSetupQuery
-    {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_SETUP);
-    }
-
-    /**
-     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery
-     */
-    public function getPunchoutCatalogConnectionCartPropelQuery(): PgwPunchoutCatalogConnectionCartQuery
-    {
-        return $this->getProvidedDependency(PunchoutCatalogsDependencyProvider::PROPEL_QUERY_PUNCHOUT_CATALOG_CONNECTION_CART);
-    }
-
-    /**
      * @return \SprykerEco\Zed\PunchoutCatalogs\Dependency\Service\PunchoutCatalogsToUtilDateTimeServiceInterface
      */
     public function getUtilDateTimeService(): PunchoutCatalogsToUtilDateTimeServiceInterface
