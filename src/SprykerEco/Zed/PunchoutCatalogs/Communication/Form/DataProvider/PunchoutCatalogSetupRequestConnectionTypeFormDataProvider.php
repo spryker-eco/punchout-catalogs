@@ -209,7 +209,7 @@ class PunchoutCatalogSetupRequestConnectionTypeFormDataProvider
             return [];
         }
 
-        $companyBusinessUnitIds = $this->punchoutCatalogsRepository->getActiveCompanyBusinessUnitIdsByParentCompanyBuesinessUnitId($parentCompanyBusinessUnitId);
+        $companyBusinessUnitIds = $this->punchoutCatalogsRepository->getActiveCompanyBusinessUnitIdsByParentCompanyBusinessUnitId($parentCompanyBusinessUnitId);
 
         if (!$companyBusinessUnitIds) {
             return [$parentCompanyBusinessUnitTransfer];

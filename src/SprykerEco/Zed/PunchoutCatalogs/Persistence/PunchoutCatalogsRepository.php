@@ -84,14 +84,12 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
         return $this->getFactory()
             ->getCompanyUserPropelQuery()
             ->useCompanyQuery(null, Criteria::INNER_JOIN)
-                ->filterByIsActive(true)
             ->endUse()
             ->useCustomerQuery(null, Criteria::INNER_JOIN)
                 ->filterByAnonymizedAt(null)
             ->endUse()
-            ->useCompanyBusinessUnitQuery(null, Criteria::INNER_JOIN)
-                ->filterByIdCompanyBusinessUnit($idCompanyBusinessUnit)
-            ->endUse()
+            ->filterByIsActive(true)
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->select(SpyCompanyUserTableMap::COL_ID_COMPANY_USER)
             ->find()
             ->toArray();
@@ -104,7 +102,7 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
      *
      * @return int[]
      */
-    public function getActiveCompanyBusinessUnitIdsByParentCompanyBuesinessUnitId(int $parentCompanyBusinessUnitId): array
+    public function getActiveCompanyBusinessUnitIdsByParentCompanyBusinessUnitId(int $parentCompanyBusinessUnitId): array
     {
         return $this->getFactory()
             ->getCompanyBusinessUnitPropelQuery()

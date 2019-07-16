@@ -79,8 +79,8 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
         $container = $this->addPunchoutCatalogConnectionSetupPropelQuery($container);
         $container = $this->addPunchoutCatalogConnectionCartPropelQuery($container);
         $container = $this->addPunchoutCatalogTransactionPropelQuery($container);
-        $container = $this->addCompanyBusinessUnitQuery($container);
-        $container = $this->addCompanyUserQuery($container);
+        $container = $this->addCompanyBusinessUnitPropelQuery($container);
+        $container = $this->addCompanyUserPropelQuery($container);
 
         return $container;
     }
@@ -305,7 +305,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyBusinessUnitQuery(Container $container): Container
+    protected function addCompanyBusinessUnitPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return SpyCompanyBusinessUnitQuery::create();
@@ -319,7 +319,7 @@ class PunchoutCatalogsDependencyProvider extends AbstractBundleDependencyProvide
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCompanyUserQuery(Container $container): Container
+    protected function addCompanyUserPropelQuery(Container $container): Container
     {
         $container->set(static::PROPEL_QUERY_COMPANY_USER, function (Container $container) {
             return SpyCompanyUserQuery::create();

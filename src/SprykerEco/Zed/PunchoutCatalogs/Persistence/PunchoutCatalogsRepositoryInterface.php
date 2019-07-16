@@ -38,5 +38,5 @@ interface PunchoutCatalogsRepositoryInterface
      *
      * @return int[]
      */
-    public function getActiveCompanyBusinessUnitIdsByParentCompanyBuesinessUnitId(int $parentCompanyBusinessUnitId): array;
+    public function getActiveCompanyBusinessUnitIdsByParentCompanyBusinessUnitId(int $parentCompanyBusinessUnitId): array;
 }
