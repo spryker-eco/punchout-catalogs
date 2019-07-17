@@ -1,0 +1,5 @@
+{
+  "exclude": {
+    "PunchoutCatalog": "Alias for punchout-catalogs/punchout-catalog-spryker."
+  }
+}
