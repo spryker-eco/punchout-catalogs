@@ -42,5 +42,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#punchoutCatalogConnection_fkCompanyBusinessUnit').select2();
+    $('#punchoutCatalogConnection_fkCompanyBusinessUnit')
+        .select2()
+        .change();
 });
