@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "punchout-catalogs/punchout-catalog-spryker": "dev-master#^1.0.1",
+    "punchout-catalogs/punchout-catalog-spryker": "^1.0.1",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^2.9.0",
     "spryker/company-user": "^2.0.0",
