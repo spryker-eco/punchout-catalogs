@@ -8,7 +8,7 @@
     "punchout-catalogs/punchout-catalog-spryker": "^1.0.0",
     "spryker/company-business-unit": "^2.0.0",
     "spryker/company-user": "^2.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/util-text": "^1.1.0",
     "spryker/vault": "^1.0.0"
   },
