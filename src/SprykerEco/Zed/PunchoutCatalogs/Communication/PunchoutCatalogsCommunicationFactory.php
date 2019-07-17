@@ -8,9 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Communication;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
-use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionCartQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
-use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionSetupQuery;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransactionQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\DataProvider\PunchoutCatalogConnectionFormDataProvider;

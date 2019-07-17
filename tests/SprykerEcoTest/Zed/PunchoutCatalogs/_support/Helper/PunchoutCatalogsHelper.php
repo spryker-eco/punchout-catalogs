@@ -53,11 +53,6 @@ class PunchoutCatalogsHelper extends Module
             );
         }
 
-        if ($punchoutCatalogConnectionTransfer->getCompanyBusinessUnit()) {
-            $punchoutCatalogTransactionEntity->setFkCompanyBusinessUnit(
-                $punchoutCatalogConnectionTransfer->getCompanyBusinessUnit()->getIdCompanyBusinessUnit()
-            );
-        }
         $punchoutCatalogTransactionEntity->save();
 
         return $punchoutCatalogConnectionTransfer->setIdPunchoutCatalogTransaction(

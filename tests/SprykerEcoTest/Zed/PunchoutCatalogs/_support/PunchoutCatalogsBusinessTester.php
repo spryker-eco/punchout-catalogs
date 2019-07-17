@@ -55,6 +55,7 @@ class PunchoutCatalogsBusinessTester extends Actor
     protected const CONNECTION_TYPE = 'Test type';
     protected const CONNECTION_FORMAT = 'Test format';
     protected const CONNECTION_PASSWORD = 'Test password';
+    protected const CONNECTION_CART_TOTALS_MODE = 'Test totals mode';
 
     /**
      * @return \Generated\Shared\Transfer\CompanyTransfer
@@ -122,6 +123,7 @@ class PunchoutCatalogsBusinessTester extends Actor
         return (new PunchoutCatalogConnectionCartTransfer())
             ->setDefaultSupplierId(static::CONNECTION_CART_SUPPLIED_ID)
             ->setMaxDescriptionLength(static::CONNECTION_CART_MAX_DESCRIPTION_LENGTH)
+            ->setTotalsMode(static::CONNECTION_CART_TOTALS_MODE)
             ->setMapping(static::CONNECTION_CART_MAPPING)
             ->setEncoding(static::CONNECTION_CART_ENCODING);
     }
