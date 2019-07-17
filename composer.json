@@ -6,21 +6,25 @@
   "require": {
     "php": ">=7.1",
     "punchout-catalogs/punchout-catalog-spryker": "^1.0.0",
+    "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^2.0.0",
     "spryker/company-user": "^2.0.0",
+    "spryker/customer": "^7.0.0",
     "spryker/kernel": "^3.33.0",
+    "spryker/util-date-time": "^1.0.0",
     "spryker/util-text": "^1.1.0",
-    "spryker/vault": "^1.0.0"
+    "spryker/vault": "^1.0.0",
+    "spryker/zed-request": "^3.4.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/store": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "SprykerEco\\": "src/SprykerEco/"
+      "SprykerEco\\": "src/SprykerEco/",
+      "SprykerEcoTest\\Zed\\PunchoutCatalogs\\Helper\\": "tests/SprykerEcoTest/Zed/PunchoutCatalogs/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -30,17 +34,17 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.0.x-dev"
-    }
-  },
   "repositories": [
     {
       "type": "git",
       "url": "git@github.com:punchout-catalogs/punchout-catalog-spryker.git"
     }
   ],
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
   "config": {
     "sort-packages": true
   }
