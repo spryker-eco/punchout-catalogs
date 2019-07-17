@@ -16,9 +16,9 @@ checks:
     php:
       code_rating: true
 
-  filter:
-    excluded_paths:
-    - config/*
-    - tests/*
-    - src/Generated/*
-    - src/Pyz/*
+filter:
+  excluded_paths:
+  - config/*
+  - tests/*
+  - src/Generated/*
+  - src/Pyz/*
