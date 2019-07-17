@@ -68,7 +68,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindConnectionByIdRetrievesPasswordFormVaultWhenItExists(): void
+    public function testFindConnectionByIdWithPasswordRetrievesPasswordFormVaultWhenItExists(): void
     {
         // Arrange
         $punchoutCatalogConnectionTransfer = $this->tester->createPunchoutCatalogConnection(
@@ -77,7 +77,7 @@ class PunchoutCatalogsFacadeTest extends Unit
 
         // Act
         $persistentPunchoutCatalogConnectionTransfer = $this->tester->getFacade()
-            ->findConnectionById($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection());
+            ->findConnectionByIdWithPassword($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection());
 
         // Assert
         $this->assertNotNull($persistentPunchoutCatalogConnectionTransfer);
