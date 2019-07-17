@@ -140,7 +140,7 @@ class PunchoutCatalogsWriter implements PunchoutCatalogsWriterInterface
      */
     protected function storePassword(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): void
     {
-        if (!$punchoutCatalogConnectionTransfer->getPassword()) {
+        if (!$punchoutCatalogConnectionTransfer->isPropertyModified(PunchoutCatalogConnectionTransfer::PASSWORD)) {
             return;
         }
 

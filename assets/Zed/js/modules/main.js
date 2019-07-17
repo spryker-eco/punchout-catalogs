@@ -7,7 +7,7 @@
 
 $(document).ready(function() {
     $('#punchoutCatalogConnection_fkCompanyBusinessUnit').on('change', function () {
-        var parentCompanyBusinessUnitId = $(this),
+        var parentCompanyBusinessUnitId = $(this).val(),
             companyBusinessUnitField = $('#punchoutCatalogConnection_setup_request_setup_fkCompanyBusinessUnit'),
             companyUserField = $('#punchoutCatalogConnection_setup_request_setup_fkCompanyUser');
 

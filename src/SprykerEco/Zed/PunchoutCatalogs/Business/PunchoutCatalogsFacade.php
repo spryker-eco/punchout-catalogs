@@ -40,6 +40,22 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
      *
      * @api
      *
+     * @param int $idConnection
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
+     */
+    public function findConnectionByIdWithPassword(int $idConnection): ?PunchoutCatalogConnectionTransfer
+    {
+        return $this->getFactory()
+            ->createPunchoutCatalogsReader()
+            ->findConnectionByIdWithPassword($idConnection);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogResponseTransfer

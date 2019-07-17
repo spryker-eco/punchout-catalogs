@@ -26,8 +26,22 @@ interface PunchoutCatalogsFacadeInterface
     public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer;
 
     /**
+     * Specifications:
+     * - Retrieves punchout catalog connection transfer by ID, returns null if nothing found.
+     * - Populates punchout catalog connection transfer with plain password.
+     *
+     * @api
+     *
+     * @param int $idConnection
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
+     */
+    public function findConnectionByIdWithPassword(int $idConnection): ?PunchoutCatalogConnectionTransfer;
+
+    /**
      * Specification:
      * - Creates punchout catalog connection in Persistence.
+     * - Saves connection password if it was provided.
      * - Returns unsuccessful response with corresponding message if no connection was created.
      *
      * @api
@@ -43,6 +57,7 @@ interface PunchoutCatalogsFacadeInterface
      * - Expects idPunchoutCatalogConnection to be provided.
      * - Returns unsuccessful response with corresponding message if no connection found by idPunchoutCatalogConnection.
      * - Updates punchout catalog connection in Persistence.
+     * - Saves connection password if it was updated.
      *
      * @api
      *

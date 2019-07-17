@@ -17,4 +17,11 @@ interface PunchoutCatalogsReaderInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
     public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer;
+
+    /**
+     * @param int $idConnection
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
+     */
+    public function findConnectionByIdWithPassword(int $idConnection): ?PunchoutCatalogConnectionTransfer;
 }

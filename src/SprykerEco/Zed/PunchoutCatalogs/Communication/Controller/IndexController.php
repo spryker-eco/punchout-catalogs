@@ -102,7 +102,7 @@ class IndexController extends AbstractController
         );
 
         $punchoutCatalogConnectionTransfer = $this->getFacade()
-            ->findConnectionById($idPunchoutCatalogConnection);
+            ->findConnectionByIdWithPassword($idPunchoutCatalogConnection);
 
         if (!$punchoutCatalogConnectionTransfer) {
             $this->addErrorMessage(static::MESSAGE_CONNECTION_NOT_FOUND);

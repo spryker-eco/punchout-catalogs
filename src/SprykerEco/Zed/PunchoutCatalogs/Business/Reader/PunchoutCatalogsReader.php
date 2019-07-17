@@ -42,6 +42,16 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
      */
     public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer
     {
+        return $this->punchoutCatalogsRepository->findConnectionById($idConnection);
+    }
+
+    /**
+     * @param int $idConnection
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
+     */
+    public function findConnectionByIdWithPassword(int $idConnection): ?PunchoutCatalogConnectionTransfer
+    {
         $punchoutCatalogConnectionTransfer = $this->punchoutCatalogsRepository->findConnectionById($idConnection);
 
         if (!$punchoutCatalogConnectionTransfer) {
