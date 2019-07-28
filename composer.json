@@ -35,12 +35,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "repositories": [
-    {
-      "type": "git",
-      "url": "git@github.com:punchout-catalogs/punchout-catalog-spryker.git"
-    }
-  ],
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
