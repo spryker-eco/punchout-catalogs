@@ -84,6 +84,7 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
         return $this->getFactory()
             ->getCompanyUserPropelQuery()
             ->useCompanyQuery(null, Criteria::INNER_JOIN)
+                ->filterByIsActive(true)
             ->endUse()
             ->useCustomerQuery(null, Criteria::INNER_JOIN)
                 ->filterByAnonymizedAt(null)
