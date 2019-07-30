@@ -8,6 +8,7 @@
 namespace SprykerEcoTest\Zed\PunchoutCatalogs;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\PunchoutCatalogConnectionBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -39,11 +40,6 @@ class PunchoutCatalogsBusinessTester extends Actor
    /**
     * Define custom actions here
     */
-
-    /**
-     * @see \SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter::PASSWORD_VAULT_DATA_TYPE
-     */
-    protected const VAULT_DATA_TYPE_PASSWORD = 'pwg_punchout_catalog_connection.password';
 
     protected const CONNECTION_SETUP_LOGIN_MODE = 'single_user';
     protected const CONNECTION_CART_SUPPLIED_ID = 'Test supplier ID';
@@ -88,22 +84,6 @@ class PunchoutCatalogsBusinessTester extends Actor
     }
 
     /**
-     * @param int $idPunchoutCatalogConnection
-     *
-     * @return string|null
-     */
-    public function retrieveConnectionPasswordFromVault(int $idPunchoutCatalogConnection): ?string
-    {
-        return $this->getLocator()
-            ->vault()
-            ->facade()
-            ->retrieve(
-                static::VAULT_DATA_TYPE_PASSWORD,
-                $idPunchoutCatalogConnection
-            );
-    }
-
-    /**
      * @param int $idCompanyBusinessUnit
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer
@@ -129,33 +109,13 @@ class PunchoutCatalogsBusinessTester extends Actor
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
-     */
-    public function createPunchoutCatalogConnection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): PunchoutCatalogConnectionTransfer
-    {
-        $punchoutCatalogConnectionTransfer = $this->havePunchoutCatalogConnection([
-            PunchoutCatalogConnectionTransfer::NAME => static::CONNECTION_NAME,
-            PunchoutCatalogConnectionTransfer::USERNAME => static::CONNECTION_USERNAME,
-            PunchoutCatalogConnectionTransfer::PASSWORD => static::CONNECTION_PASSWORD,
-            PunchoutCatalogConnectionTransfer::TYPE => static::CONNECTION_TYPE,
-            PunchoutCatalogConnectionTransfer::FORMAT => static::CONNECTION_FORMAT,
-            PunchoutCatalogConnectionTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
-            PunchoutCatalogConnectionTransfer::SETUP => $this->createPunchoutCatalogsConnectionSetupTransfer($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()),
-            PunchoutCatalogConnectionTransfer::CART => $this->createPunchoutCatalogsConnectionCartTransfer(),
-        ]);
-
-        return $punchoutCatalogConnectionTransfer;
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer
      */
-    public function createPunchoutCatalogTransaction(): PunchoutCatalogTransactionTransfer
+    public function createPunchoutCatalogTransaction(PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer): PunchoutCatalogTransactionTransfer
     {
         $companyBusinessUnitTransfer = $this->createCompanyBusinessUnit();
-        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection($companyBusinessUnitTransfer);
 
         return $this->havePunchoutCatalogTransaction([
             PunchoutCatalogTransactionTransfer::CONNECTION => $punchoutCatalogConnectionTransfer,

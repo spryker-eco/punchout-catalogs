@@ -22,22 +22,6 @@ class PunchoutCatalogsHelper extends Module
     /**
      * @param array $seed
      *
-     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
-     */
-    public function havePunchoutCatalogConnection(array $seed = []): PunchoutCatalogConnectionTransfer
-    {
-        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionBuilder($seed))->build();
-
-        return $this->getLocator()
-            ->punchoutCatalogs()
-            ->facade()
-            ->createConnection($punchoutCatalogConnectionTransfer)
-            ->getPunchoutCatalogConnection();
-    }
-
-    /**
-     * @param array $seed
-     *
      * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer
      */
     public function havePunchoutCatalogTransaction(array $seed = []): PunchoutCatalogTransactionTransfer
