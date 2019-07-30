@@ -15,10 +15,6 @@ matrix:
 
     - php: '7.1'
       env:
-        - PRODUCT_NAME=b2c-demo-shop
-
-    - php: '7.1'
-      env:
         - PRODUCT_NAME=b2b-demo-shop
 
 services:
