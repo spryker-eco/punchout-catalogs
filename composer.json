@@ -1,21 +1,31 @@
 {
   "name": "spryker-eco/punchout-catalogs",
+  "type": "library",
   "description": "PunchoutCatalogs module",
-  "license": "MIT",
+  "license": "proprietary",
   "require": {
     "php": ">=7.1",
-    "spryker/kernel": "^3.0.0",
-    "punchout-catalogs/punchout-catalog-spryker": "dev-master"
+    "punchout-catalogs/punchout-catalog-spryker": "^2.0.0",
+    "spryker/company": "^1.0.0",
+    "spryker/company-business-unit": "^2.9.0",
+    "spryker/company-user": "^2.0.0",
+    "spryker/customer": "^7.0.0",
+    "spryker/gui": "^3.0.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/util-date-time": "^1.0.0",
+    "spryker/util-text": "^1.1.0",
+    "spryker/vault": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
-    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
-      "SprykerEco\\": "src/SprykerEco/"
+      "SprykerEco\\": "src/SprykerEco/",
+      "SprykerEcoTest\\Zed\\PunchoutCatalogs\\Helper\\": "tests/SprykerEcoTest/Zed/PunchoutCatalogs/_support/Helper/"
     }
   },
   "autoload-dev": {

@@ -1,0 +1,53 @@
+<script src="/assets/js/spryker-zed-punchout-catalogs-main.js"></script>
+
+<div class="ibox-content">
+    {{ form_start(punchoutCatalogConnectionForm) }}
+    <h4>{{ "General" | trans }}</h4>
+    <hr>
+    {{ form_row(punchoutCatalogConnectionForm.name) }}
+    {{ form_row(punchoutCatalogConnectionForm.fkCompanyBusinessUnit) }}
+    {{ form_row(punchoutCatalogConnectionForm.mapping) }}
+    <br>
+
+    <h4>{{ "Connection Format" | trans }}</h4>
+    <hr>
+    {{ form_row(punchoutCatalogConnectionForm.format) }}
+    {% for key,choice in punchoutCatalogConnectionForm.format.vars.choices %}
+        {{ form_row(attribute(punchoutCatalogConnectionForm, choice.value)) }}
+    {% endfor %}
+    <br>
+
+    <h4>{{ "Connection Type" | trans }}</h4>
+    <hr>
+    {{ form_row(punchoutCatalogConnectionForm.type) }}
+    {% for key,choice in punchoutCatalogConnectionForm.type.vars.choices %}
+        {{ _self.renderFormWithTemplateRecursive(attribute(punchoutCatalogConnectionForm, choice.value)) }}
+    {% endfor %}
+
+    <input type="submit" class="btn btn-create safe-submit" value="{{ submitLabel | trans }}" />
+    {{ form_end(punchoutCatalogConnectionForm) }}
+</div>
+
+
+{% macro renderFormWithTemplateRecursive(form) %}
+    {% if form.children is not empty %}
+        {% for subForm in form.children %}
+            {{ _self.renderFormWithTemplateRecursive(subForm) }}
+        {% endfor %}
+    {% else %}
+        {{ _self.renderFormFieldWithTemplate(form) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro renderFormFieldWithTemplate(formField) %}
+    <div class="form-group {% if formField.vars.errors|length %}has-error{% endif %}">
+        {{ form_label(formField) }}
+        {{ form_errors(formField) }}
+
+        {% if formField.vars.attr.template_path is defined %}
+            {% include formField.vars.attr.template_path with {'form': formField} %}
+        {% else %}
+            {{ form_widget(formField) }}
+        {% endif %}
+    </div>
+{% endmacro %}

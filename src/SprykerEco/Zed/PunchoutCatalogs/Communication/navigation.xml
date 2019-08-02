@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config>
+    <punchout-catalogs>
+        <label>PunchOut</label>
+        <title>PunchOut</title>
+        <pages>
+            <connection>
+                <label>Connections</label>
+                <title>Connections</title>
+                <bundle>punchout-catalogs</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+                <pages>
+                    <edit-page>
+                        <label>Edit Transferred Cart Connection</label>
+                        <title>Edit Transferred Cart Connection</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>index</controller>
+                        <action>edit</action>
+                        <visible>0</visible>
+                    </edit-page>
+                    <create-page>
+                        <label>Create Transferred Cart Connection</label>
+                        <title>Create Transferred Cart Connection</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>index</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </create-page>
+                    <entry-points-page>
+                        <label>Entry Points</label>
+                        <title>Entry Points</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>entry-points</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </entry-points-page>
+                </pages>
+            </connection>
+            <transaction-log>
+                <label>Transactions Log</label>
+                <title>Transactions Log</title>
+                <bundle>punchout-catalogs</bundle>
+                <controller>transaction</controller>
+                <action>index</action>
+                <visible>1</visible>
+                <pages>
+                    <view-page>
+                        <label>View Transactions Log</label>
+                        <title>View Transactions Log</title>
+                        <bundle>punchout-catalogs</bundle>
+                        <controller>transaction</controller>
+                        <action>view</action>
+                        <visible>0</visible>
+                    </view-page>
+                </pages>
+            </transaction-log>
+        </pages>
+    </punchout-catalogs>
+</config>

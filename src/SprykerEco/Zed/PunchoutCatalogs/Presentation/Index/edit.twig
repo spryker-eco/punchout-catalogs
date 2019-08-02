@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block section_title ('Edit Transferred Cart Connection' | trans) ~ ': ' ~ idPunchoutCatalogConnection %}
+
+{% block action %}
+    {{ backActionButton('/punchout-catalogs', 'List of PunchOut connections' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                {{ include ('@PunchoutCatalogs/_partial/connection-form.twig', {'submitLabel':'Save'}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script type="text/javascript" src="/assets/js/spryker-zed-punchout-catalogs-main.js"></script>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/css/spryker-zed-punchout-catalogs-main.css">
+{% endblock %}
