@@ -13,7 +13,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogSetupReques
 class BundleModePunchoutCatalogSetupRequestFormExtensionPlugin implements PunchoutCatalogSetupRequestFormExtensionPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

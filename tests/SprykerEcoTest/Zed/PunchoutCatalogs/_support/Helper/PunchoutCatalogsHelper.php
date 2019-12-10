@@ -8,9 +8,7 @@
 namespace SprykerEcoTest\Zed\PunchoutCatalogs\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\PunchoutCatalogConnectionBuilder;
 use Generated\Shared\DataBuilder\PunchoutCatalogTransactionBuilder;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;

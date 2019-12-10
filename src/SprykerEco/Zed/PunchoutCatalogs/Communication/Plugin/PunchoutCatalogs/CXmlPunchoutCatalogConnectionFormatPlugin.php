@@ -19,7 +19,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionF
 class CXmlPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implements PunchoutCatalogConnectionFormatPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class CXmlPunchoutCatalogConnectionFormatPlugin extends AbstractPlugin implement
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns a form that is capable of handling all attributes related to the cXml connection format.
      *
      * @api

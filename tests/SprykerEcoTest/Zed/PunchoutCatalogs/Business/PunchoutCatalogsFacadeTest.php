@@ -8,26 +8,22 @@
 namespace SprykerTest\Zed\PunchoutCatalogs\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\PunchoutCatalogConnectionBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Spryker\Shared\Vault\VaultConfig as SharedVaultConfig;
-use Spryker\Zed\Vault\VaultConfig;
 use Spryker\Shared\Vault\VaultConstants;
-use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Vault\Business\VaultBusinessFactory;
-use Spryker\Zed\Vault\Business\VaultFacade;
-use Spryker\Zed\Vault\Business\VaultFacadeInterface;
+use Spryker\Zed\Vault\VaultConfig;
 use SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsBusinessFactory;
 use SprykerEco\Zed\PunchoutCatalogs\Business\PunchoutCatalogsFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeBridge;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsEntityManager;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepository;
-use SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsDependencyProvider;
 
 /**
  * Auto-generated group annotations
+ *
  * @group SprykerTest
  * @group Zed
  * @group PunchoutCatalogs
@@ -243,8 +239,6 @@ class PunchoutCatalogsFacadeTest extends Unit
         return $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
             ->createConnection($this->tester->createPunchoutCatalogConnectionTransfer())
             ->getPunchoutCatalogConnection();
-
-        return $punchoutCatalogConnectionTransfer;
     }
 
     /**
