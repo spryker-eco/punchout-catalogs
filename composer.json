@@ -36,8 +36,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml -p src/",
-    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml -p src/"
+    "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml -p src/ tests/",
+    "cs-fix": "phpcbf --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml -p src/ tests/"
   },
   "extra": {
     "branch-alias": {
