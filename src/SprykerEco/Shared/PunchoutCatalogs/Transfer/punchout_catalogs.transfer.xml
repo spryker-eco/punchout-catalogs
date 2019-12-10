@@ -76,7 +76,7 @@
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
-        <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitId"/>
+        <property name="companyBusinessUnitIds" type="array" singular="companyBusinessUnitIds"/>
     </transfer>
 
     <transfer name="CompanyUserCollection">
