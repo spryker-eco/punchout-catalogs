@@ -5,7 +5,7 @@ Company,Company
 Type,Type
 Status,Status
 Format,Format
-Created At,Created At
+"Created At","Created At"
 Actions,Actions
 Activate,Activate
 Deactivate,Deactivate
@@ -48,8 +48,7 @@ Back,Back
 "Cart Mapping","Cart Mapping"
 "Default Supplier ID","Default Supplier ID"
 "Login Mode","Login Mode"
-"Default Business Unit","Default Business Unit"
-"Single User","Single User"
+"Single User","SinglConnection Formate User"
 "Dynamic User Creation","Dynamic User Creation"
 "Default Business Unit","Default Business Unit"
 base64,base64
@@ -58,8 +57,8 @@ url-encoded,url-encoded
 "Request Mapping","Request Mapping"
 setup_request,Setup Request
 General,General
-Connection Format,Connection Format
-Connection Type,Connection Type
+"Connection Format","Connection Format"
+"Connection Type","Connection Type"
 "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied."
 "Bundle Support","Bundle Mode"
 "Entry Points","Entry Points"

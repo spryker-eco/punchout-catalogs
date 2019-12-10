@@ -21,8 +21,8 @@ Edit,Bearbeiten
 "Create transferred cart connection","Verbindung für übertragenen Warenkorb erstellen"
 "Edit transferred cart connection","Bearbeiten Sie die übertragene Warenkorbverbindung"
 "List of PunchOut connections","Liste der PunchOut Verbindungen."
-"Connection ""%connection_name%"" was updated successfully.","Verbindung ""%connection_name%"" wurde erfolgreich aktualisiert".
-"Connection ""%connection_name%"" was created successfully.","Verbindung ""%connection_name%"" wurde erfolgreich erstellt".
+"Connection ""%connection_name%"" was updated successfully.","Verbindung ""%connection_name%"" wurde erfolgreich aktualisiert."
+"Connection ""%connection_name%"" was created successfully.","Verbindung ""%connection_name%"" wurde erfolgreich erstellt."
 "Connection not found","Verbindung nicht gefunden"
 "Connection ""%connection_name%"" was activated.","Verbindung ""%connection_name%"" wurde aktiviert."
 "Connection ""%connection_name%"" was deactivated.","Verbindung ""%connection_name%"" wurde deaktiviert."
@@ -48,7 +48,6 @@ Back,Zurück
 "Cart Mapping","Mapping des Warenkorbs"
 "Default Supplier ID",Standardlieferanten-ID
 "Login Mode",Anmeldemodus
-"Default Business Unit",Standardgeschäftsbereich
 "Single User",Einzelnutzer
 "Dynamic User Creation","Dynamische Benutzererstellung"
 "Default Business Unit",Standardgeschäftsbereich
@@ -72,4 +71,3 @@ Connections,Verbindungen
 Line,Zeile
 "You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","Sie können die Verbindung ""%totals_mode%"" for ""%connection_format%"" nicht verwenden - wählen Sie bitte eine andere Verbindung aus."
 NULL,NULL
-"Connection ""%connection_name%"" was updated successfully.","Verbindung ""%connection_name%"" wurde erfolgreich geändert."
