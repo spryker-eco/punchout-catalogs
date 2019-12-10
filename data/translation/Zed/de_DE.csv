@@ -1,11 +1,11 @@
-PunchOut Catalog,PunchOut Katalog
-New connection,Neue Verbindung
+"PunchOut Catalog","PunchOut Katalog"
+"New connection","Neue Verbindung"
 Name,Name
 Company,Firma
 Type,Typ
 Status,Status
 Format,Format
-Created At,Hergestellt in
+"Created At","Hergestellt in"
 Actions,Aktionen
 Activate,Aktivieren
 Deactivate,Deaktivieren
@@ -13,62 +13,63 @@ Active,Aktiv
 Inactive,Inaktiv
 cXML,cXML
 OCI,OCI
-Choose business unit,Wählen Sie einen Geschäftsbereich
-Error during connection update,Fehler beim Verbindungsupdate
+"Choose business unit","Wählen Sie einen Geschäftsbereich"
+"Error during connection update","Fehler beim Verbindungsupdate"
 Save,Speichern
 Create,Erstellen
 Edit,Bearbeiten
-Create transferred cart connection,Verbindung für übertragenen Warenkorb erstellen
-Edit transferred cart connection,Bearbeiten Sie die übertragene Warenkorbverbindung
-List of PunchOut connections,Liste der PunchOut Verbindungen.
+"Create transferred cart connection","Verbindung für übertragenen Warenkorb erstellen"
+"Edit transferred cart connection","Bearbeiten Sie die übertragene Warenkorbverbindung"
+"List of PunchOut connections","Liste der PunchOut Verbindungen."
 "Connection ""%connection_name%"" was updated successfully.","Verbindung ""%connection_name%"" wurde erfolgreich aktualisiert".
 "Connection ""%connection_name%"" was created successfully.","Verbindung ""%connection_name%"" wurde erfolgreich erstellt".
-Connection not found,Verbindung nicht gefunden
+"Connection not found","Verbindung nicht gefunden"
 "Connection ""%connection_name%"" was activated.","Verbindung ""%connection_name%"" wurde aktiviert."
 "Connection ""%connection_name%"" was deactivated.","Verbindung ""%connection_name%"" wurde deaktiviert."
-Transaction not found,Transaktion nicht gefunden
+"Transaction not found","Transaktion nicht gefunden"
 View,Ansehen
 ID,ID
-Message Type,Nachrichtentyp
-Business Unit,Geschäftsbereich
-Connection Name,Verbindungsname
-Session ID,Sitzungs-ID
+"Message Type",Nachrichtentyp
+"Business Unit",Geschäftsbereich
+"Connection Name",Verbindungsname
+"Session ID",Sitzungs-ID
 Message,Nachricht
-Raw Data,Rohdaten
-View Transaction:,Transaktion ansehen:
-Transaction Details,Transaktionsdetails
-Transaction ID,Transaktions-ID
-View Transactions Log,Transaktionsprotokoll ansehen
-Transactions Log,Transaktionsprotokoll
+"Raw Data",Rohdaten
+"View Transaction:","Transaktion ansehen:"
+"Transaction Details",Transaktionsdetails
+"Transaction ID",Transaktions-ID
+"View Transactions Log","Transaktionsprotokoll ansehen"
+"Transactions Log",Transaktionsprotokoll
 Unsuccessful,Erfolglos
 Successful,Erfolgreich
 Back,Zurück
 "Set Description length on ""Transfer to Requisition""","Stellen Sie die Beschreibungslänge auf ""Zur Bestellanforderung übertragen"" ein."
-Cart Encoding,Kartencodierung
-Cart Mapping,Mapping des Warenkorbs
-Default Supplier ID,Standardlieferanten-ID
-Login Mode,Anmeldemodus
-Default Business Unit,Standardgeschäftsbereich
-Single User,Einzelnutzer
-Dynamic User Creation,Dynamische Benutzererstellung
-Default Business Unit,Standardgeschäftsbereich
+"Cart Encoding",Kartencodierung
+"Cart Mapping","Mapping des Warenkorbs"
+"Default Supplier ID",Standardlieferanten-ID
+"Login Mode",Anmeldemodus
+"Default Business Unit",Standardgeschäftsbereich
+"Single User",Einzelnutzer
+"Dynamic User Creation","Dynamische Benutzererstellung"
+"Default Business Unit",Standardgeschäftsbereich
 base64,base64
 url-encoded,url-encoded
-No Encoding,Keine Kodierung
-Request Mapping,Mapping der Anfrage
+"No Encoding","Keine Kodierung"
+"Request Mapping","Mapping der Anfrage"
 setup_request,Einrichtungsanforderung
 General,Allgemeines
-Connection Format,Verbindungsformat
-Connection Type,Verbindungstyp
+"Connection Format",Verbindungsformat
+"Connection Type",Verbindungstyp
 "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","Eine Zahl zwischen %min% und %max%. Wenn nicht definiert, wird das maximale Längenlimit angewendet."
-Bundle Support,Unterstützung von Bündeln
-Entry Points,Einstiegspunkte
-Store Name,Geschäftsname
-URL Entry Point,URL-Einstiegspunkt
-Entry Points for Connection,Einstiegspunkte für die Verbindung
+"Bundle Support","Unterstützung von Bündeln"
+"Entry Points",Einstiegspunkte
+"Store Name",Geschäftsname
+"URL Entry Point",URL-Einstiegspunkt
+"Entry Points for Connection","Einstiegspunkte für die Verbindung"
 Connections,Verbindungen
-Totals Mode,Summenmodus
-Header (does not work with OCI),Header (funktioniert nicht mit OCI)
+"Totals Mode",Summenmodus
+"Header (does not work with OCI)","Header (funktioniert nicht mit OCI)"
 Line,Zeile
 "You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","Sie können die Verbindung ""%totals_mode%"" for ""%connection_format%"" nicht verwenden - wählen Sie bitte eine andere Verbindung aus."
 NULL,NULL
+"Connection ""%connection_name%"" was updated successfully.","Verbindung ""%connection_name%"" wurde erfolgreich geändert."
