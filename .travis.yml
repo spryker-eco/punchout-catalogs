@@ -52,9 +52,8 @@ cache:
 before_install:
   - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
   - if [[ ${TRAVIS_PHP_VERSION} != "7.4" ]]; then phpenv config-rm xdebug.ini ; fi
-  - if [[ ${TRAVIS_PHP_VERSION} = "7.4" ]]; then sudo apt-get update ; fi
-  - if [[ ${TRAVIS_PHP_VERSION} = "7.4" ]]; then sudo apt install php7.4-zip ; fi
-  - if [[ ${TRAVIS_PHP_VERSION} = "7.4" ]]; then sudo apt install php7.4-gd ; fi
+  - if [[ ${TRAVIS_PHP_VERSION} = "7.4" ]]; then pecl install zip ; fi
+  - if [[ ${TRAVIS_PHP_VERSION} = "7.4" ]]; then pecl install gd ; fi
 
 script:
   - git clone -b 0.3.0 https://github.com/spryker-eco/eco-ci.git ecoci
