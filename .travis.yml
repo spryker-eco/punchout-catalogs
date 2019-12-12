@@ -15,6 +15,10 @@ matrix:
 
     - php: '7.4'
       env:
+        - PRODUCT_NAME=suite
+
+    - php: '7.2'
+      env:
         - PRODUCT_NAME=b2b-demo-shop
 
 services:
@@ -43,7 +47,6 @@ env:
 
 cache:
   directories:
-    - $SHOP_DIR/current/vendor
     - $HOME/.composer/cache
 
 before_install:
