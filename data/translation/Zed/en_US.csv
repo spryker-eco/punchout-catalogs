@@ -1,11 +1,11 @@
-PunchOut Catalog,PunchOut Catalog
-New connection,New connection
+"PunchOut Catalog","PunchOut Catalog"
+"New connection","New connection"
 Name,Name
 Company,Company
 Type,Type
 Status,Status
 Format,Format
-Created At,Created At
+"Created At","Created At"
 Actions,Actions
 Activate,Activate
 Deactivate,Deactivate
@@ -13,62 +13,62 @@ Active,Active
 Inactive,Inactive
 cXML,cXML
 OCI,OCI
-Choose business unit,Choose business unit
-Error during connection update,Error during connection update
+"Choose business unit","Choose business unit"
+"Error during connection update","Error during connection update"
 Save,Save
 Create,Create
 Edit,Edit
-Create transferred cart connection,Create transferred cart connection
-Edit transferred cart connection,Edit transferred cart connection
-List of PunchOut connections,List of PunchOut connections
+"Create transferred cart connection","Create transferred cart connection"
+"Edit transferred cart connection","Edit transferred cart connection"
+"List of PunchOut connections","List of PunchOut connections"
 "Connection ""%connection_name%"" was updated successfully","Connection ""%connection_name%"" was updated successfully."
 "Connection ""%connection_name%"" was created successfully.","Connection ""%connection_name%"" was created successfully."
-Connection not found,Verbindung nicht gefunden
+"Connection not found","Verbindung nicht gefunden"
 "Connection ""%connection_name%"" was activated.","Connection ""%connection_name%"" was activated."
 "Connection ""%connection_name%"" was deactivated.","Connection ""%connection_name%"" was deactivated."
-Transaction not found,Transaction not found
+"Transaction not found","Transaction not found"
 View,View
 ID,ID
-Message Type,Message Type
-Business Unit,Business Unit
-Connection Name,Connection Name
-Session ID,Session ID
+"Message Type","Message Type"
+"Business Unit","Business Unit"
+"Connection Name","Connection Name"
+"Session ID","Session ID"
 Message,Message
-Raw Data,Raw Data
-View Transaction:,View Transaction:
-Transaction Details,Transaction Details
-Transaction ID,Transaction ID
-View Transactions Log,View Transactions Log
-Transactions Log,Transactions Log
+"Raw Data","Raw Data"
+"View Transaction:","View Transaction:"
+"Transaction Details","Transaction Details"
+"Transaction ID","Transaction ID"
+"View Transactions Log","View Transactions Log"
+"Transactions Log","Transactions Log"
 Unsuccessful,Unsuccessful
 Successful,Successful
 Back,Back
 "Set Description length on ""Transfer to Requisition""","Set Description length on ""Transfer to Requisition"""
-Cart Encoding,Cart Encoding
-Cart Mapping,Cart Mapping
-Default Supplier ID,Default Supplier ID
-Login Mode,Login Mode
-Default Business Unit,Default Business Unit
-Single User,Single User
-Dynamic User Creation,Dynamic User Creation
-Default Business Unit,Default Business Unit
+"Cart Encoding","Cart Encoding"
+"Cart Mapping","Cart Mapping"
+"Default Supplier ID","Default Supplier ID"
+"Login Mode","Login Mode"
+"Single User","SinglConnection Formate User"
+"Dynamic User Creation","Dynamic User Creation"
+"Default Business Unit","Default Business Unit"
 base64,base64
 url-encoded,url-encoded
-No Encoding,No Encoding
-Request Mapping,Request Mapping
-setup_request,Setup Request
+"No Encoding","No Encoding"
+"Request Mapping","Request Mapping"
+setup_request,"Setup Request"
 General,General
-Connection Format,Connection Format
-Connection Type,Connection Type
+"Connection Format","Connection Format"
+"Connection Type","Connection Type"
 "A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied.","A number ranged between %min% and %max%. If not defined, the maximum length limit will be applied."
-Bundle Support,Bundle Mode
-Entry Points,Entry Points
-Store Name,Store Name
-URL Entry Point,URL Entry Point
-Entry Points for Connection,Entry Points for Connection
+"Bundle Support","Bundle Mode"
+"Entry Points","Entry Points"
+"Store Name","Store Name"
+"URL Entry Point","URL Entry Point"
+"Entry Points for Connection","Entry Points for Connection"
 Connections,Connections
-Totals Mode,Totals Mode
-Header (does not work with OCI),Header (does not work with OCI)
+"Totals Mode","Totals Mode"
+"Header (does not work with OCI)","Header (does not work with OCI)"
 Line,Line
 "You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one."
 NULL,NULL
+"Connection ""%connection_name%"" was updated successfully.","Connection ""%connection_name%"" was updated successfully."

@@ -19,7 +19,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Dependency\Plugin\PunchoutCatalogConnectionT
 class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin implements PunchoutCatalogConnectionTypePluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -31,7 +31,7 @@ class SetupRequestPunchoutCatalogConnectionTypePlugin extends AbstractPlugin imp
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Returns a form that is capable of handling all attributes related to the setup_request connection type.
      *
      * @api

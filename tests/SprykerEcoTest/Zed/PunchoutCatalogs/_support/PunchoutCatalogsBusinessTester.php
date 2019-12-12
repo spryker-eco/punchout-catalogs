@@ -8,7 +8,6 @@
 namespace SprykerEcoTest\Zed\PunchoutCatalogs;
 
 use Codeception\Actor;
-use Generated\Shared\DataBuilder\PunchoutCatalogConnectionBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -19,6 +18,7 @@ use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 
 /**
  * Inherited Methods
+ *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

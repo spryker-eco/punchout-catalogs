@@ -20,7 +20,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,7 +36,7 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -52,7 +52,7 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,7 +68,7 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -84,7 +84,7 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
