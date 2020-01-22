@@ -10,16 +10,21 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Form;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use SprykerEco\Zed\PunchoutCatalogs\Communication\Form\ConnectionSetupSubForms\PunchoutCatalogConnectionCartForm;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \SprykerEco\Zed\PunchoutCatalogs\PunchoutCatalogsConfig getConfig()
@@ -67,6 +72,12 @@ class PunchoutCatalogConnectionForm extends AbstractType
             static::OPTION_CONNECTION_FORMAT_SUB_FORM_TYPES,
             static::OPTION_CONNECTION_TYPE_SUB_FORM_TYPES,
         ]);
+
+        $resolver->setDefaults(
+            [
+                'constraints' => [$this->createGlobalTotalsModeValidationConstraint()]
+            ]
+        );
     }
 
     /**
@@ -198,6 +209,30 @@ class PunchoutCatalogConnectionForm extends AbstractType
         $this->addConnectionTypeDynamicSubFormListener($builder);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Callback
+     */
+    protected function createGlobalTotalsModeValidationConstraint(): Callback
+    {
+        return new Callback([
+            'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
+                $connectionFormat = $context->getRoot()
+                    ->get(PunchoutCatalogConnectionTransfer::FORMAT)
+                    ->getData();
+
+                $totalsMode = $dataToValidate->getCart()->getTotalsMode();
+                $allowedConnectionFormats =
+                    PunchoutCatalogConnectionCartForm::ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES[$totalsMode] ?? [];
+
+                if (!in_array($connectionFormat, $allowedConnectionFormats)) {
+                    $context->addViolation(
+                        'Saving of connection was not successful. Please re-check the input and try again.'
+                    );
+                }
+            },
+        ]);
     }
 
     /**

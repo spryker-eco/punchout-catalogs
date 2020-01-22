@@ -44,10 +44,11 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
 
     protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/Form/Connection/Setup/max_description_length.twig';
 
-    protected const ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES = [
-        'line' => ['cxml', 'oci'],
-        'header' => ['cxml'],
-    ];
+    public const ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES =
+        [
+            'line' => ['cxml', 'oci'],
+            'header' => ['cxml'],
+        ];
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
