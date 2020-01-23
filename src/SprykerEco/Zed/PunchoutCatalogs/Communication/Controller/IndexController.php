@@ -30,6 +30,7 @@ class IndexController extends AbstractController
     protected const MESSAGE_CONNECTION_UPDATED = 'Connection "%connection_name%" was updated successfully.';
     protected const MESSAGE_CONNECTION_NOT_FOUND = 'Connection not found';
     protected const MESSAGE_CONNECTION_ADDED = 'Connection "%connection_name%" was created successfully.';
+    protected const MESSAGE_CONNECTION_NOT_SAVED = 'Saving of connection was not successful. Please re-check the input and try again.';
 
     protected const MESSAGE_PARAM_CONNECTION_NAME = '%connection_name%';
 
@@ -85,6 +86,10 @@ class IndexController extends AbstractController
             return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
         }
 
+        if ($punchoutCatalogConnectionsForm->isSubmitted() && !$punchoutCatalogConnectionsForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CONNECTION_NOT_SAVED);
+        }
+
         return [
             'punchoutCatalogConnectionForm' => $punchoutCatalogConnectionsForm->createView(),
         ];
@@ -119,6 +124,10 @@ class IndexController extends AbstractController
             $this->processPunchoutCatalogConnectionEditForm($punchoutCatalogConnectionEditForm);
 
             return $this->redirectResponse(static::ROUTE_PUNCHOUT_CATALOGS_CONNECTION_LIST_PAGE);
+        }
+
+        if ($punchoutCatalogConnectionEditForm->isSubmitted() && !$punchoutCatalogConnectionEditForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CONNECTION_NOT_SAVED);
         }
 
         return [
