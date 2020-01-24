@@ -4,12 +4,17 @@
     <transfer name="PunchoutCatalogConnection">
         <property name="idPunchoutCatalogConnection" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="isActive" type="bool"/>
         <property name="name" type="string"/>
         <property name="mapping" type="string"/>
         <property name="type" type="string"/>
         <property name="format" type="string"/>
         <property name="username" type="string"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionCollection">
+        <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection[]"/>
     </transfer>
 
     <transfer name="PunchoutCatalogTransaction">

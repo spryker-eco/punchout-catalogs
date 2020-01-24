@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
@@ -43,6 +44,35 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
                 $punchoutCatalogConnectionEntity,
                 new PunchoutCatalogConnectionTransfer()
             );
+    }
+
+    /**
+     * @param int $fkCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     */
+    public function findConnectionByFkCompanyBusinessUnit(
+        int $fkCompanyBusinessUnit
+    ): ?PunchoutCatalogConnectionCollectionTransfer {
+        $punchoutCatalogConnectionEntityCollection = $this->getFactory()
+            ->getPunchoutCatalogConnectionPropelQuery()
+            ->filterByFkCompanyBusinessUnit($fkCompanyBusinessUnit)
+            ->joinWithCompanyBusinessUnit()
+            ->find();
+
+        $punchoutCatalogsConnectionMapper = $this->getFactory()->createPunchoutCatalogsConnectionMapper();
+        $punchoutCatalogConnectionCollectionTransfer = new PunchoutCatalogConnectionCollectionTransfer();
+        foreach ($punchoutCatalogConnectionEntityCollection as $punchoutCatalogConnectionEntity) {
+            $punchoutCatalogConnectionTransfer = $punchoutCatalogsConnectionMapper
+                ->mapPunchoutCatalogConnectionEntityToTransfer(
+                    $punchoutCatalogConnectionEntity,
+                    new PunchoutCatalogConnectionTransfer()
+                );
+
+            $punchoutCatalogConnectionCollectionTransfer->addPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        }
+
+        return $punchoutCatalogConnectionCollectionTransfer;
     }
 
     /**

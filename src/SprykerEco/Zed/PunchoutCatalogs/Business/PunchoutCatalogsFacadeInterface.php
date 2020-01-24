@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
@@ -78,4 +79,20 @@ interface PunchoutCatalogsFacadeInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
      */
     public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer;
+
+    /**
+     * Specification:
+     * - Finds punchout catalogs which use given CompanyBusinessUnitTransfer.
+     * - Returns CompanyBusinessUnitResponseTransfer with check results.
+     * - CompanyBusinessUnitResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function isCompanyBusinessUnitDeletable(
+        PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+    ): CompanyBusinessUnitResponseTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Reader;
 
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
@@ -64,5 +65,16 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
         );
 
         return $punchoutCatalogConnectionTransfer->setPassword($password);
+    }
+
+    /**
+     * @param int $fkCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     */
+    public function findConnectionByFkCompanyBusinessUnit(
+        int $fkCompanyBusinessUnit
+    ): ?PunchoutCatalogConnectionCollectionTransfer {
+        return $this->punchoutCatalogsRepository->findConnectionByFkCompanyBusinessUnit($fkCompanyBusinessUnit);
     }
 }

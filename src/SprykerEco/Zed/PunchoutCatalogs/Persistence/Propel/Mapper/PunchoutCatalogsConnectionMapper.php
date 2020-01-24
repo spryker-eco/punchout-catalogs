@@ -7,10 +7,12 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
+use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction;
 
@@ -81,6 +83,15 @@ class PunchoutCatalogsConnectionMapper
             );
         }
 
+        if ($punchoutCatalogConnectionEntity->getCompanyBusinessUnit()) {
+            $punchoutCatalogConnectionTransfer->setCompanyBusinessUnit(
+                $this->mapCompanyBusinessUnitEntityToTransfer(
+                    $punchoutCatalogConnectionEntity->getCompanyBusinessUnit(),
+                    new CompanyBusinessUnitTransfer()
+                )
+            );
+        }
+
         return $punchoutCatalogConnectionTransfer;
     }
 
@@ -106,5 +117,18 @@ class PunchoutCatalogsConnectionMapper
         }
 
         return $punchoutCatalogTransactionTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit $companyBusinessUnitEntity
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    public function mapCompanyBusinessUnitEntityToTransfer(
+        SpyCompanyBusinessUnit $companyBusinessUnitEntity,
+        CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+    ): CompanyBusinessUnitTransfer {
+        return $companyBusinessUnitTransfer->fromArray($companyBusinessUnitEntity->toArray(), true);
     }
 }
