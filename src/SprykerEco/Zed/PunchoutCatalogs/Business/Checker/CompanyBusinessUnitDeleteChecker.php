@@ -55,8 +55,7 @@ class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheck
      */
     protected function createCompanyBusinessUnitResponseTransfer(
         PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
-    ): CompanyBusinessUnitResponseTransfer
-    {
+    ): CompanyBusinessUnitResponseTransfer {
         $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())->setIsSuccessful(true);
 
         if (!count($punchoutCatalogConnectionCollectionTransfer->getPunchoutCatalogConnection())) {

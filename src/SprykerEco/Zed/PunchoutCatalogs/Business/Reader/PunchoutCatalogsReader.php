@@ -77,4 +77,13 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
     ): ?PunchoutCatalogConnectionCollectionTransfer {
         return $this->punchoutCatalogsRepository->findConnectionByFkCompanyBusinessUnit($fkCompanyBusinessUnit);
     }
+
+    /**
+     * @param int $fkCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     */
+    public function findConnectionByFkCompanyUser(int $fkCompanyUser): ?PunchoutCatalogConnectionCollectionTransfer {
+        return $this->punchoutCatalogsRepository->findConnectionByFkCompanyUser($fkCompanyUser);
+    }
 }

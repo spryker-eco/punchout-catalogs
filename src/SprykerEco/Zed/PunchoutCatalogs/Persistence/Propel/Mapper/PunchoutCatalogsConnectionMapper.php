@@ -9,12 +9,14 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnection;
 use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogTransaction;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class PunchoutCatalogsConnectionMapper
 {
@@ -51,6 +53,28 @@ class PunchoutCatalogsConnectionMapper
         $punchoutCatalogConnectionEntity->fromArray($punchoutCatalogConnectionTransfer->toArray());
 
         return $punchoutCatalogConnectionEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $punchoutCatalogConnectionEntityCollection
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer
+     */
+    public function mapPunchoutCatalogConnectionEntityCollectionToCollectionTransfer(
+        ObjectCollection $punchoutCatalogConnectionEntityCollection,
+        PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
+    ): PunchoutCatalogConnectionCollectionTransfer {
+        foreach ($punchoutCatalogConnectionEntityCollection as $punchoutCatalogConnectionEntity) {
+            $punchoutCatalogConnectionTransfer = $this->mapPunchoutCatalogConnectionEntityToTransfer(
+                $punchoutCatalogConnectionEntity,
+                new PunchoutCatalogConnectionTransfer()
+            );
+
+            $punchoutCatalogConnectionCollectionTransfer->addPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
+        }
+
+        return $punchoutCatalogConnectionCollectionTransfer;
     }
 
     /**

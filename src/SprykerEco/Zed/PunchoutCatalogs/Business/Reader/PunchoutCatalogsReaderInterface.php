@@ -35,4 +35,11 @@ interface PunchoutCatalogsReaderInterface
     public function findConnectionByFkCompanyBusinessUnit(
         int $fkCompanyBusinessUnit
     ): ?PunchoutCatalogConnectionCollectionTransfer;
+
+    /**
+     * @param int $fkCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     */
+    public function findConnectionByFkCompanyUser(int $fkCompanyUser): ?PunchoutCatalogConnectionCollectionTransfer;
 }

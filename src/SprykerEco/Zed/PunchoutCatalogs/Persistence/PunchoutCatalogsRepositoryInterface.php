@@ -30,6 +30,13 @@ interface PunchoutCatalogsRepositoryInterface
     ): ?PunchoutCatalogConnectionCollectionTransfer;
 
     /**
+     * @param int $fkCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     */
+    public function findConnectionByFkCompanyUser(int $fkCompanyUser): ?PunchoutCatalogConnectionCollectionTransfer;
+
+    /**
      * @param int $idPunchoutCatalogTransaction
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null

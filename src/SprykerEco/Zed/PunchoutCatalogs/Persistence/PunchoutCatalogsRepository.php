@@ -61,18 +61,34 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
             ->find();
 
         $punchoutCatalogsConnectionMapper = $this->getFactory()->createPunchoutCatalogsConnectionMapper();
-        $punchoutCatalogConnectionCollectionTransfer = new PunchoutCatalogConnectionCollectionTransfer();
-        foreach ($punchoutCatalogConnectionEntityCollection as $punchoutCatalogConnectionEntity) {
-            $punchoutCatalogConnectionTransfer = $punchoutCatalogsConnectionMapper
-                ->mapPunchoutCatalogConnectionEntityToTransfer(
-                    $punchoutCatalogConnectionEntity,
-                    new PunchoutCatalogConnectionTransfer()
-                );
 
-            $punchoutCatalogConnectionCollectionTransfer->addPunchoutCatalogConnection($punchoutCatalogConnectionTransfer);
-        }
+        return $punchoutCatalogsConnectionMapper->mapPunchoutCatalogConnectionEntityCollectionToCollectionTransfer(
+            $punchoutCatalogConnectionEntityCollection,
+            new PunchoutCatalogConnectionCollectionTransfer()
+        );
+    }
 
-        return $punchoutCatalogConnectionCollectionTransfer;
+    /**
+     * @param int $fkCompanyUser
+     *
+     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     */
+    public function findConnectionByFkCompanyUser(int $fkCompanyUser): ?PunchoutCatalogConnectionCollectionTransfer
+    {
+        $punchoutCatalogConnectionEntityCollection = $this->getFactory()
+            ->getPunchoutCatalogConnectionPropelQuery()
+            ->usePgwPunchoutCatalogConnectionSetupQuery()
+                ->filterByFkCompanyUser($fkCompanyUser)
+            ->endUse()
+            ->find();
+
+        $punchoutCatalogsConnectionMapper = $this->getFactory()->createPunchoutCatalogsConnectionMapper();
+
+        return $punchoutCatalogsConnectionMapper
+            ->mapPunchoutCatalogConnectionEntityCollectionToCollectionTransfer(
+                $punchoutCatalogConnectionEntityCollection,
+                new PunchoutCatalogConnectionCollectionTransfer()
+            );
     }
 
     /**
