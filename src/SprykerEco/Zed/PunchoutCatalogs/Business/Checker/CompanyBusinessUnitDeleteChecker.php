@@ -19,6 +19,8 @@ use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterf
 
 class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheckerInterface
 {
+    protected const ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS = 'company.company_business_unit.delete.error.has_punchout_catalog';
+
     /**
      * @var SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
      */
@@ -66,6 +68,10 @@ class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheck
             $punchoutCatalogConnectionCollectionTransfer
                 ->getPunchoutCatalogConnection()[0]
                 ->getCompanyBusinessUnit()
+        );
+
+        $companyBusinessUnitResponseTransfer->addMessage(
+            (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS)
         );
 
         return $companyBusinessUnitResponseTransfer->setIsSuccessful(false);

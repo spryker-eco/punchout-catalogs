@@ -10,10 +10,13 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Business\Checker;
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\ResponseMessageTransfer;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
 
 class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
 {
+    protected const ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS = 'company.account.company_user.delete.error.has_punchout_catalog';
+
     /**
      * @var SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
      */
@@ -56,6 +59,10 @@ class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
         if (!count($punchoutCatalogConnectionCollectionTransfer->getPunchoutCatalogConnection())) {
             return $companyUserResponseTransfer;
         }
+
+        $companyUserResponseTransfer->addMessage(
+            (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS)
+        );
 
         return $companyUserResponseTransfer->setIsSuccessful(false);
     }
