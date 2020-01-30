@@ -30,13 +30,12 @@ class PunchoutCatalogsCompanyUserDeletePreCheckPlugin extends AbstractPlugin imp
      */
     public function execute(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $fkCompanyUser = $companyUserTransfer->getIdCompanyUser();
         $punchoutCatalogConnectionSetupTransfer = (new PunchoutCatalogConnectionSetupTransfer())
-            ->setFkCompanyUser($fkCompanyUser);
+            ->setFkCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        $punchoutCatalogsTransfer = (new PunchoutCatalogConnectionTransfer())
+        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
             ->setSetup($punchoutCatalogConnectionSetupTransfer);
 
-        return $this->getFacade()->isCompanyUserDeletable($punchoutCatalogsTransfer);
+        return $this->getFacade()->isCompanyUserDeletable($punchoutCatalogConnectionTransfer);
     }
 }

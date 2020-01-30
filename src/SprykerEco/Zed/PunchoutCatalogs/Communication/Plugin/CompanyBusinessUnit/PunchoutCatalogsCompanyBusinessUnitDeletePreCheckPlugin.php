@@ -30,9 +30,9 @@ class PunchoutCatalogsCompanyBusinessUnitDeletePreCheckPlugin extends AbstractPl
      */
     public function execute(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
-        $punchoutCatalogsTransfer = (new PunchoutCatalogConnectionTransfer())
+        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
             ->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
-        return $this->getFacade()->isCompanyBusinessUnitDeletable($punchoutCatalogsTransfer);
+        return $this->getFacade()->isCompanyBusinessUnitDeletable($punchoutCatalogConnectionTransfer);
     }
 }

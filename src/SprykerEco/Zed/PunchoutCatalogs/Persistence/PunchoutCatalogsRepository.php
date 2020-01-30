@@ -58,7 +58,7 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
     ): bool {
         $punchoutCatalogConnectionPropelQuery = $this->getFactory()->getPunchoutCatalogConnectionPropelQuery();
         $punchoutCatalogConnectionPropelQuery = $this
-            ->expandPunchoutCatalogConnectionPropelQueryWithPunchoutCatalogConnectionFilter(
+            ->setPunchoutCatalogConnectionFilters(
                 $punchoutCatalogConnectionPropelQuery,
                 $punchoutCatalogConnectionFilterTransfer
             );
@@ -143,7 +143,7 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
      *
      * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
      */
-    protected function expandPunchoutCatalogConnectionPropelQueryWithPunchoutCatalogConnectionFilter(
+    protected function setPunchoutCatalogConnectionFilters(
         PgwPunchoutCatalogConnectionQuery $pgwPunchoutCatalogConnectionQuery,
         PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
     ): PgwPunchoutCatalogConnectionQuery {
