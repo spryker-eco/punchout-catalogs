@@ -8,14 +8,14 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Checker;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
 
 class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
 {
-    protected const ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS = 'company.account.company_user.delete.error.has_punchout_catalog';
+    protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.account.company_user.delete.error.has_punchout_catalog';
 
     /**
      * @var SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
@@ -40,30 +40,19 @@ class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
     ): CompanyUserResponseTransfer {
         $punchoutCatalogConnectionTransfer->requireSetup();
 
-        $punchoutCatalogCollectionTransfer = $this->punchoutCatalogsReader
-            ->findConnectionByFkCompanyUser($punchoutCatalogConnectionTransfer->getSetup()->getFkCompanyUser());
+        $punchoutCatalogConnectionFilter = (new PunchoutCatalogConnectionFilterTransfer())
+            ->setIdCompanyUser($punchoutCatalogConnectionTransfer->getSetup()->getFkCompanyUser());
 
-        return $this->createCompanyUserResponseTransfer($punchoutCatalogCollectionTransfer);
-    }
+        $hasCompanyUserPunchoutCatalogConnection = $this->punchoutCatalogsReader
+            ->hasPunchoutCatalogConnection($punchoutCatalogConnectionFilter);
 
-    /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
-     */
-    protected function createCompanyUserResponseTransfer(
-        PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
-    ): CompanyUserResponseTransfer {
-        $companyUserResponseTransfer = (new CompanyUserResponseTransfer())->setIsSuccessful(true);
-
-        if (!count($punchoutCatalogConnectionCollectionTransfer->getPunchoutCatalogConnection())) {
-            return $companyUserResponseTransfer;
+        $companyUserResponseTransfer = new CompanyUserResponseTransfer();
+        if (!$hasCompanyUserPunchoutCatalogConnection) {
+            return $companyUserResponseTransfer->setIsSuccessful(true);
         }
 
-        $companyUserResponseTransfer->addMessage(
-            (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS)
-        );
-
-        return $companyUserResponseTransfer->setIsSuccessful(false);
+        return $companyUserResponseTransfer
+            ->addMessage((new ResponseMessageTransfer())->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG))
+            ->setIsSuccessful(false);
     }
 }

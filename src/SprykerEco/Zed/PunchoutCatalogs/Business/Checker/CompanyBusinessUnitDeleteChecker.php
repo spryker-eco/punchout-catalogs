@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogSetupResponseTransfer;
@@ -19,7 +20,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterf
 
 class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheckerInterface
 {
-    protected const ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS = 'company.company_business_unit.delete.error.has_punchout_catalog';
+    protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.company_business_unit.delete.error.has_punchout_catalog';
 
     /**
      * @var SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
@@ -42,38 +43,21 @@ class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheck
     public function isCompanyBusinessUnitDeletable(
         PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
     ): CompanyBusinessUnitResponseTransfer {
-        $punchoutCatalogConnectionTransfer->requireFkCompanyBusinessUnit()->getFkCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer->requireFkCompanyBusinessUnit();
 
-        $punchoutCatalogCollectionTransfer = $this->punchoutCatalogsReader
-            ->findConnectionByFkCompanyBusinessUnit($punchoutCatalogConnectionTransfer->getFkCompanyBusinessUnit());
+        $punchoutCatalogConnectionFilter = (new PunchoutCatalogConnectionFilterTransfer())
+            ->setIdCompanyBusinessUnit($punchoutCatalogConnectionTransfer->getFkCompanyBusinessUnit());
 
-        return $this->createCompanyBusinessUnitResponseTransfer($punchoutCatalogCollectionTransfer);
-    }
+        $hasCompanyBusinessUnitPunchoutCatalogConnection = $this->punchoutCatalogsReader
+            ->hasPunchoutCatalogConnection($punchoutCatalogConnectionFilter);
 
-    /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
-     */
-    protected function createCompanyBusinessUnitResponseTransfer(
-        PunchoutCatalogConnectionCollectionTransfer $punchoutCatalogConnectionCollectionTransfer
-    ): CompanyBusinessUnitResponseTransfer {
-        $companyBusinessUnitResponseTransfer = (new CompanyBusinessUnitResponseTransfer())->setIsSuccessful(true);
-
-        if (!count($punchoutCatalogConnectionCollectionTransfer->getPunchoutCatalogConnection())) {
-            return $companyBusinessUnitResponseTransfer;
+        $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();
+        if (!$hasCompanyBusinessUnitPunchoutCatalogConnection) {
+            return $companyBusinessUnitResponseTransfer->setIsSuccessful(true);
         }
 
-        $companyBusinessUnitResponseTransfer->setCompanyBusinessUnitTransfer(
-            $punchoutCatalogConnectionCollectionTransfer
-                ->getPunchoutCatalogConnection()[0]
-                ->getCompanyBusinessUnit()
-        );
-
-        $companyBusinessUnitResponseTransfer->addMessage(
-            (new ResponseMessageTransfer())->setText(static::ERROR_MESSAGE_HAS_PUNCHOUT_CATALOGS)
-        );
-
-        return $companyBusinessUnitResponseTransfer->setIsSuccessful(false);
+        return $companyBusinessUnitResponseTransfer
+            ->addMessage((new ResponseMessageTransfer())->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG))
+            ->setIsSuccessful(false);
     }
 }

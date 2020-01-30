@@ -13,10 +13,6 @@
         <property name="username" type="string"/>
     </transfer>
 
-    <transfer name="PunchoutCatalogConnectionCollection">
-        <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection[]"/>
-    </transfer>
-
     <transfer name="PunchoutCatalogTransaction">
         <property name="idPunchoutCatalogTransaction" type="int"/>
         <property name="connection" type="PunchoutCatalogConnection"/>
@@ -64,6 +60,11 @@
         <property name="messages" type="Message[]" singular="message"/>
         <property name="punchoutCatalogConnection" type="PunchoutCatalogConnection"/>
         <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionFilter">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnit">

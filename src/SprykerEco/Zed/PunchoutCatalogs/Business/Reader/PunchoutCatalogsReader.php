@@ -8,6 +8,7 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Reader;
 
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use SprykerEco\Zed\PunchoutCatalogs\Dependency\Facade\PunchoutCatalogsToVaultFacadeInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
@@ -68,22 +69,13 @@ class PunchoutCatalogsReader implements PunchoutCatalogsReaderInterface
     }
 
     /**
-     * @param int $fkCompanyBusinessUnit
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
+     * @return bool
      */
-    public function findConnectionByFkCompanyBusinessUnit(
-        int $fkCompanyBusinessUnit
-    ): ?PunchoutCatalogConnectionCollectionTransfer {
-        return $this->punchoutCatalogsRepository->findConnectionByFkCompanyBusinessUnit($fkCompanyBusinessUnit);
-    }
-
-    /**
-     * @param int $fkCompanyUser
-     *
-     * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer|null
-     */
-    public function findConnectionByFkCompanyUser(int $fkCompanyUser): ?PunchoutCatalogConnectionCollectionTransfer {
-        return $this->punchoutCatalogsRepository->findConnectionByFkCompanyUser($fkCompanyUser);
+    public function hasPunchoutCatalogConnection(
+        PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
+    ): bool {
+        return $this->punchoutCatalogsRepository->hasPunchoutCatalogConnection($punchoutCatalogConnectionFilterTransfer);
     }
 }
