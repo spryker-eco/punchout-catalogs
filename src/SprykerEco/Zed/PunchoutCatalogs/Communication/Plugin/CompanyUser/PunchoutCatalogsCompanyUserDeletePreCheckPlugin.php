@@ -21,6 +21,9 @@ class PunchoutCatalogsCompanyUserDeletePreCheckPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
+     * - Finds punchout catalogs which use given CompanyUserTransfer.
+     * - Returns CompanyUserTransfer with check results.
+     * - CompanyUserTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
      *
      * @api
      *

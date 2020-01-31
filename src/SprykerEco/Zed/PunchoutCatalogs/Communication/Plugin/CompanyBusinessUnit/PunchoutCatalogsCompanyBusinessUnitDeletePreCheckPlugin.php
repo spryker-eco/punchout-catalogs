@@ -21,6 +21,9 @@ class PunchoutCatalogsCompanyBusinessUnitDeletePreCheckPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
+     * - Finds punchout catalogs which use given CompanyBusinessUnitTransfer.
+     * - Returns CompanyBusinessUnitResponseTransfer with check results.
+     * - CompanyBusinessUnitResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
      *
      * @api
      *
