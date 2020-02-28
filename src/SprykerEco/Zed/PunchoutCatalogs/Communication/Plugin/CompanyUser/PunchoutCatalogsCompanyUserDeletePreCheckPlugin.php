@@ -9,8 +9,6 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserDeletePreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -21,9 +19,7 @@ class PunchoutCatalogsCompanyUserDeletePreCheckPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
-     * - Finds punchout catalogs which use given CompanyUserTransfer.
-     * - Returns CompanyUserTransfer with check results.
-     * - CompanyUserTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
+     * - If the company user was linked to the punchout catalog the deleting will be canceled.
      *
      * @api
      *
@@ -33,12 +29,8 @@ class PunchoutCatalogsCompanyUserDeletePreCheckPlugin extends AbstractPlugin imp
      */
     public function execute(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
     {
-        $punchoutCatalogConnectionSetupTransfer = (new PunchoutCatalogConnectionSetupTransfer())
-            ->setFkCompanyUser($companyUserTransfer->getIdCompanyUser());
+        $companyUserResponseTransfer = $this->getFacade()->isCompanyUserDeletable($companyUserTransfer);
 
-        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
-            ->setSetup($punchoutCatalogConnectionSetupTransfer);
-
-        return $this->getFacade()->isCompanyUserDeletable($punchoutCatalogConnectionTransfer);
+        return $companyUserResponseTransfer;
     }
 }

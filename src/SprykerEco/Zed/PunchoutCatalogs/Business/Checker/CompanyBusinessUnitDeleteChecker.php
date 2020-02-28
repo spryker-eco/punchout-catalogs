@@ -7,57 +7,68 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Checker;
 
-use Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogSetupResponseTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
-use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
 
 class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheckerInterface
 {
     protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.company_business_unit.delete.error.has_punchout_catalog';
 
-    /**
-     * @var SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
-     */
-    protected $punchoutCatalogsReader;
+    protected const ERROR_MESSAGE_PARAM_UNIT = '%unit%';
 
     /**
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface $punchoutCatalogsReader
+     * @var SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
      */
-    public function __construct(PunchoutCatalogsReaderInterface $punchoutCatalogsReader)
+    protected $punchoutCatalogsRepository;
+
+    /**
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
+     */
+    public function __construct(PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository)
     {
-        $this->punchoutCatalogsReader = $punchoutCatalogsReader;
+        $this->punchoutCatalogsRepository = $punchoutCatalogsRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function isCompanyBusinessUnitDeletable(
-        PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
-    ): CompanyBusinessUnitResponseTransfer {
-        $punchoutCatalogConnectionTransfer->requireFkCompanyBusinessUnit();
+    public function isCompanyBusinessUnitDeletable(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        $punchoutCatalogConnectionFilterTransfer = (new PunchoutCatalogConnectionFilterTransfer())
+            ->setIdCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
 
-        $punchoutCatalogConnectionFilter = (new PunchoutCatalogConnectionFilterTransfer())
-            ->setIdCompanyBusinessUnit($punchoutCatalogConnectionTransfer->getFkCompanyBusinessUnit());
-
-        $hasCompanyBusinessUnitPunchoutCatalogConnection = $this->punchoutCatalogsReader
-            ->hasPunchoutCatalogConnection($punchoutCatalogConnectionFilter);
+        $isPunchoutCatalogConnectionExists = $this->punchoutCatalogsRepository
+            ->isPunchoutCatalogConnectionExists($punchoutCatalogConnectionFilterTransfer);
 
         $companyBusinessUnitResponseTransfer = new CompanyBusinessUnitResponseTransfer();
-        if (!$hasCompanyBusinessUnitPunchoutCatalogConnection) {
+        if (!$isPunchoutCatalogConnectionExists) {
             return $companyBusinessUnitResponseTransfer->setIsSuccessful(true);
         }
 
         return $companyBusinessUnitResponseTransfer
-            ->addMessage((new ResponseMessageTransfer())->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG))
+            ->addMessage($this->getResponseMessageTransfer($companyBusinessUnitTransfer))
             ->setIsSuccessful(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
+     */
+    protected function getResponseMessageTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
+    {
+        return (new ResponseMessageTransfer())
+            ->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG)
+            ->setParameters(
+                [
+                    static::ERROR_MESSAGE_PARAM_UNIT => $companyBusinessUnitTransfer->getName()
+                ]
+            );
     }
 }

@@ -26,7 +26,7 @@ interface PunchoutCatalogsRepositoryInterface
      *
      * @return bool
      */
-    public function hasPunchoutCatalogConnection(PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer): bool;
+    public function isPunchoutCatalogConnectionExists(PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer): bool;
 
     /**
      * @param int $idPunchoutCatalogTransaction

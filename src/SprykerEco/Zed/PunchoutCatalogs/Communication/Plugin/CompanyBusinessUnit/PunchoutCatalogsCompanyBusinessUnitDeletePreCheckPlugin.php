@@ -9,8 +9,6 @@ namespace SprykerEco\Zed\PunchoutCatalogs\Communication\Plugin\CompanyBusinessUn
 
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogSetupRequestTransfer;
 use Spryker\Zed\CompanyBusinessUnitExtension\Dependency\Plugin\CompanyBusinessUnitDeletePreCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -21,9 +19,7 @@ class PunchoutCatalogsCompanyBusinessUnitDeletePreCheckPlugin extends AbstractPl
 {
     /**
      * {@inheritDoc}
-     * - Finds punchout catalogs which use given CompanyBusinessUnitTransfer.
-     * - Returns CompanyBusinessUnitResponseTransfer with check results.
-     * - CompanyBusinessUnitResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
+     * - If the company business unit was linked to the punchout catalog the deleting will be canceled.
      *
      * @api
      *
@@ -33,9 +29,6 @@ class PunchoutCatalogsCompanyBusinessUnitDeletePreCheckPlugin extends AbstractPl
      */
     public function execute(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
     {
-        $punchoutCatalogConnectionTransfer = (new PunchoutCatalogConnectionTransfer())
-            ->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit());
-
-        return $this->getFacade()->isCompanyBusinessUnitDeletable($punchoutCatalogConnectionTransfer);
+        return $this->getFacade()->isCompanyBusinessUnitDeletable($companyBusinessUnitTransfer);
     }
 }

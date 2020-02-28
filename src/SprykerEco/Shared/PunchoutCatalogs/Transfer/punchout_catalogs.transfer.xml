@@ -105,4 +105,23 @@
         <property name="lastName" type="string"/>
     </transfer>
 
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionCollection">
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitResponse">
+    </transfer>
+
+    <transfer name="CompanyUserResponse">
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+    </transfer>
+
+    <transfer name="Pagination">
+    </transfer>
 </transfers>

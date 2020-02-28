@@ -8,51 +8,83 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Checker;
 
 use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\ResponseMessageTransfer;
-use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface;
 
 class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
 {
+    protected const ERROR_MESSAGE_PARAM_CUSTOMER_NAME = '%customer_name%';
     protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.account.company_user.delete.error.has_punchout_catalog';
 
-    /**
-     * @var SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface
-     */
-    protected $punchoutCatalogsReader;
+    protected const TEMPLATE_FULL_NAME = '%s %s';
 
     /**
-     * @param \SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface $punchoutCatalogsReader
+     * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
      */
-    public function __construct(PunchoutCatalogsReaderInterface $punchoutCatalogsReader)
+    protected $punchoutCatalogsRepository;
+
+    /**
+     * @param \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository
+     */
+    public function __construct(PunchoutCatalogsRepositoryInterface $punchoutCatalogsRepository)
     {
-        $this->punchoutCatalogsReader = $punchoutCatalogsReader;
+        $this->punchoutCatalogsRepository = $punchoutCatalogsRepository;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
      */
-    public function isCompanyUserDeletable(
-        PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
-    ): CompanyUserResponseTransfer {
-        $punchoutCatalogConnectionTransfer->requireSetup();
+    public function isCompanyUserDeletable(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        $punchoutCatalogConnectionFilterTransfer = (new PunchoutCatalogConnectionFilterTransfer())
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
 
-        $punchoutCatalogConnectionFilter = (new PunchoutCatalogConnectionFilterTransfer())
-            ->setIdCompanyUser($punchoutCatalogConnectionTransfer->getSetup()->getFkCompanyUser());
-
-        $hasCompanyUserPunchoutCatalogConnection = $this->punchoutCatalogsReader
-            ->hasPunchoutCatalogConnection($punchoutCatalogConnectionFilter);
+        $isPunchoutCatalogConnectionExists = $this->punchoutCatalogsRepository
+            ->isPunchoutCatalogConnectionExists($punchoutCatalogConnectionFilterTransfer);
 
         $companyUserResponseTransfer = new CompanyUserResponseTransfer();
-        if (!$hasCompanyUserPunchoutCatalogConnection) {
+        if (!$isPunchoutCatalogConnectionExists) {
             return $companyUserResponseTransfer->setIsSuccessful(true);
         }
 
         return $companyUserResponseTransfer
-            ->addMessage((new ResponseMessageTransfer())->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG))
+            ->addMessage($this->getResponseMessageTransfer($companyUserTransfer))
             ->setIsSuccessful(false);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\ResponseMessageTransfer
+     */
+    protected function getResponseMessageTransfer(CompanyUserTransfer $companyUserTransfer): ResponseMessageTransfer
+    {
+        return (new ResponseMessageTransfer())
+            ->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG)
+            ->setParameters(
+                [
+                    static::ERROR_MESSAGE_PARAM_CUSTOMER_NAME => $this->getCustomerFullName($companyUserTransfer->getCustomer())
+                ]
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return string
+     */
+    protected function getCustomerFullName(CustomerTransfer $customerTransfer): string
+    {
+        return sprintf(
+            static::TEMPLATE_FULL_NAME,
+            $customerTransfer->getFirstName(),
+            $customerTransfer->getLastName()
+        );
     }
 }

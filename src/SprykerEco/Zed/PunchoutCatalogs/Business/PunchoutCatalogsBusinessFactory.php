@@ -54,7 +54,7 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCompanyBusinessUnitDeleteChecker(): CompanyBusinessUnitDeleteCheckerInterface
     {
-        return new CompanyBusinessUnitDeleteChecker($this->createPunchoutCatalogsReader());
+        return new CompanyBusinessUnitDeleteChecker($this->getRepository());
     }
 
     /**
@@ -62,7 +62,7 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
      */
     public function createCompanyUserDeleteChecker(): CompanyUserDeleteCheckerInterface
     {
-        return new CompanyUserDeleteChecker($this->createPunchoutCatalogsReader());
+        return new CompanyUserDeleteChecker($this->getRepository());
     }
 
     /**

@@ -8,16 +8,14 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Checker;
 
 use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 interface CompanyBusinessUnitDeleteCheckerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
      */
-    public function isCompanyBusinessUnitDeletable(
-        PunchoutCatalogConnectionTransfer $punchoutCatalogConnectionTransfer
-    ): CompanyBusinessUnitResponseTransfer;
+    public function isCompanyBusinessUnitDeletable(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
 }
