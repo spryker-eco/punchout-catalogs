@@ -17,10 +17,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterf
 
 class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
 {
-    protected const ERROR_MESSAGE_PARAM_CUSTOMER_NAME = '%customer_name%';
     protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.account.company_user.delete.error.has_punchout_catalog';
-
-    protected const TEMPLATE_FULL_NAME = '%s %s';
 
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
@@ -69,7 +66,7 @@ class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
             ->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG)
             ->setParameters(
                 [
-                    static::ERROR_MESSAGE_PARAM_CUSTOMER_NAME => $this->getCustomerFullName($companyUserTransfer->getCustomer())
+                    '%customer_name%' => $this->getCustomerFullName($companyUserTransfer->getCustomer())
                 ]
             );
     }
@@ -82,7 +79,7 @@ class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
     protected function getCustomerFullName(CustomerTransfer $customerTransfer): string
     {
         return sprintf(
-            static::TEMPLATE_FULL_NAME,
+            '%s %s',
             $customerTransfer->getFirstName(),
             $customerTransfer->getLastName()
         );
