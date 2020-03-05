@@ -27,11 +27,4 @@ interface PunchoutCatalogsReaderInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
     public function findConnectionByIdWithPassword(int $idConnection): ?PunchoutCatalogConnectionTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
-     *
-     * @return bool
-     */
-    public function hasPunchoutCatalogConnection(PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer): bool;
 }
