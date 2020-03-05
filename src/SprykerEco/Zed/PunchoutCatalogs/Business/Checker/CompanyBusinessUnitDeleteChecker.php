@@ -16,7 +16,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterf
 
 class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheckerInterface
 {
-    protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.company_business_unit.delete.error.has_punchout_catalog';
+    protected const GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_IS_USED = 'punchout_catalogs.error.company_business_unit.is_used';
 
     protected const ERROR_MESSAGE_PARAM_UNIT = '%unit%';
 
@@ -64,7 +64,7 @@ class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheck
     protected function getResponseMessageTransfer(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): ResponseMessageTransfer
     {
         return (new ResponseMessageTransfer())
-            ->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG)
+            ->setText(static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_IS_USED)
             ->setParameters(
                 [
                     static::ERROR_MESSAGE_PARAM_UNIT => $companyBusinessUnitTransfer->getName()

@@ -17,7 +17,7 @@ use SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterf
 
 class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
 {
-    protected const GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG = 'company.account.company_user.delete.error.has_punchout_catalog';
+    protected const GLOSSARY_KEY_COMPANY_USER_IS_USED = 'punchout_catalogs.error.company_user.is_used';
 
     /**
      * @var \SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
@@ -63,7 +63,7 @@ class CompanyUserDeleteChecker implements CompanyUserDeleteCheckerInterface
     protected function getResponseMessageTransfer(CompanyUserTransfer $companyUserTransfer): ResponseMessageTransfer
     {
         return (new ResponseMessageTransfer())
-            ->setText(static::GLOSSARY_KEY_HAS_PUNCHOUT_CATALOG)
+            ->setText(static::GLOSSARY_KEY_COMPANY_USER_IS_USED)
             ->setParameters(
                 [
                     '%customer_name%' => $this->getCustomerFullName($companyUserTransfer->getCustomer())
