@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\PunchoutCatalogs\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Spryker\Shared\Vault\VaultConfig as SharedVaultConfig;
 use Spryker\Shared\Vault\VaultConstants;
@@ -74,9 +76,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     public function testFindConnectionByIdRetrievesConnectionWhenItExists(): void
     {
         // Arrange
-        $idPunchoutCatalogConnection = $this->createPunchoutCatalogConnection(
-            $this->tester->createCompanyBusinessUnit()
-        )->getIdPunchoutCatalogConnection();
+        $idPunchoutCatalogConnection = $this->createPunchoutCatalogConnection()->getIdPunchoutCatalogConnection();
 
         // Act
         $punchoutCatalogConnectionTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
@@ -93,9 +93,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     public function testFindConnectionByIdWithPasswordRetrievesPasswordFormVaultWhenItExists(): void
     {
         // Arrange
-        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection(
-            $this->tester->createCompanyBusinessUnit()
-        );
+        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection();
 
         // Act
         $persistentPunchoutCatalogConnectionTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
@@ -153,9 +151,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     public function testUpdateConnectionUpdatesConnectionWhenItExists(): void
     {
         // Arrange
-        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection(
-            $this->tester->createCompanyBusinessUnit()
-        );
+        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection();
 
         $punchoutCatalogConnectionTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
             ->findConnectionById($punchoutCatalogConnectionTransfer->getIdPunchoutCatalogConnection());
@@ -215,9 +211,7 @@ class PunchoutCatalogsFacadeTest extends Unit
     {
         // Arrange
         $punchoutCatalogTransactionTransfer = $this->tester->createPunchoutCatalogTransaction(
-            $this->createPunchoutCatalogConnection(
-                $this->tester->createCompanyBusinessUnit()
-            )
+            $this->createPunchoutCatalogConnection()
         );
 
         // Act
@@ -230,14 +224,105 @@ class PunchoutCatalogsFacadeTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     * @return void
+     */
+    public function testIsCompanyBusinessUnitDeletableWhenItLinkedToPunchoutCatalog(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->createCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection($companyBusinessUnitTransfer);
+
+        $punchoutCatalogTransactionTransfer = $this->tester->createPunchoutCatalogTransaction(
+            $punchoutCatalogConnectionTransfer
+        );
+
+        // Act
+        $companyBusinessUnitResponseTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
+            ->isCompanyBusinessUnitDeletable($companyBusinessUnitTransfer);
+
+        // Assert
+        $this->assertFalse($companyBusinessUnitResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsCompanyUserDeletableWhenItLinkedToPunchoutCatalog(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUser();
+        $punchoutCatalogConnectionTransfer = $this
+            ->createPunchoutCatalogConnection(null, $companyUserTransfer);
+
+        $punchoutCatalogTransactionTransfer = $this->tester->createPunchoutCatalogTransaction(
+            $punchoutCatalogConnectionTransfer
+        );
+
+        // Act
+        $companyUserResponseTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
+            ->isCompanyUserDeletable($companyUserTransfer);
+
+        // Assert
+        $this->assertFalse($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsCompanyBusinessUnitDeletableWhenItNotLinkedToPunchoutCatalog(): void
+    {
+        // Arrange
+        $companyBusinessUnitTransfer = $this->tester->createCompanyBusinessUnit();
+        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection();
+
+        $punchoutCatalogTransactionTransfer = $this->tester->createPunchoutCatalogTransaction(
+            $punchoutCatalogConnectionTransfer
+        );
+
+        // Act
+        $companyBusinessUnitResponseTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
+            ->isCompanyBusinessUnitDeletable($companyBusinessUnitTransfer);
+
+        // Assert
+        $this->assertTrue($companyBusinessUnitResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsCompanyUserDeletableWhenItNotLinkedToPunchoutCatalog(): void
+    {
+        // Arrange
+        $companyUserTransfer = $this->tester->createCompanyUser();
+        $punchoutCatalogConnectionTransfer = $this->createPunchoutCatalogConnection();
+
+        $punchoutCatalogTransactionTransfer = $this->tester->createPunchoutCatalogTransaction(
+            $punchoutCatalogConnectionTransfer
+        );
+
+        // Act
+        $companyUserResponseTransfer = $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
+            ->isCompanyUserDeletable($companyUserTransfer);
+
+        // Assert
+        $this->assertTrue($companyUserResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
      */
-    protected function createPunchoutCatalogConnection(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): PunchoutCatalogConnectionTransfer
-    {
+    protected function createPunchoutCatalogConnection(
+        ?CompanyBusinessUnitTransfer $companyBusinessUnitTransfer = null,
+        ?CompanyUserTransfer $companyUserTransfer = null
+    ): PunchoutCatalogConnectionTransfer {
+        $punchoutCatalogConnectionTransfer = $this->tester
+            ->createPunchoutCatalogConnectionTransfer($companyBusinessUnitTransfer, $companyUserTransfer);
+
         return $this->getPunchoutCatalogsFacadeWithMockedVaultFacade()
-            ->createConnection($this->tester->createPunchoutCatalogConnectionTransfer())
+            ->createConnection($punchoutCatalogConnectionTransfer)
             ->getPunchoutCatalogConnection();
     }
 

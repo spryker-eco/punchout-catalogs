@@ -7,7 +7,6 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
-use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;

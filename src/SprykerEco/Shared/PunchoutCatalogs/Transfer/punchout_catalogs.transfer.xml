@@ -11,6 +11,9 @@
         <property name="type" type="string"/>
         <property name="format" type="string"/>
         <property name="username" type="string"/>
+        <property name="password" type="string"/>
+        <property name="cart" type="PunchoutCatalogConnectionCart"/>
+        <property name="setup" type="PunchoutCatalogConnectionSetup"/>
     </transfer>
 
     <transfer name="PunchoutCatalogTransaction">
@@ -47,6 +50,7 @@
         <property name="encoding" type="string"/>
         <property name="totalsMode" type="string"/>
         <property name="mapping" type="string"/>
+        <property name="bundleMode" type="string"/>
     </transfer>
 
     <transfer name="PunchoutCatalogConnectionSetup">
@@ -70,6 +74,7 @@
     <transfer name="CompanyBusinessUnit">
         <property name="company" type="Company"/>
         <property name="name" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="Company">
@@ -113,15 +118,21 @@
     <transfer name="PunchoutCatalogConnectionCollection">
     </transfer>
 
-    <transfer name="CompanyBusinessUnitResponse">
-    </transfer>
-
     <transfer name="CompanyUserResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
     </transfer>
 
     <transfer name="Pagination">
     </transfer>
+
+    <transfer name="CompanyBusinessUnitResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
 </transfers>

@@ -7,10 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Business\Reader;
 
-use Generated\Shared\Transfer\PunchoutCatalogConnectionCollectionTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
-use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
 
 interface PunchoutCatalogsReaderInterface
 {
