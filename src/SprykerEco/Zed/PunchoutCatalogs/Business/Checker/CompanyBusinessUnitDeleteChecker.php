@@ -18,8 +18,6 @@ class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheck
 {
     protected const GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_IS_USED = 'punchout_catalogs.error.company_business_unit.is_used';
 
-    protected const ERROR_MESSAGE_PARAM_UNIT = '%unit%';
-
     /**
      * @var SprykerEco\Zed\PunchoutCatalogs\Persistence\PunchoutCatalogsRepositoryInterface
      */
@@ -67,7 +65,7 @@ class CompanyBusinessUnitDeleteChecker implements CompanyBusinessUnitDeleteCheck
             ->setText(static::GLOSSARY_KEY_COMPANY_BUSINESS_UNIT_IS_USED)
             ->setParameters(
                 [
-                    static::ERROR_MESSAGE_PARAM_UNIT => $companyBusinessUnitTransfer->getName()
+                    '%unit%' => $companyBusinessUnitTransfer->getName()
                 ]
             );
     }
