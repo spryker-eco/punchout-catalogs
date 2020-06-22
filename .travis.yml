@@ -40,6 +40,7 @@ env:
     - MODULE_DIR=module
     - SHOP_DIR=current
     - MODULE_NAME=punchout-catalogs
+    - POSTGRES_PORT=5432
 
 cache:
   directories:
