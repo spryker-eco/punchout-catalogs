@@ -7,6 +7,10 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
@@ -78,4 +82,30 @@ interface PunchoutCatalogsFacadeInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer|null
      */
     public function findTransactionById(int $idPunchoutCatalogTransaction): ?PunchoutCatalogTransactionTransfer;
+
+    /**
+     * Specification:
+     * - Finds punchout catalogs which use given CompanyBusinessUnitTransfer.
+     * - Returns CompanyBusinessUnitResponseTransfer with check results, CompanyBusinessUnitResponseTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function isCompanyBusinessUnitDeletable(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer;
+
+    /**
+     * Specification:
+     * - Finds punchout catalogs which use given CompanyUserTransfer.
+     * - Returns CompanyUserTransfer with check results, CompanyUserTransfer::isSuccessful is equal to true when usage cases were not found, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function isCompanyUserDeletable(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;
 }

@@ -7,10 +7,12 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
+use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyUser\Persistence\Map\SpyCompanyUserTableMap;
+use Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -43,6 +45,23 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
                 $punchoutCatalogConnectionEntity,
                 new PunchoutCatalogConnectionTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
+     *
+     * @return bool
+     */
+    public function isPunchoutCatalogConnectionExists(PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer): bool
+    {
+        $punchoutCatalogConnectionPropelQuery = $this->getFactory()->getPunchoutCatalogConnectionPropelQuery();
+        $punchoutCatalogConnectionPropelQuery = $this
+            ->setPunchoutCatalogConnectionFilters(
+                $punchoutCatalogConnectionPropelQuery,
+                $punchoutCatalogConnectionFilterTransfer
+            );
+
+        return $punchoutCatalogConnectionPropelQuery->exists();
     }
 
     /**
@@ -114,5 +133,31 @@ class PunchoutCatalogsRepository extends AbstractRepository implements PunchoutC
             ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery $pgwPunchoutCatalogConnectionQuery
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
+     *
+     * @return \Orm\Zed\PunchoutCatalog\Persistence\PgwPunchoutCatalogConnectionQuery
+     */
+    protected function setPunchoutCatalogConnectionFilters(
+        PgwPunchoutCatalogConnectionQuery $pgwPunchoutCatalogConnectionQuery,
+        PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
+    ): PgwPunchoutCatalogConnectionQuery {
+        if ($punchoutCatalogConnectionFilterTransfer->getIdCompanyUser()) {
+            $pgwPunchoutCatalogConnectionQuery
+                ->usePgwPunchoutCatalogConnectionSetupQuery()
+                    ->filterByFkCompanyUser($punchoutCatalogConnectionFilterTransfer->getIdCompanyUser())
+                ->endUse();
+        }
+
+        if ($punchoutCatalogConnectionFilterTransfer->getIdCompanyBusinessUnit()) {
+            $pgwPunchoutCatalogConnectionQuery->filterByFkCompanyBusinessUnit(
+                $punchoutCatalogConnectionFilterTransfer->getIdCompanyBusinessUnit()
+            );
+        }
+
+        return $pgwPunchoutCatalogConnectionQuery;
     }
 }

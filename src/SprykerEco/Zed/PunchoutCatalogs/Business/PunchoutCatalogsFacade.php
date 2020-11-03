@@ -7,6 +7,10 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
+use Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
+use Generated\Shared\Transfer\CompanyUserResponseTransfer;
+use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogResponseTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
@@ -96,5 +100,37 @@ class PunchoutCatalogsFacade extends AbstractFacade implements PunchoutCatalogsF
     {
         return $this->getRepository()
             ->findTransactionById($idPunchoutCatalogTransaction);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer $companyBusinessUnitTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitResponseTransfer
+     */
+    public function isCompanyBusinessUnitDeletable(CompanyBusinessUnitTransfer $companyBusinessUnitTransfer): CompanyBusinessUnitResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyBusinessUnitDeleteChecker()
+            ->isCompanyBusinessUnitDeletable($companyBusinessUnitTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
+     */
+    public function isCompanyUserDeletable(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUserDeleteChecker()
+            ->isCompanyUserDeletable($companyUserTransfer);
     }
 }

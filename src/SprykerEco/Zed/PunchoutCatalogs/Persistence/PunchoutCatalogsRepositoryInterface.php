@@ -7,6 +7,7 @@
 
 namespace SprykerEco\Zed\PunchoutCatalogs\Persistence;
 
+use Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogTransactionTransfer;
 
@@ -18,6 +19,13 @@ interface PunchoutCatalogsRepositoryInterface
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer|null
      */
     public function findConnectionById(int $idConnection): ?PunchoutCatalogConnectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer
+     *
+     * @return bool
+     */
+    public function isPunchoutCatalogConnectionExists(PunchoutCatalogConnectionFilterTransfer $punchoutCatalogConnectionFilterTransfer): bool;
 
     /**
      * @param int $idPunchoutCatalogTransaction

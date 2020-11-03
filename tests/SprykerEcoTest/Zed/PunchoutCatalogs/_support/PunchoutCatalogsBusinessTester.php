@@ -11,6 +11,7 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionCartTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer;
 use Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer;
@@ -84,15 +85,45 @@ class PunchoutCatalogsBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\CompanyUserTransfer
+     */
+    public function createCompanyUser(): CompanyUserTransfer
+    {
+        $customerTransfer = $this->createCustomer();
+
+        return $this->haveCompanyUser(
+            [
+                CompanyUserTransfer::ID_COMPANY_USER => '78945689',
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+                CompanyUserTransfer::FK_COMPANY => $this->haveCompany()->getIdCompany()
+            ]
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function createCustomer(): CustomerTransfer
+    {
+        return $this->haveCustomer();
+    }
+
+    /**
      * @param int $idCompanyBusinessUnit
+     * @param int $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionSetupTransfer
      */
-    public function createPunchoutCatalogsConnectionSetupTransfer(int $idCompanyBusinessUnit): PunchoutCatalogConnectionSetupTransfer
+    public function createPunchoutCatalogsConnectionSetupTransfer(
+        int $idCompanyBusinessUnit,
+        int $idCompanyUser
+    ): PunchoutCatalogConnectionSetupTransfer
     {
         return (new PunchoutCatalogConnectionSetupTransfer())
             ->setLoginMode(static::CONNECTION_SETUP_LOGIN_MODE)
-            ->setFkCompanyBusinessUnit($idCompanyBusinessUnit);
+            ->setFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->setFkCompanyUser($idCompanyUser);
     }
 
     /**
@@ -125,11 +156,23 @@ class PunchoutCatalogsBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $companyBusinessUnitTransfer
+     * @param \Generated\Shared\Transfer\CompanyUserTransfer|null $companyUserTransfer
+     *
      * @return \Generated\Shared\Transfer\PunchoutCatalogConnectionTransfer
      */
-    public function createPunchoutCatalogConnectionTransfer(): PunchoutCatalogConnectionTransfer
-    {
-        $companyBusinessUnitTransfer = $this->createCompanyBusinessUnit();
+    public function createPunchoutCatalogConnectionTransfer(
+        ?CompanyBusinessUnitTransfer $companyBusinessUnitTransfer = null,
+        ?CompanyUserTransfer $companyUserTransfer = null
+    ): PunchoutCatalogConnectionTransfer {
+        $companyBusinessUnitTransfer = $companyBusinessUnitTransfer ?? $this->createCompanyBusinessUnit();
+        $companyUserTransfer = $companyUserTransfer ?? $this->createCompanyUser();
+
+        $punchoutCatalogsConnectionSetupTransfer = $this
+            ->createPunchoutCatalogsConnectionSetupTransfer(
+                $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+                $companyUserTransfer->getIdCompanyUser()
+            );
 
         return (new PunchoutCatalogConnectionTransfer())
             ->setFkCompanyBusinessUnit($companyBusinessUnitTransfer->getIdCompanyBusinessUnit())
@@ -138,7 +181,7 @@ class PunchoutCatalogsBusinessTester extends Actor
             ->setPassword(static::CONNECTION_PASSWORD)
             ->setType(static::CONNECTION_TYPE)
             ->setFormat(static::CONNECTION_FORMAT)
-            ->setSetup($this->createPunchoutCatalogsConnectionSetupTransfer($companyBusinessUnitTransfer->getIdCompanyBusinessUnit()))
+            ->setSetup($punchoutCatalogsConnectionSetupTransfer)
             ->setCart($this->createPunchoutCatalogsConnectionCartTransfer());
     }
 }

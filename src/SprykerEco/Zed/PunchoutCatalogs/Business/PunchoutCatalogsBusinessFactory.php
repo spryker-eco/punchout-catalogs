@@ -8,6 +8,10 @@
 namespace SprykerEco\Zed\PunchoutCatalogs\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Checker\CompanyBusinessUnitDeleteChecker;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Checker\CompanyBusinessUnitDeleteCheckerInterface;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Checker\CompanyUserDeleteChecker;
+use SprykerEco\Zed\PunchoutCatalogs\Business\Checker\CompanyUserDeleteCheckerInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReader;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Reader\PunchoutCatalogsReaderInterface;
 use SprykerEco\Zed\PunchoutCatalogs\Business\Writer\PunchoutCatalogsWriter;
@@ -43,6 +47,22 @@ class PunchoutCatalogsBusinessFactory extends AbstractBusinessFactory
             $this->getVaultFacade(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Business\CompanyBusinessUnitDeleteCheckerInterface
+     */
+    public function createCompanyBusinessUnitDeleteChecker(): CompanyBusinessUnitDeleteCheckerInterface
+    {
+        return new CompanyBusinessUnitDeleteChecker($this->getRepository());
+    }
+
+    /**
+     * @return \SprykerEco\Zed\PunchoutCatalogs\Business\Checker\CompanyUserDeleteCheckerInterface
+     */
+    public function createCompanyUserDeleteChecker(): CompanyUserDeleteCheckerInterface
+    {
+        return new CompanyUserDeleteChecker($this->getRepository());
     }
 
     /**

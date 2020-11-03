@@ -4,12 +4,16 @@
     <transfer name="PunchoutCatalogConnection">
         <property name="idPunchoutCatalogConnection" type="int"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="companyBusinessUnit" type="CompanyBusinessUnit"/>
         <property name="isActive" type="bool"/>
         <property name="name" type="string"/>
         <property name="mapping" type="string"/>
         <property name="type" type="string"/>
         <property name="format" type="string"/>
         <property name="username" type="string"/>
+        <property name="password" type="string"/>
+        <property name="cart" type="PunchoutCatalogConnectionCart"/>
+        <property name="setup" type="PunchoutCatalogConnectionSetup"/>
     </transfer>
 
     <transfer name="PunchoutCatalogTransaction">
@@ -46,6 +50,7 @@
         <property name="encoding" type="string"/>
         <property name="totalsMode" type="string"/>
         <property name="mapping" type="string"/>
+        <property name="bundleMode" type="string"/>
     </transfer>
 
     <transfer name="PunchoutCatalogConnectionSetup">
@@ -61,9 +66,15 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
+    <transfer name="PunchoutCatalogConnectionFilter">
+        <property name="idCompanyBusinessUnit" type="int"/>
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
     <transfer name="CompanyBusinessUnit">
         <property name="company" type="Company"/>
         <property name="name" type="string"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
     </transfer>
 
     <transfer name="Company">
@@ -97,6 +108,31 @@
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="ResponseMessage">
+        <property name="text" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="PunchoutCatalogConnectionCollection">
+    </transfer>
+
+    <transfer name="CompanyUserResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitCollection">
+        <property name="companyBusinessUnits" type="CompanyBusinessUnit[]" singular="companyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="Pagination">
+    </transfer>
+
+    <transfer name="CompanyBusinessUnitResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="ResponseMessage[]" singular="message"/>
     </transfer>
 
 </transfers>
