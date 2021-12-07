@@ -72,3 +72,4 @@ Line,Line
 "You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one."
 NULL,NULL
 "Connection ""%connection_name%"" was updated successfully.","Connection ""%connection_name%"" was updated successfully."
+Disabled,Disabled
