@@ -45,6 +45,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
     protected const TEMPLATE_PATH_MAX_DESCRIPTION_LENGTH_FIELD = '@PunchoutCatalogs/Form/Connection/Setup/max_description_length.twig';
 
     protected const ALLOWED_CONNECTION_FORMATS_FOR_TOTALS_MODES = [
+        'disabled' => ['cxml', 'oci'],
         'line' => ['cxml', 'oci'],
         'header' => ['cxml'],
     ];
@@ -127,6 +128,7 @@ class PunchoutCatalogConnectionCartForm extends AbstractType
         $builder->add(PunchoutCatalogConnectionCartTransfer::TOTALS_MODE, ChoiceType::class, [
             'label' => 'Totals Mode',
             'choices' => [
+                'Disabled' => 'disabled',
                 'Line' => 'line',
                 'Header (does not work with OCI)' => 'header',
             ],

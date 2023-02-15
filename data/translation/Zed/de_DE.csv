@@ -70,5 +70,6 @@ Connections,Verbindungen
 "Totals Mode",Summenmodus
 "Header (does not work with OCI)","Header (funktioniert nicht mit OCI)"
 Line,Zeile
-"You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","Sie können die Verbindung ""%totals_mode%"" for ""%connection_format%"" nicht verwenden - wählen Sie bitte eine andere Verbindung aus."
+"You can’t use ""%totals_mode%"" for ""%connection_format%"" connection - please choose another one.","Sie können die Verbindung ""%totals_mode%"" für ""%connection_format%"" nicht verwenden - wählen Sie bitte eine andere Verbindung aus."
 NULL,NULL
+Disabled,Deaktiviert
